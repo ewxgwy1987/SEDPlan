@@ -3,6 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEDPlan", "SEDPlan\SEDPlan.csproj", "{EBEF10B4-1804-4D68-ACCC-131C6B02DB3E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cfg", "cfg", "{CF64F6B8-F901-4A0E-B469-828832F7B69B}"
+	ProjectSection(SolutionItems) = preProject
+		cfg\CFG_SEDPlan.xml = cfg\CFG_SEDPlan.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{BEFD02C8-D1BC-47D2-B119-5AB3AEEE83DB}"
+	ProjectSection(SolutionItems) = preProject
+		lib\log4net.dll = lib\log4net.dll
+		lib\PALS.Configure.dll = lib\PALS.Configure.dll
+		lib\PALS.dll = lib\PALS.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
