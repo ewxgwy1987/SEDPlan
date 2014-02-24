@@ -15,8 +15,11 @@ namespace SEDPlan
         public ShowData(DataTable dt)
         {
             InitializeComponent();
-            this.dataGridView1.DataSource = dt;
-            this.dataGridView1.Refresh();
+            if (dt != null)
+            {
+                this.dataGridView1.DataSource = dt;
+                this.dataGridView1.Refresh();
+            }
         }
 
         private void btnOKClose_Click(object sender, EventArgs e)

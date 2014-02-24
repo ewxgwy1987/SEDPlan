@@ -12,3 +12,17 @@ F:\1Pteris Global Ltd\EWXGWY1987_DEV\SEDPlan\SEDPlan\bin\Debug\SEDPlan.exe.confi
 F:\1Pteris Global Ltd\EWXGWY1987_DEV\SEDPlan\SEDPlan\bin\Debug\log4net.dll
 F:\1Pteris Global Ltd\EWXGWY1987_DEV\SEDPlan\SEDPlan\bin\Debug\PALS.Configure.dll
 F:\1Pteris Global Ltd\EWXGWY1987_DEV\SEDPlan\SEDPlan\bin\Debug\PALS.dll
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\bin\Debug\SEDPlan.exe.config
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\obj\x86\Debug\SEDPlan.csproj.ResolveComReference.cache
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\obj\x86\Debug\SEDPlan.exe
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\obj\x86\Debug\SEDPlan.pdb
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\obj\x86\Debug\SEDPlan.csprojResolveAssemblyReference.cache
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\obj\x86\Debug\SEDPlan.Form1.resources
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\obj\x86\Debug\SEDPlan.Properties.Resources.resources
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\obj\x86\Debug\SEDPlan.ShowData.resources
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\obj\x86\Debug\SEDPlan.csproj.GenerateResource.Cache
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\bin\Debug\SEDPlan.exe
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\bin\Debug\SEDPlan.pdb
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\bin\Debug\log4net.dll
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\bin\Debug\PALS.Configure.dll
+D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\SEDPlan\bin\Debug\PALS.dll

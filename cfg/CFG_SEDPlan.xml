@@ -38,4 +38,31 @@
       <level value="ALL" />
     </logger>
   </log4net>
+  <configSet name="SEDPlan.ExcelDataImport">
+    <connectionString>User ID=sa;Pwd=DBAdm1n@BHS.irel;Initial Catalog=SEDPLAN;Data Source=SG10031CSD6782;Packet Size=4096</connectionString>
+    <VariableType>L,LS,A°</VariableType>
+    <SAComponent>
+      <SCColumns>NAME,DESCRIPTION,LHS,RHS,PCE,VAR,WEIGHT (lbs/pce),REMARKS</SCColumns>
+      <SCParameters>SAID,PARTSNAME,SPEC,LHS,RHS,PCE,VAR,WEIGHT,PROCESS,REVISION,CRTIME</SCParameters>
+      <SCSTP>stp_ImportSCData</SCSTP>
+    </SAComponent>
+    
+    <SAVariable>
+      <SVColumns>L(Inches),LS(Inches),A(Degree),Weight(Ibs)</SVColumns>
+      <SVParameters>SAID,L_para,LS_para,A_para,Weight,Revision,CRTIME</SVParameters>
+      <SCSTP>stp_ImportSVData</SCSTP>
+    </SAVariable>
+    
+    <BOMPlan>
+      <BPColumns>SAID,Quantity,L,LS,A°</BPColumns>
+      <BPParameters>PlanName,SAID,Quantity,L_para,LS_para,A_para,Revision,Created_Time</BPParameters>
+      <BPSTP></BPSTP>
+    </BOMPlan>
+    
+    <StandardParts>
+      <STDColumns>NAME,DESCRIPTION,WEIGHT (lbs/pce)</STDColumns>
+      <STDParameters>STDImportName,PartsName,Spec,STDWeight,Revision,Created_Time</STDParameters>
+      <STDSTP>stp_ImportSTDData</STDSTP>
+    </StandardParts>
+  </configSet>
 </configuration>
