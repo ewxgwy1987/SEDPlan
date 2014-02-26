@@ -28,10 +28,10 @@ namespace SEDPlan
         private const string XCFG_SC_STP = "SCSTP";
 
         // SV Tags
-        private const string XCFG_SV = "SAVariable";
-        private const string XCFG_SV_COLUMNS = "SVColumns";
-        private const string XCFG_SV_PARAMETERS = "SVParameters";
-        private const string XCFG_SV_STP = "SVSTP";
+        private const string XCFG_SV = "DDVariable";
+        private const string XCFG_SV_COLUMNS = "DDColumns";
+        private const string XCFG_SV_PARAMETERS = "DDParameters";
+        private const string XCFG_SV_STP = "DDSTP";
 
         // STD Tags
         private const string XCFG_STD = "StandardParts";

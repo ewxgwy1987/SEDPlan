@@ -162,7 +162,7 @@
             this.lb_DDV_DDID.Name = "lb_DDV_DDID";
             this.lb_DDV_DDID.Size = new System.Drawing.Size(55, 14);
             this.lb_DDV_DDID.TabIndex = 1;
-            this.lb_DDV_DDID.Text = "SA ID:";
+            this.lb_DDV_DDID.Text = "DD ID:";
             // 
             // btn_DDV_Import
             // 

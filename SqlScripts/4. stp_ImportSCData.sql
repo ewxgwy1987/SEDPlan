@@ -10,7 +10,7 @@ ALTER PROCEDURE dbo.stp_ImportSCData
 		  @RHS NVARCHAR(100),
 		  @PCE NVARCHAR(100),
 		  @VAR NVARCHAR(100),
-		  @WEIGHT NVARCHAR(100),
+		  @PARATYPE NVARCHAR(100),
 		  @PROCESS NVARCHAR(100),
 		  @REVISION NVARCHAR(100),
 		  @CRTIME NVARCHAR(100)
@@ -29,58 +29,44 @@ BEGIN
 		DECLARE @IsVariable BIT;
 		DECLARE @VAR_Type NVARCHAR(5);
 		DECLARE @IsStandard BIT;
-		DECLARE @Parts_Weight FLOAT;
+		DECLARE @Para_Type NVARCHAR(5) = @PARATYPE;
 		DECLARE @Process_ID BIGINT;
-		DECLARE @CREATED_TIME DATETIME;
-		DECLARE @NEW_REVISION INT;
+		DECLARE @CREATED_TIME DATETIME = CAST(@CRTIME AS datetime);
+		DECLARE @NEW_REVISION INT = CAST(@REVISION AS INT);
 
 		IF @VAR != ''
 		BEGIN
 			SET @IsVariable = 1;
 			SET @VAR_Type = @VAR;
 			SET @IsStandard = 0;
-			SET @Parts_Weight= 0;
+			--SET @Parts_Weight= 0;
 		END
 		ELSE
 		BEGIN
-			SET @IsVariable= 0;
+			SET @IsVariable = 0;
 			SET @VAR_Type = '';
 
-			IF @WEIGHT='' OR CAST(@WEIGHT AS FLOAT) < 0
-			BEGIN
-				SET @IsStandard = 1;
-				SET @Parts_Weight = 0;
-			END
-			ELSE
-			BEGIN
+			
+			-- if it is not fixed weight, then set isStandard to be 0
+			IF EXISTS(SELECT * FROM DD_Variable_Map DDM WHERE DDM.DD_ID = @Specification AND DDM.VAR_Type = 'F')
 				SET @IsStandard = 0;
-				SET @Parts_Weight = @WEIGHT;
-			END
+			ELSE
+				SET @IsStandard = 1;
+			--SET @Parts_Weight = @WEIGHT;
+
 		END
 
 		SELECT @Process_ID = Process_ID
 		FROM SA_Process SAP
 		WHERE SAP.Process_Name = @PROCESS;
 
-		--SET @CREATED_TIME = GETDATE();
-
-		--SELECT @NEW_REVISION = MAX(Revision)
-		--FROM SA_Component SC
-		--WHERE SC.SA_ID=@SAID AND SC.Parts_Name=@PARTSNAME AND SC.Specification=@SPEC;
-
-		--IF @NEW_REVISION IS NULL
-		--	SET @NEW_REVISION = 0;
-		--ELSE
-		--	SET @NEW_REVISION = @NEW_REVISION + 1;
-		SET @NEW_REVISION = CAST(@REVISION AS INT);
-		SET @CREATED_TIME = CAST(@CRTIME AS datetime);
 
 		INSERT INTO SA_Component
 		(SA_ID,Parts_Name,Specification,LHS,RHS,PCE,IsVariable,
-		VAR_Type,IsStandard,Parts_Weight,Process_ID,Revision,Created_Time)
+		VAR_Type,IsStandard,Para_Type,Process_ID,Revision,Created_Time)
 		VALUES 
 		(@SA_ID,@Parts_Name,@Specification,@LHS_INT,@RHS_INT,@PCE_INT,@IsVariable,
-		@VAR_Type,@IsStandard,@Parts_Weight,@Process_ID,@NEW_REVISION,@CREATED_TIME);
+		@VAR_Type,@IsStandard,@Para_Type,@Process_ID,@NEW_REVISION,@CREATED_TIME);
 
 	END TRY
 	BEGIN CATCH

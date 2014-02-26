@@ -38,15 +38,18 @@ select max(Revision) as MAXREV from SA_Variable_Map where SA_ID='SA-Test1';
 DECLARE @PlanName NVARCHAR(100)='TEST-BP1';
 DECLARE @SAID NVARCHAR(100)='B21-60-001';
 DECLARE @Quantity NVARCHAR(100)='100'
-DECLARE @L_para NVARCHAR(100)='';
-DECLARE @LS_para NVARCHAR(100)='';
-DECLARE @A_para NVARCHAR(100)='24';
+DECLARE @PARAS NVARCHAR(100) = ',,,,';--'L,LS,A,TB,H'
+--DECLARE @L_para NVARCHAR(100)='';
+--DECLARE @LS_para NVARCHAR(100)='';
+--DECLARE @A_para NVARCHAR(100)='24';
 DECLARE @Revision NVARCHAR(100)='0';
 DECLARE @CRTIME NVARCHAR(100)=GETDATE();
 
-EXEC stp_ImportBPData @PlanName,@SAID,@Quantity,@L_para,@LS_para,@A_para,@Revision,@CRTIME;
+EXEC stp_ImportBPData2 @PlanName,@SAID,@Quantity,@PARAS,@Revision,@CRTIME;
+--EXEC stp_ImportBPData @PlanName,@SAID,@Quantity,@L_para,@LS_para,@A_para,@Revision,@CRTIME;
 
 SELECT * FROM BOM_Plan;
+DELETE FROM BOM_PLAN;
 
 SELECT dbo.FUN_VAR_EXISTS('IS1-60-001','L','10');
 
@@ -72,3 +75,11 @@ TRUNCATE TABLE SA_Component;
 TRUNCATE TABLE SA_Variable_Map;
 TRUNCATE TABLE STD_Parts;
 TRUNCATE TABLE BOM_Plan;
+drop database SEDPLAN;
+
+
+SELECT * INTO #TEST
+FROM DBO.RPT_GETPARAMETERS('10,20,,TS,,') 
+
+SELECT * FROM #TEST;
+DROP TABLE #TEST;

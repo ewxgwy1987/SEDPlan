@@ -159,13 +159,15 @@ namespace SEDPlan
                 xlsimport.OnErrorHappened += new EventHandler<ErrorEventArgs>(ExcelView_OnError);
 
                 // test
-                this.cmbx_SC_SAID.Text = "SA-Test1"; // SA-Test2 SA-Test3
-                this.tbx_SC_FPath.Text = "../../../excel/Bill Of Material dated 14102013.xls";
-
-                this.tbx_DDV_SAID.Text = "SA-Test1";
+                this.tbx_DDV_SAID.Text = "MS01-17-301";
                 this.tbx_DDV_FPath.Text = "../../../excel/Values Chart for Variables A degrees_ L and LS dated 08112013.xls";
 
                 this.tbx_STD_FPath.Text = "../../../excel/Standard Parts.xlsx";
+
+                this.tbx_FW_FPath.Text = "../../../excel/Detail Design Fixed Weight.xlsx"
+
+                this.cmbx_SC_SAID.Text = "SA-Test1"; // SA-Test2 SA-Test3
+                this.tbx_SC_FPath.Text = "../../../excel/Bill Of Material dated 14102013.xls";
 
                 this.tbx_BP_PlanName.Text = "BOMPlanTest";
                 this.tbx_BP_FPath.Text = "../../../excel/BomPlan.xlsx";

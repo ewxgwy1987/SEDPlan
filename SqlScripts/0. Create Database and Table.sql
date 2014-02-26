@@ -15,16 +15,29 @@ INSERT INTO SA_Process VALUES (1003,'FOR FABRICATION');
 INSERT INTO SA_Process VALUES (1004,'FOR ASSEMBLY');
 INSERT INTO SA_Process VALUES (1005,'FOR SITE JOINT');
 
-CREATE TABLE SA_Variable_Map
+--drop table SA_Variable_Map
+CREATE TABLE DD_Variable_Map
 (
-	SA_ID NVARCHAR(50),
-	VAR_Type NVARCHAR(5), --The type of variable: A L LS
+	DD_ID NVARCHAR(50),
+	--The type of variable: A for angle degree, L for length, LS for length ??, F for Fix
+	VAR_Type NVARCHAR(5),
 	VAR_Value NVARCHAR(50),
 	VAR_Weight FLOAT,
 	Revision int,
 	Created_Time Datetime,
 	timestamp,
-	CONSTRAINT PK_SA_Variable_Map PRIMARY KEY (SA_ID,VAR_TYPE,VAR_VALUE,Revision)
+	CONSTRAINT PK_SA_Variable_Map PRIMARY KEY (DD_ID,VAR_TYPE,VAR_VALUE,Revision)
+);
+
+CREATE TABLE STD_Parts
+(
+	Parts_Name NVARCHAR(100),
+	Specification NVARCHAR(100),
+	STD_Weight FLOAT,
+	Revision int,
+	Created_Time Datetime,
+	timestamp,
+	CONSTRAINT PK_STD_Parts PRIMARY KEY (Parts_Name, Specification,Revision)
 );
 
 --DROP TABLE SA_Component;
@@ -37,9 +50,9 @@ CREATE TABLE SA_Component
 	RHS INT,
 	PCE INT,
 	IsVariable BIT, -- Inidcate whether this part has a variable
-	VAR_Type NVARCHAR(5),
+	VAR_Type NVARCHAR(5),--The type of variable: A for angle degree, L for length, LS for length ??
 	IsStandard BIT, -- Inidate whether this part is a standard part
-	Parts_Weight FLOAT,
+	Para_Type NVARCHAR(5), -- The type of parameter: TB and H
 	Process_ID BIGINT,
 	Revision int,
 	Created_Time Datetime,
@@ -51,6 +64,18 @@ CREATE TABLE SA_Component
 	CONSTRAINT CHK_SA_Component_PARTS CHECK (DBO.FUN_STD_EXISTS(Parts_Name,Specification,IsStandard)=CAST(1 AS BIT))
 );
 
+CREATE TABLE DD_TYPES
+(
+	SA_ID NVARCHAR(50),
+	Parts_Name NVARCHAR(100),
+	Para_Type NVARCHAR(5),
+	Para_Value NVARCHAR(50),
+	DD_ID NVARCHAR(50),
+	Revision int,
+	Created_Time Datetime,
+	timestamp,
+	CONSTRAINT PK_DD_TYPES PRIMARY KEY (SA_ID, Parts_Name, Para_Type, Para_Value, Revision)
+);
 
 --DROP TABLE BOM_Plan;
 CREATE TABLE BOM_Plan
@@ -66,21 +91,11 @@ CREATE TABLE BOM_Plan
 	timestamp,
 	CONSTRAINT PK_BOM_Plan PRIMARY KEY (Plan_Name, SA_ID, VAR_Type, VAR_Value,Revision),
 	--CONSTRAINT FK_BOM_Plan FOREIGN KEY (SA_ID,VAR_TYPE,VAR_VALUE) REFERENCES SA_VAR_CURRENT(SA_ID,VAR_TYPE,VAR_VALUE),
-	CONSTRAINT CHK_BOM_Plan_SAID CHECK (DBO.FUN_BP_SAID_EXISTS(SA_ID)=CAST(1 AS BIT)),
-	CONSTRAINT CHK_BOM_Plan_VAR CHECK (DBO.FUN_BP_VAR_EXISTS(SA_ID,VAR_Type,VAR_Value)=CAST(1 AS BIT)),
+	--CONSTRAINT CHK_BOM_Plan_SAID CHECK (DBO.FUN_BP_SAID_EXISTS(SA_ID)=CAST(1 AS BIT)),
+	--CONSTRAINT CHK_BOM_Plan_VAR CHECK (DBO.FUN_BP_VAR_EXISTS(SA_ID,VAR_Type,VAR_Value)=CAST(1 AS BIT)),
 );
 
-CREATE TABLE STD_Parts
-(
-	--STD_ImportName NVARCHAR(100),
-	Parts_Name NVARCHAR(100),
-	Specification NVARCHAR(100),
-	STD_Weight FLOAT,
-	Revision int,
-	Created_Time Datetime,
-	timestamp,
-	CONSTRAINT PK_STD_Parts PRIMARY KEY (Parts_Name, Specification,Revision)
-);
+
 
 
 CREATE TABLE BOM_Detail
@@ -101,8 +116,11 @@ CREATE TABLE BOM_Detail
 );
 
 DROP TABLE SA_Process;
-DROP TABLE SA_Variable_Map;
-DROP TABLE SA_Component;
-DROP TABLE BOM_Plan;
+DROP TABLE DD_Variable_Map;
 DROP TABLE STD_Parts;
+DROP TABLE SA_Component;
+DROP TABLE DD_TYPES;
+DROP TABLE BOM_Plan;
 DROP TABLE BOM_Detail;
+
+DROP DATABASE SEDPLAN;

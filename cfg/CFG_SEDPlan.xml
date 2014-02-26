@@ -42,28 +42,44 @@
   <sql-cmbx_SC_SAID>select distinct SA_ID from SA_Variable_Map</sql-cmbx_SC_SAID>
   <configSet name="SEDPlan.ExcelDataImport">
     <VariableType>L,LS,A°</VariableType>
-    <SAComponent>
-      <SCColumns>NAME,DESCRIPTION,LHS,RHS,PCE,VAR,WEIGHT (lbs/pce),REMARKS</SCColumns>
-      <SCParameters>SAID,PARTSNAME,SPEC,LHS,RHS,PCE,VAR,WEIGHT,PROCESS,REVISION,CRTIME</SCParameters>
-      <SCSTP>stp_ImportSCData</SCSTP>
-    </SAComponent>
-    
-    <SAVariable>
-      <SVColumns>L(Inches),LS(Inches),A(Degree),Weight(Ibs)</SVColumns>
-      <SVParameters>SAID,L_para,LS_para,A_para,Weight,Revision,CRTIME</SVParameters>
-      <SVSTP>stp_ImportSVData</SVSTP>
-    </SAVariable>
-    
-    <BOMPlan>
-      <BPColumns>SAID,Quantity,L,LS,A°</BPColumns>
-      <BPParameters>PlanName,SAID,Quantity,L_para,LS_para,A_para,Revision,CRTIME</BPParameters>
-      <BPSTP>stp_ImportBPData</BPSTP>
-    </BOMPlan>
-    
+
+    <DDVariable>
+      <DDColumns>L(Inches),LS(Inches),A(Degree),Weight(Ibs)</DDColumns>
+      <DDParameters>DDID,L_para,LS_para,A_para,Weight,Revision,CRTIME</DDParameters>
+      <DDSTP>stp_ImportDDVData</DDSTP>
+    </DDVariable>
+
     <StandardParts>
       <STDColumns>NAME,DESCRIPTION,WEIGHT (lbs/pce)</STDColumns>
       <STDParameters>PartsName,Spec,STDWeight,Revision,CRTIME</STDParameters>
       <STDSTP>stp_ImportSTDData</STDSTP>
     </StandardParts>
+
+    <FixedWeight>
+      <FWColumns>DD ID,WEIGHT (lbs/pce)</FWColumns>
+      <FWParameters>DDID,Weight,Revision,CRTIME</FWParameters>
+      <FWSTP>stp_ImportFWData</FWSTP>
+    </FixedWeight>
+
+    <DrawingDesingTypes>
+      <DDTColumns>NAME,Para Type,Para Value,DD ID</DDTColumns>
+      <DDTParameters>SAID,PARTSNAME,PARATYPE,PARAVALUE,DDID,REVISION,CRTIME</DDTParameters>
+      <DDTSTP>stp_ImportDDTData</DDTSTP>
+    </DrawingDesingTypes>
+    
+    <SAComponent>
+      <SCColumns>NAME,DESCRIPTION,LHS,RHS,PCE,VAR,Parameter,REMARKS</SCColumns>
+      <SCParameters>SAID,PARTSNAME,SPEC,LHS,RHS,PCE,VAR,PARATYPE,PROCESS,REVISION,CRTIME</SCParameters>
+      <SCSTP>stp_ImportSCData</SCSTP>
+    </SAComponent>
+
+    <BOMPlan>
+      <BPColumns>SAID,Quantity,L,LS,A°,TB,H</BPColumns>
+      <!--<BPParameters>PlanName,SAID,Quantity,L_para,LS_para,A_para,TB_para,H_para,Revision,CRTIME</BPParameters>-->
+      <BPParameters>PlanName,SAID,Quantity,paras,Revision,CRTIME</BPParameters>
+      <BPSTP>stp_ImportBPData</BPSTP>
+    </BOMPlan>
+    
+    
   </configSet>
 </configuration>

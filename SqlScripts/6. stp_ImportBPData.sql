@@ -6,9 +6,12 @@ ALTER PROCEDURE dbo.stp_ImportBPData
 		  @PlanName NVARCHAR(100),
 		  @SAID NVARCHAR(100),
 		  @Quantity NVARCHAR(100),
-		  @L_para NVARCHAR(100),
-		  @LS_para NVARCHAR(100),
-		  @A_para NVARCHAR(100),
+		  @PARAS NVARCHAR(MAX),
+		  --@L_para NVARCHAR(100),
+		  --@LS_para NVARCHAR(100),
+		  --@A_para NVARCHAR(100),
+		  --@TB_para NVARCHAR(100),
+		  --@H_para NVARCHAR(100),
 		  @Revision NVARCHAR(100),
 		  @CRTIME NVARCHAR(100)
 AS
@@ -26,6 +29,10 @@ BEGIN
 
 		DECLARE @MARK BIT = 0;
 
+		DECLARE @PARANAMES NVARCHAR(50) = 'L,LS,A,TB,H';
+		SELECT INTO 
+		
+
 		IF (@L_para IS NULL OR @L_para = '')
 		AND (@LS_para IS NULL OR @LS_para = '')
 		AND (@A_para IS NULL OR @A_para = '')
@@ -41,7 +48,7 @@ BEGIN
 			BEGIN
 				SET @IsMain = 0;
 			END
-			INSERT INTO BOM_Plan(Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,IsMain,Revision,Created_Time)
+			INSERT INTO BOM_Plan(Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,PARA_TB,PARA_H,IsMain,Revision,Created_Time)
 			VALUES(@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@IsMain,@NewRevision,@Created_Time);
 		END
 		ELSE
@@ -61,7 +68,7 @@ BEGIN
 					SET @IsMain = 0;
 				END
 
-				INSERT INTO BOM_Plan(Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,IsMain,Revision,Created_Time)
+				INSERT INTO BOM_Plan(Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,PARA_TB,PARA_H,IsMain,Revision,Created_Time)
 				VALUES(@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@IsMain,@NewRevision,@Created_Time);
 			END
 
@@ -80,7 +87,7 @@ BEGIN
 					SET @IsMain = 0;
 				END
 
-				INSERT INTO BOM_Plan(Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,IsMain,Revision,Created_Time)
+				INSERT INTO BOM_Plan(Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,PARA_TB,PARA_H,IsMain,Revision,Created_Time)
 				VALUES(@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@IsMain,@NewRevision,@Created_Time);
 			END
 
