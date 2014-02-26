@@ -38,8 +38,9 @@
       <level value="ALL" />
     </logger>
   </log4net>
+  <connectionString>User ID=sa;Pwd=DBAdm1n@BHS.irel;Initial Catalog=SEDPLAN;Data Source=SG10031CSD6782;Packet Size=4096</connectionString>
+  <sql-cmbx_SC_SAID>select distinct SA_ID from SA_Variable_Map</sql-cmbx_SC_SAID>
   <configSet name="SEDPlan.ExcelDataImport">
-    <connectionString>User ID=sa;Pwd=DBAdm1n@BHS.irel;Initial Catalog=SEDPLAN;Data Source=SG10031CSD6782;Packet Size=4096</connectionString>
     <VariableType>L,LS,A°</VariableType>
     <SAComponent>
       <SCColumns>NAME,DESCRIPTION,LHS,RHS,PCE,VAR,WEIGHT (lbs/pce),REMARKS</SCColumns>
@@ -50,18 +51,18 @@
     <SAVariable>
       <SVColumns>L(Inches),LS(Inches),A(Degree),Weight(Ibs)</SVColumns>
       <SVParameters>SAID,L_para,LS_para,A_para,Weight,Revision,CRTIME</SVParameters>
-      <SCSTP>stp_ImportSVData</SCSTP>
+      <SVSTP>stp_ImportSVData</SVSTP>
     </SAVariable>
     
     <BOMPlan>
       <BPColumns>SAID,Quantity,L,LS,A°</BPColumns>
-      <BPParameters>PlanName,SAID,Quantity,L_para,LS_para,A_para,Revision,Created_Time</BPParameters>
-      <BPSTP></BPSTP>
+      <BPParameters>PlanName,SAID,Quantity,L_para,LS_para,A_para,Revision,CRTIME</BPParameters>
+      <BPSTP>stp_ImportBPData</BPSTP>
     </BOMPlan>
     
     <StandardParts>
       <STDColumns>NAME,DESCRIPTION,WEIGHT (lbs/pce)</STDColumns>
-      <STDParameters>STDImportName,PartsName,Spec,STDWeight,Revision,Created_Time</STDParameters>
+      <STDParameters>PartsName,Spec,STDWeight,Revision,CRTIME</STDParameters>
       <STDSTP>stp_ImportSTDData</STDSTP>
     </StandardParts>
   </configSet>

@@ -2,7 +2,7 @@ GO
 USE [SEDPLAN];
 GO
 
-CREATE PROCEDURE dbo.stp_ImportBPData
+ALTER PROCEDURE dbo.stp_ImportBPData
 		  @PlanName NVARCHAR(100),
 		  @SAID NVARCHAR(100),
 		  @Quantity NVARCHAR(100),
@@ -13,39 +13,103 @@ CREATE PROCEDURE dbo.stp_ImportBPData
 		  @CRTIME NVARCHAR(100)
 AS
 BEGIN
-	DECLARE @Plan_Name NVARCHAR(100) = @PlanName;
-	DECLARE @SA_ID NVARCHAR(50) = @SAID;
-	DECLARE @VAR_Type NVARCHAR(5);
-	DECLARE @VAR_Value NVARCHAR(50);
-	DECLARE @Qty INT = CAST(@Quantity AS INT);
-	DECLARE @IsMain BIT = 0;
-	DECLARE @NewRevision INT = CAST(@Revision AS INT);
-	DECLARE @Created_Time Datetime = CAST(@CRTIME AS datetime);
+	BEGIN TRANSACTION;
+	BEGIN TRY
+		DECLARE @Plan_Name NVARCHAR(100) = @PlanName;
+		DECLARE @SA_ID NVARCHAR(50) = @SAID;
+		DECLARE @VAR_Type NVARCHAR(5);
+		DECLARE @VAR_Value NVARCHAR(50);
+		DECLARE @Qty INT = CAST(@Quantity AS INT);
+		DECLARE @IsMain BIT = 0;
+		DECLARE @NewRevision INT = CAST(@Revision AS INT);
+		DECLARE @Created_Time Datetime = CAST(@CRTIME AS datetime);
 
-	IF @L_para != ''
-	BEGIN
-		SET @VAR_Type = 'L';
-		SET @VAR_Value = @L_para;
-		IF @IsMain = 0
-			SET @IsMain = 1;
-		INSERT INTO SA_Variable_Map VALUES(@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@IsMain,@NewRevision,@Created_Time);
-	END
+		DECLARE @MARK BIT = 0;
 
-	IF @LS_para != ''
-	BEGIN
-		SET @VAR_Type = 'LS';
-		SET @VAR_Value = @LS_para;
-		IF @IsMain = 0
-			SET @IsMain = 1;
-		INSERT INTO SA_Variable_Map VALUES(@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@IsMain,@NewRevision,@Created_Time);
-	END
+		IF (@L_para IS NULL OR @L_para = '')
+		AND (@LS_para IS NULL OR @LS_para = '')
+		AND (@A_para IS NULL OR @A_para = '')
+		BEGIN
+			SET @VAR_Type = 'F';
+			SET @VAR_Value = '-';
+			IF @MARK = 0
+			BEGIN
+				SET @MARK = 1;
+				SET @IsMain = 1;
+			END
+			ELSE 
+			BEGIN
+				SET @IsMain = 0;
+			END
+			INSERT INTO BOM_Plan(Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,IsMain,Revision,Created_Time)
+			VALUES(@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@IsMain,@NewRevision,@Created_Time);
+		END
+		ELSE
+		BEGIN
+			IF @L_para != ''
+			BEGIN
+				SET @VAR_Type = 'L';
+				SET @VAR_Value = @L_para;
 
-	IF @A_para != ''
-	BEGIN
-		SET @VAR_Type = 'A¡ã';
-		SET @VAR_Value = @A_para;
-		IF @IsMain = 0
-			SET @IsMain = 1;
-		INSERT INTO SA_Variable_Map VALUES(@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@IsMain,@NewRevision,@Created_Time);
-	END
+				IF @MARK = 0
+				BEGIN
+					SET @MARK = 1;
+					SET @IsMain = 1;
+				END
+				ELSE 
+				BEGIN
+					SET @IsMain = 0;
+				END
+
+				INSERT INTO BOM_Plan(Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,IsMain,Revision,Created_Time)
+				VALUES(@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@IsMain,@NewRevision,@Created_Time);
+			END
+
+			IF @LS_para != ''
+			BEGIN
+				SET @VAR_Type = 'LS';
+				SET @VAR_Value = @LS_para;
+		
+				IF @MARK = 0
+				BEGIN
+					SET @MARK = 1;
+					SET @IsMain = 1;
+				END
+				ELSE 
+				BEGIN
+					SET @IsMain = 0;
+				END
+
+				INSERT INTO BOM_Plan(Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,IsMain,Revision,Created_Time)
+				VALUES(@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@IsMain,@NewRevision,@Created_Time);
+			END
+
+			IF @A_para != ''
+			BEGIN
+				SET @VAR_Type = 'A¡ã';
+				SET @VAR_Value = @A_para;
+		
+				IF @MARK = 0
+				BEGIN
+					SET @MARK = 1;
+					SET @IsMain = 1;
+				END
+				ELSE 
+				BEGIN
+					SET @IsMain = 0;
+				END
+
+				INSERT INTO BOM_Plan(Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,IsMain,Revision,Created_Time)
+				VALUES(@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@IsMain,@NewRevision,@Created_Time);
+			END
+		END
+	END TRY
+	BEGIN CATCH
+		IF @@TRANCOUNT>0
+			ROLLBACK TRANSACTION;
+		THROW
+	END CATCH;
+
+	IF @@TRANCOUNT>0
+		COMMIT TRANSACTION;
 END

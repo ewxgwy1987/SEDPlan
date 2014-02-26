@@ -102,9 +102,10 @@ namespace SEDPlan
 
         #region Constructor, Dispose, Finalize and Destructor
 
-        public ExcelDataImport(XmlNode xconfig)
+        public ExcelDataImport(XmlNode xconfig, string connstr)
         {
-            this.connstr = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xconfig, XCFG_CONNSTR, "");
+            //this.connstr = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xconfig, XCFG_CONNSTR, "");
+            this.connstr = connstr;
 
             string str_VARTYPE = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xconfig, XCFG_VARTYPE, "");
             this.Var_Types = str_VARTYPE.Split(',');
@@ -123,7 +124,7 @@ namespace SEDPlan
             this.SV_ColNames = str_SVCols.Split(',');
             string str_SVParas = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SV, XCFG_SV_PARAMETERS, "");
             this.SV_ParaNames = str_SVParas.Split(',');
-            this.SV_STPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SC, XCFG_SC_STP, "");
+            this.SV_STPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SV, XCFG_SV_STP, "");
 
             // Fetch BOM Plan configuration
             XmlNode xml_BP = PALS.Utilities.XMLConfig.GetConfigSetElement(ref xconfig, XCFG_BP);
@@ -148,6 +149,7 @@ namespace SEDPlan
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
             bool res = true;
+            this.showerrstr = "";
 
             try
             {
@@ -190,6 +192,11 @@ namespace SEDPlan
                 temp(this, new_errargs);
         }
 
+        private void CleanError()
+        {
+            this.showerrstr = "";
+        }
+
         public bool ImportData(string tabletype)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
@@ -206,7 +213,7 @@ namespace SEDPlan
                 sqlcmd = new SqlCommand();
                 sqlcmd.Connection = sqlconn;
 
-                int revision = this.getMaxRevision(this.sheetname, sqlcmd, tabletype);
+                int revision = this.getNewRevision(this.sheetname, sqlcmd, tabletype);
                 string crtime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
                 SqlTransaction sqltran = sqlconn.BeginTransaction();
@@ -317,8 +324,10 @@ namespace SEDPlan
                         if (dr.Table.Columns.Contains(vartype))
                         {
                             if (dr[vartype] != null && ((string)dr[vartype]) != "")
+                            {
                                 paras[i] = ((string)dr[vartype]).Trim();
-                            break;
+                                break;
+                            }
                         }
                     }
                 }
@@ -341,7 +350,7 @@ namespace SEDPlan
             foreach (string colname in this.SV_ColNames)
             {
                 paras[i] = "";
-                if (dr[colname] != null)
+                if (dr.Table.Columns.Contains(colname))
                     paras[i] = ((string)dr[colname]).Trim();
                 i++;
             }
@@ -352,9 +361,10 @@ namespace SEDPlan
 
         private string[] AnalyzeDataRow_STD(DataRow dr, string revision, string created_time)
         {
-            string[] paras = new string[this.STD_ColNames.Length + 3];
-            paras[0] = this.sheetname.Trim();
-            int i = 1;
+            string[] paras = new string[this.STD_ColNames.Length + 2];
+            //paras[0] = this.sheetname.Trim();
+
+            int i = 0;
             foreach (string colname in this.STD_ColNames)
             {
                 paras[i] = "";
@@ -396,41 +406,48 @@ namespace SEDPlan
                 if (sqlcmd.Parameters.Count > 0)
                     sqlcmd.Parameters.Clear();
                 SqlParameter[] sPararameter = new SqlParameter[paras.Length];
-                int i;
-                for (i = 0; i < paras.Length; i++)
-                {
-                    sPararameter[i] = new SqlParameter("@" + this.SC_ParaNames[i], SqlDbType.NVarChar, 100);
-                    sPararameter[i].Direction = ParameterDirection.Input;
-                    sPararameter[i].Value = paras[i];
-                    sqlcmd.Parameters.Add(sPararameter[i]);
-                }
+                string[] paranames;
 
                 switch (tabletype)
                 {
                     case TP_SC:
+                        paranames = this.SC_ParaNames;
                         sqlcmd.CommandText = SC_STPName;
                         break;
                     case TP_SV:
+                        paranames = this.SV_ParaNames;
                         sqlcmd.CommandText = SV_STPName;
                         break;
                     case TP_STD:
+                        paranames = this.STD_ParaNames;
                         sqlcmd.CommandText = STD_STPName;
                         break;
                     case TP_BP:
+                        paranames = this.BP_ParaNames;
                         sqlcmd.CommandText = BP_STPName;
                         break;
                     default:
+                        paranames = null;
                         sqlcmd.CommandText = "";
                         break;
                 }
-                
-                if(sqlcmd.CommandText == "")
+
+                if (sqlcmd.CommandText == "" || paranames == null)
                 {
                     showerrstr += "unknown excel type\n";
                     errstr += showerrstr;
                     _logger.Error(errstr);
                     ShowError(showerrstr);
                     return false;
+                }
+
+                int i;
+                for (i = 0; i < paras.Length; i++)
+                {
+                    sPararameter[i] = new SqlParameter("@" + paranames[i], SqlDbType.NVarChar, 100);
+                    sPararameter[i].Direction = ParameterDirection.Input;
+                    sPararameter[i].Value = paras[i];
+                    sqlcmd.Parameters.Add(sPararameter[i]);
                 }
 
                 sqlcmd.CommandType = CommandType.StoredProcedure;
@@ -451,7 +468,7 @@ namespace SEDPlan
             return res;
         }
 
-        private int getMaxRevision(string sheetname, SqlCommand sqlcmd, string tabletype)
+        private int getNewRevision(string sheetname, SqlCommand sqlcmd, string tabletype)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
@@ -468,7 +485,8 @@ namespace SEDPlan
                         sqlstr = "select max(Revision) as MAXREV from SA_Variable_Map where SA_ID='" + sheetname + "';";
                         break;
                     case TP_STD:
-                        sqlstr = "select max(Revision) as MAXREV from STD_Parts where STD_ImportName='" + sheetname + "';";
+                        //sqlstr = "select max(Revision) as MAXREV from STD_Parts where STD_ImportName='" + sheetname + "';";
+                        sqlstr = "select max(Revision) as MAXREV from STD_Parts;";
                         break;
                     case TP_BP:
                         sqlstr = "select max(Revision) as MAXREV from BOM_Plan where Plan_Name='" + sheetname + "';";
@@ -492,7 +510,7 @@ namespace SEDPlan
                         if (dt_loc.Rows[0][0] == DBNull.Value)
                             return 0;
                         else
-                            return (int)dt_loc.Rows[0][0];
+                            return ((int)dt_loc.Rows[0][0]) + 1;
                     }
                     else
                         return 0;

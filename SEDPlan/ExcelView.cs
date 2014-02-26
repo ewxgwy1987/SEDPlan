@@ -230,10 +230,17 @@ namespace SEDPlan
                     this.m_xlsapp = null;
                 }
 
-                //this.m_DataRange.Clear();
-                this.m_DataRange = null;
-                this.m_dtImportData.Dispose();
-                this.m_dtImportData = null;
+                if (this.m_DataRange != null)
+                {
+                    //this.m_DataRange.Clear();
+                    this.m_DataRange = null;
+                }
+
+                if (this.m_dtImportData != null)
+                {
+                    this.m_dtImportData.Dispose();
+                    this.m_dtImportData = null;
+                }
                 _logger.Info("SEDPlan Quit!");
             }
             catch (Exception exp)
@@ -249,6 +256,31 @@ namespace SEDPlan
             if (this.m_dtImportData != null)
             {
                 this.m_dtImportData.Clear();
+                this.m_dtImportData = null;
+            }
+
+            if (this.m_xlswbk != null)
+            {
+                this.m_xlswbk.Close();
+
+                this.m_xlswbk = null;
+            }
+
+            if (this.m_xlsapp != null)
+            {
+                this.m_xlsapp.Quit();
+                this.m_xlsapp = null;
+            }
+
+            if (this.m_DataRange != null)
+            {
+                //this.m_DataRange.Clear();
+                this.m_DataRange = null;
+            }
+
+            if (this.m_dtImportData != null)
+            {
+                this.m_dtImportData.Dispose();
                 this.m_dtImportData = null;
             }
         }
