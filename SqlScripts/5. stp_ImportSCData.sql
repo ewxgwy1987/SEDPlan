@@ -44,15 +44,21 @@ BEGIN
 		ELSE
 		BEGIN
 			SET @IsVariable = 0;
-			SET @VAR_Type = '';
+			SET @VAR_Type = 'F';
 
-			
-			-- if it is not fixed weight, then set isStandard to be 0
-			IF EXISTS(SELECT * FROM DD_Variable_Map DDM WHERE DDM.DD_ID = @Specification AND DDM.VAR_Type = 'F')
+			IF @Para_Type != ''
+			BEGIN
 				SET @IsStandard = 0;
+			END
 			ELSE
-				SET @IsStandard = 1;
-			--SET @Parts_Weight = @WEIGHT;
+			BEGIN
+				-- if it is not fixed weight, then set isStandard to be 0
+				IF EXISTS(SELECT * FROM DD_Variable_Map DDV WHERE DDV.DD_ID = @Specification AND DDV.VAR_Type = 'F')
+					SET @IsStandard = 0;
+				ELSE
+					SET @IsStandard = 1;
+				--SET @Parts_Weight = @WEIGHT;
+			END
 
 		END
 
@@ -60,6 +66,8 @@ BEGIN
 		FROM SA_Process SAP
 		WHERE SAP.Process_Name = @PROCESS;
 
+		--print @SA_ID + ' ' + @Parts_Name + ' ' + @Specification + ' ' + @LHS_INT + ' ' + @RHS_INT + ' ' + @PCE_INT + ' ' + @IsVariable
+		-- + ' ' + @VAR_Type + ' ' + @IsStandard + ' ' + @Para_Type + ' ' + @Process_ID + ' ' + @NEW_REVISION + ' ' + @CREATED_TIME;
 
 		INSERT INTO SA_Component
 		(SA_ID,Parts_Name,Specification,LHS,RHS,PCE,IsVariable,

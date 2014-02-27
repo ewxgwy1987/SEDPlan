@@ -53,15 +53,6 @@
             this.btn_FW_View = new System.Windows.Forms.Button();
             this.lb_FW_FPath = new System.Windows.Forms.Label();
             this.tbx_FW_FPath = new System.Windows.Forms.TextBox();
-            this.tabSACmpn = new System.Windows.Forms.TabPage();
-            this.pnlSACmpn = new System.Windows.Forms.Panel();
-            this.cmbx_SC_SAID = new System.Windows.Forms.ComboBox();
-            this.btn_SC_Open = new System.Windows.Forms.Button();
-            this.lb_SC_SAID = new System.Windows.Forms.Label();
-            this.btn_SC_Import = new System.Windows.Forms.Button();
-            this.btn_SC_View = new System.Windows.Forms.Button();
-            this.lb_SC_FPath = new System.Windows.Forms.Label();
-            this.tbx_SC_FPath = new System.Windows.Forms.TextBox();
             this.tabDDTypes = new System.Windows.Forms.TabPage();
             this.pnlDDTypes = new System.Windows.Forms.Panel();
             this.cmbx_DDT_SAID = new System.Windows.Forms.ComboBox();
@@ -71,6 +62,15 @@
             this.btn_DDT_View = new System.Windows.Forms.Button();
             this.lb_DDT_FPath = new System.Windows.Forms.Label();
             this.tbx_DDT_FPath = new System.Windows.Forms.TextBox();
+            this.tabSACmpn = new System.Windows.Forms.TabPage();
+            this.pnlSACmpn = new System.Windows.Forms.Panel();
+            this.cmbx_SC_SAID = new System.Windows.Forms.ComboBox();
+            this.btn_SC_Open = new System.Windows.Forms.Button();
+            this.lb_SC_SAID = new System.Windows.Forms.Label();
+            this.btn_SC_Import = new System.Windows.Forms.Button();
+            this.btn_SC_View = new System.Windows.Forms.Button();
+            this.lb_SC_FPath = new System.Windows.Forms.Label();
+            this.tbx_SC_FPath = new System.Windows.Forms.TextBox();
             this.tabBOMPlan = new System.Windows.Forms.TabPage();
             this.pnlBOMPlan = new System.Windows.Forms.Panel();
             this.btn_BP_Open = new System.Windows.Forms.Button();
@@ -94,10 +94,10 @@
             this.pnlSTDParts.SuspendLayout();
             this.tabFixedWeight.SuspendLayout();
             this.pnlFixedWeight.SuspendLayout();
-            this.tabSACmpn.SuspendLayout();
-            this.pnlSACmpn.SuspendLayout();
             this.tabDDTypes.SuspendLayout();
             this.pnlDDTypes.SuspendLayout();
+            this.tabSACmpn.SuspendLayout();
+            this.pnlSACmpn.SuspendLayout();
             this.tabBOMPlan.SuspendLayout();
             this.pnlBOMPlan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sAComponentBindingSource)).BeginInit();
@@ -110,8 +110,8 @@
             this.ImportTabs.Controls.Add(this.tabDDVar);
             this.ImportTabs.Controls.Add(this.tabSTDParts);
             this.ImportTabs.Controls.Add(this.tabFixedWeight);
-            this.ImportTabs.Controls.Add(this.tabSACmpn);
             this.ImportTabs.Controls.Add(this.tabDDTypes);
+            this.ImportTabs.Controls.Add(this.tabSACmpn);
             this.ImportTabs.Controls.Add(this.tabBOMPlan);
             this.ImportTabs.Location = new System.Drawing.Point(0, 35);
             this.ImportTabs.Name = "ImportTabs";
@@ -152,7 +152,7 @@
             this.btn_DDV_Open.TabIndex = 8;
             this.btn_DDV_Open.Text = "Open";
             this.btn_DDV_Open.UseVisualStyleBackColor = true;
-            this.btn_DDV_Open.Click += new System.EventHandler(this.btn_SV_Open_Click);
+            this.btn_DDV_Open.Click += new System.EventHandler(this.btn_DDV_Open_Click);
             // 
             // lb_DDV_DDID
             // 
@@ -189,7 +189,7 @@
             this.btn_DDV_View.TabIndex = 5;
             this.btn_DDV_View.Text = "View";
             this.btn_DDV_View.UseVisualStyleBackColor = true;
-            this.btn_DDV_View.Click += new System.EventHandler(this.btn_SV_View_Click);
+            this.btn_DDV_View.Click += new System.EventHandler(this.btn_DDV_View_Click);
             // 
             // lb_DDV_FPath
             // 
@@ -309,6 +309,7 @@
             this.btn_FW_Open.TabIndex = 8;
             this.btn_FW_Open.Text = "Open";
             this.btn_FW_Open.UseVisualStyleBackColor = true;
+            this.btn_FW_Open.Click += new System.EventHandler(this.btn_FW_Open_Click);
             // 
             // btn_FW_Import
             // 
@@ -318,6 +319,7 @@
             this.btn_FW_Import.TabIndex = 6;
             this.btn_FW_Import.Text = "Import";
             this.btn_FW_Import.UseVisualStyleBackColor = true;
+            this.btn_FW_Import.Click += new System.EventHandler(this.btn_FW_Import_Click);
             // 
             // btn_FW_View
             // 
@@ -327,6 +329,7 @@
             this.btn_FW_View.TabIndex = 5;
             this.btn_FW_View.Text = "View";
             this.btn_FW_View.UseVisualStyleBackColor = true;
+            this.btn_FW_View.Click += new System.EventHandler(this.btn_FW_View_Click);
             // 
             // lb_FW_FPath
             // 
@@ -344,6 +347,96 @@
             this.tbx_FW_FPath.Name = "tbx_FW_FPath";
             this.tbx_FW_FPath.Size = new System.Drawing.Size(480, 20);
             this.tbx_FW_FPath.TabIndex = 4;
+            // 
+            // tabDDTypes
+            // 
+            this.tabDDTypes.Controls.Add(this.pnlDDTypes);
+            this.tabDDTypes.Location = new System.Drawing.Point(4, 22);
+            this.tabDDTypes.Name = "tabDDTypes";
+            this.tabDDTypes.Padding = new System.Windows.Forms.Padding(3);
+            this.tabDDTypes.Size = new System.Drawing.Size(754, 292);
+            this.tabDDTypes.TabIndex = 6;
+            this.tabDDTypes.Text = "Detail Drawing Types";
+            this.tabDDTypes.UseVisualStyleBackColor = true;
+            // 
+            // pnlDDTypes
+            // 
+            this.pnlDDTypes.Controls.Add(this.cmbx_DDT_SAID);
+            this.pnlDDTypes.Controls.Add(this.btn_DDT_Open);
+            this.pnlDDTypes.Controls.Add(this.lb_DDT_SAID);
+            this.pnlDDTypes.Controls.Add(this.btn_DDT_Import);
+            this.pnlDDTypes.Controls.Add(this.btn_DDT_View);
+            this.pnlDDTypes.Controls.Add(this.lb_DDT_FPath);
+            this.pnlDDTypes.Controls.Add(this.tbx_DDT_FPath);
+            this.pnlDDTypes.Location = new System.Drawing.Point(0, 3);
+            this.pnlDDTypes.Name = "pnlDDTypes";
+            this.pnlDDTypes.Size = new System.Drawing.Size(765, 298);
+            this.pnlDDTypes.TabIndex = 8;
+            // 
+            // cmbx_DDT_SAID
+            // 
+            this.cmbx_DDT_SAID.FormattingEnabled = true;
+            this.cmbx_DDT_SAID.Location = new System.Drawing.Point(112, 28);
+            this.cmbx_DDT_SAID.Name = "cmbx_DDT_SAID";
+            this.cmbx_DDT_SAID.Size = new System.Drawing.Size(121, 21);
+            this.cmbx_DDT_SAID.TabIndex = 10;
+            // 
+            // btn_DDT_Open
+            // 
+            this.btn_DDT_Open.Location = new System.Drawing.Point(598, 90);
+            this.btn_DDT_Open.Name = "btn_DDT_Open";
+            this.btn_DDT_Open.Size = new System.Drawing.Size(75, 25);
+            this.btn_DDT_Open.TabIndex = 7;
+            this.btn_DDT_Open.Text = "Open";
+            this.btn_DDT_Open.UseVisualStyleBackColor = true;
+            this.btn_DDT_Open.Click += new System.EventHandler(this.btn_DDT_Open_Click);
+            // 
+            // lb_DDT_SAID
+            // 
+            this.lb_DDT_SAID.AutoSize = true;
+            this.lb_DDT_SAID.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_DDT_SAID.Location = new System.Drawing.Point(19, 28);
+            this.lb_DDT_SAID.Name = "lb_DDT_SAID";
+            this.lb_DDT_SAID.Size = new System.Drawing.Size(55, 14);
+            this.lb_DDT_SAID.TabIndex = 1;
+            this.lb_DDT_SAID.Text = "SA ID:";
+            // 
+            // btn_DDT_Import
+            // 
+            this.btn_DDT_Import.Location = new System.Drawing.Point(136, 191);
+            this.btn_DDT_Import.Name = "btn_DDT_Import";
+            this.btn_DDT_Import.Size = new System.Drawing.Size(100, 27);
+            this.btn_DDT_Import.TabIndex = 6;
+            this.btn_DDT_Import.Text = "Import";
+            this.btn_DDT_Import.UseVisualStyleBackColor = true;
+            this.btn_DDT_Import.Click += new System.EventHandler(this.btn_DDT_Import_Click);
+            // 
+            // btn_DDT_View
+            // 
+            this.btn_DDT_View.Location = new System.Drawing.Point(22, 191);
+            this.btn_DDT_View.Name = "btn_DDT_View";
+            this.btn_DDT_View.Size = new System.Drawing.Size(100, 27);
+            this.btn_DDT_View.TabIndex = 5;
+            this.btn_DDT_View.Text = "View";
+            this.btn_DDT_View.UseVisualStyleBackColor = true;
+            this.btn_DDT_View.Click += new System.EventHandler(this.btn_DDT_View_Click);
+            // 
+            // lb_DDT_FPath
+            // 
+            this.lb_DDT_FPath.AutoSize = true;
+            this.lb_DDT_FPath.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_DDT_FPath.Location = new System.Drawing.Point(19, 92);
+            this.lb_DDT_FPath.Name = "lb_DDT_FPath";
+            this.lb_DDT_FPath.Size = new System.Drawing.Size(87, 14);
+            this.lb_DDT_FPath.TabIndex = 3;
+            this.lb_DDT_FPath.Text = "File Path:";
+            // 
+            // tbx_DDT_FPath
+            // 
+            this.tbx_DDT_FPath.Location = new System.Drawing.Point(112, 90);
+            this.tbx_DDT_FPath.Name = "tbx_DDT_FPath";
+            this.tbx_DDT_FPath.Size = new System.Drawing.Size(480, 20);
+            this.tbx_DDT_FPath.TabIndex = 4;
             // 
             // tabSACmpn
             // 
@@ -435,93 +528,6 @@
             this.tbx_SC_FPath.Name = "tbx_SC_FPath";
             this.tbx_SC_FPath.Size = new System.Drawing.Size(480, 20);
             this.tbx_SC_FPath.TabIndex = 4;
-            // 
-            // tabDDTypes
-            // 
-            this.tabDDTypes.Controls.Add(this.pnlDDTypes);
-            this.tabDDTypes.Location = new System.Drawing.Point(4, 22);
-            this.tabDDTypes.Name = "tabDDTypes";
-            this.tabDDTypes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDDTypes.Size = new System.Drawing.Size(754, 292);
-            this.tabDDTypes.TabIndex = 6;
-            this.tabDDTypes.Text = "Detail Drawing Types";
-            this.tabDDTypes.UseVisualStyleBackColor = true;
-            // 
-            // pnlDDTypes
-            // 
-            this.pnlDDTypes.Controls.Add(this.cmbx_DDT_SAID);
-            this.pnlDDTypes.Controls.Add(this.btn_DDT_Open);
-            this.pnlDDTypes.Controls.Add(this.lb_DDT_SAID);
-            this.pnlDDTypes.Controls.Add(this.btn_DDT_Import);
-            this.pnlDDTypes.Controls.Add(this.btn_DDT_View);
-            this.pnlDDTypes.Controls.Add(this.lb_DDT_FPath);
-            this.pnlDDTypes.Controls.Add(this.tbx_DDT_FPath);
-            this.pnlDDTypes.Location = new System.Drawing.Point(0, 3);
-            this.pnlDDTypes.Name = "pnlDDTypes";
-            this.pnlDDTypes.Size = new System.Drawing.Size(765, 298);
-            this.pnlDDTypes.TabIndex = 8;
-            // 
-            // cmbx_DDT_SAID
-            // 
-            this.cmbx_DDT_SAID.FormattingEnabled = true;
-            this.cmbx_DDT_SAID.Location = new System.Drawing.Point(112, 28);
-            this.cmbx_DDT_SAID.Name = "cmbx_DDT_SAID";
-            this.cmbx_DDT_SAID.Size = new System.Drawing.Size(121, 21);
-            this.cmbx_DDT_SAID.TabIndex = 10;
-            // 
-            // btn_DDT_Open
-            // 
-            this.btn_DDT_Open.Location = new System.Drawing.Point(598, 90);
-            this.btn_DDT_Open.Name = "btn_DDT_Open";
-            this.btn_DDT_Open.Size = new System.Drawing.Size(75, 25);
-            this.btn_DDT_Open.TabIndex = 7;
-            this.btn_DDT_Open.Text = "Open";
-            this.btn_DDT_Open.UseVisualStyleBackColor = true;
-            // 
-            // lb_DDT_SAID
-            // 
-            this.lb_DDT_SAID.AutoSize = true;
-            this.lb_DDT_SAID.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lb_DDT_SAID.Location = new System.Drawing.Point(19, 28);
-            this.lb_DDT_SAID.Name = "lb_DDT_SAID";
-            this.lb_DDT_SAID.Size = new System.Drawing.Size(55, 14);
-            this.lb_DDT_SAID.TabIndex = 1;
-            this.lb_DDT_SAID.Text = "SA ID:";
-            // 
-            // btn_DDT_Import
-            // 
-            this.btn_DDT_Import.Location = new System.Drawing.Point(136, 191);
-            this.btn_DDT_Import.Name = "btn_DDT_Import";
-            this.btn_DDT_Import.Size = new System.Drawing.Size(100, 27);
-            this.btn_DDT_Import.TabIndex = 6;
-            this.btn_DDT_Import.Text = "Import";
-            this.btn_DDT_Import.UseVisualStyleBackColor = true;
-            // 
-            // btn_DDT_View
-            // 
-            this.btn_DDT_View.Location = new System.Drawing.Point(22, 191);
-            this.btn_DDT_View.Name = "btn_DDT_View";
-            this.btn_DDT_View.Size = new System.Drawing.Size(100, 27);
-            this.btn_DDT_View.TabIndex = 5;
-            this.btn_DDT_View.Text = "View";
-            this.btn_DDT_View.UseVisualStyleBackColor = true;
-            // 
-            // lb_DDT_FPath
-            // 
-            this.lb_DDT_FPath.AutoSize = true;
-            this.lb_DDT_FPath.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lb_DDT_FPath.Location = new System.Drawing.Point(19, 92);
-            this.lb_DDT_FPath.Name = "lb_DDT_FPath";
-            this.lb_DDT_FPath.Size = new System.Drawing.Size(87, 14);
-            this.lb_DDT_FPath.TabIndex = 3;
-            this.lb_DDT_FPath.Text = "File Path:";
-            // 
-            // tbx_DDT_FPath
-            // 
-            this.tbx_DDT_FPath.Location = new System.Drawing.Point(112, 90);
-            this.tbx_DDT_FPath.Name = "tbx_DDT_FPath";
-            this.tbx_DDT_FPath.Size = new System.Drawing.Size(480, 20);
-            this.tbx_DDT_FPath.TabIndex = 4;
             // 
             // tabBOMPlan
             // 
@@ -678,12 +684,12 @@
             this.tabFixedWeight.ResumeLayout(false);
             this.pnlFixedWeight.ResumeLayout(false);
             this.pnlFixedWeight.PerformLayout();
-            this.tabSACmpn.ResumeLayout(false);
-            this.pnlSACmpn.ResumeLayout(false);
-            this.pnlSACmpn.PerformLayout();
             this.tabDDTypes.ResumeLayout(false);
             this.pnlDDTypes.ResumeLayout(false);
             this.pnlDDTypes.PerformLayout();
+            this.tabSACmpn.ResumeLayout(false);
+            this.pnlSACmpn.ResumeLayout(false);
+            this.pnlSACmpn.PerformLayout();
             this.tabBOMPlan.ResumeLayout(false);
             this.pnlBOMPlan.ResumeLayout(false);
             this.pnlBOMPlan.PerformLayout();

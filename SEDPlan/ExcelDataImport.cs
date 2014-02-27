@@ -21,17 +21,13 @@ namespace SEDPlan
         private const string XCFG_CONNSTR = "connectionString";
         private const string XCFG_VARTYPE = "VariableType";
 
-        // SC TAGS
-        private const string XCFG_SC = "SAComponent";
-        private const string XCFG_SC_COLUMNS = "SCColumns";
-        private const string XCFG_SC_PARAMETERS = "SCParameters";
-        private const string XCFG_SC_STP = "SCSTP";
+        private const string XCFG_SQLREVISION = "SqlRevision";
 
         // SV Tags
-        private const string XCFG_SV = "DDVariable";
-        private const string XCFG_SV_COLUMNS = "DDColumns";
-        private const string XCFG_SV_PARAMETERS = "DDParameters";
-        private const string XCFG_SV_STP = "DDSTP";
+        private const string XCFG_DDV = "DDVariable";
+        private const string XCFG_DDV_COLUMNS = "DDVColumns";
+        private const string XCFG_DDV_PARAMETERS = "DDVParameters";
+        private const string XCFG_DDV_STP = "DDVSTP";
 
         // STD Tags
         private const string XCFG_STD = "StandardParts";
@@ -39,52 +35,81 @@ namespace SEDPlan
         private const string XCFG_STD_PARAMETERS = "STDParameters";
         private const string XCFG_STD_STP = "STDSTP";
 
+        // FW tags
+        private const string XCFG_FW = "FixedWeight";
+        private const string XCFG_FW_COLUMNS = "FWColumns";
+        private const string XCFG_FW_PARAMETERS = "FWParameters";
+        private const string XCFG_FW_STP = "FWSTP";
+
+        // DDT Tags
+        private const string XCFG_DDT = "DrawingDesingTypes";
+        private const string XCFG_DDT_COLUMNS = "DDTColumns";
+        private const string XCFG_DDT_PARAMETERS = "DDTParameters";
+        private const string XCFG_DDT_STP = "DDTSTP";
+
+
+        // SC TAGS
+        private const string XCFG_SC = "SAComponent";
+        private const string XCFG_SC_COLUMNS = "SCColumns";
+        private const string XCFG_SC_PARAMETERS = "SCParameters";
+        private const string XCFG_SC_STP = "SCSTP";
+
+
         // BP Tags
         private const string XCFG_BP = "BOMPlan";
         private const string XCFG_BP_COLUMNS = "BPColumns";
+        private const string XCFG_BP_VARNAMES = "BPVarNames";
         private const string XCFG_BP_PARAMETERS = "BPParameters";
         private const string XCFG_BP_STP = "BPSTP";
 
         private const string PARA_VAR = "VAR";
         private const string PARA_WEIGHT = "WEIGHT";
-        private const string TP_SC = "SC";
-        private const string TP_SV = "SV";
+        private const string TP_DDV = "DDV";
         private const string TP_STD = "STD";
+        private const string TP_FW = "FW";
+        private const string TP_DDT = "DDT";
+        private const string TP_SC = "SC";
         private const string TP_BP = "BP";
 
         private string connstr;
         private string[] Var_Types;
 
-        // SC
-        private string[] SC_ColNames;
-        private string[] SC_ParaNames;
-        private string SC_STPName;
-
-        // SV 
-        private string[] SV_ColNames;
-        private string[] SV_ParaNames;
-        private string SV_STPName;
+        // DDV 
+        private string[] DDV_ColNames;
+        private string[] DDV_ParaNames;
+        private string DDV_STPName;
+        private string DDV_SQL_REVISION;
 
         // STD
         private string[] STD_ColNames;
         private string[] STD_ParaNames;
         private string STD_STPName;
+        private string STD_SQL_REVISION;
+
+        // FW
+        private string[] FW_ColNames;
+        private string[] FW_ParaNames;
+        private string FW_STPName;
+        private string FW_SQL_REVISION;
+
+        // DDT
+        private string[] DDT_ColNames;
+        private string[] DDT_ParaNames;
+        private string DDT_STPName;
+        private string DDT_SQL_REVISION;
+
+        // SC
+        private string[] SC_ColNames;
+        private string[] SC_ParaNames;
+        private string SC_STPName;
+        private string SC_SQL_REVISION;
 
         // BP
         private string[] BP_ColNames;
+        private string[] BP_VarNames;
         private string[] BP_ParaNames;
         private string BP_STPName;
-
-        // SA component
-        //private const int SC_COLCNT = 8;
-        //private const string[] SC_VARIABLE_TYPES = {"L","LS","A°"};
-        //private const string SC_PARTSNAME_COLNAME = "NAME";
-        //private const string SC_SPEC_COLNAME = "DESCRIPTION";
-        //private const string SC_LHS_COLNAME = "LHS";
-        //private const string SC_RHS_COLNAME = "RHS";
-        //private const string SC_PCE_COLNAME = "PCE";
-        //private const string SC_WEIGHT_COLNAME = "WEIGHT (lbs/pce)";
-        //private const string SC_PROCESS_COLNAME = "REMARKS";
+        private string BP_SQL_REVISION;
 
         private string showerrstr;
 
@@ -110,29 +135,14 @@ namespace SEDPlan
             string str_VARTYPE = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xconfig, XCFG_VARTYPE, "");
             this.Var_Types = str_VARTYPE.Split(',');
 
-            // Fetch SA Component configuration
-            XmlNode xml_SC = PALS.Utilities.XMLConfig.GetConfigSetElement(ref xconfig, XCFG_SC);
-            string str_SCCols = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SC, XCFG_SC_COLUMNS, "");
-            this.SC_ColNames = str_SCCols.Split(',');
-            string str_SCParas = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SC, XCFG_SC_PARAMETERS, "");
-            this.SC_ParaNames = str_SCParas.Split(',');
-            this.SC_STPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SC, XCFG_SC_STP, "");
-
-            // Fetch SA Variable configuration
-            XmlNode xml_SV = PALS.Utilities.XMLConfig.GetConfigSetElement(ref xconfig, XCFG_SV);
-            string str_SVCols = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SV, XCFG_SV_COLUMNS, "");
-            this.SV_ColNames = str_SVCols.Split(',');
-            string str_SVParas = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SV, XCFG_SV_PARAMETERS, "");
-            this.SV_ParaNames = str_SVParas.Split(',');
-            this.SV_STPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SV, XCFG_SV_STP, "");
-
-            // Fetch BOM Plan configuration
-            XmlNode xml_BP = PALS.Utilities.XMLConfig.GetConfigSetElement(ref xconfig, XCFG_BP);
-            string str_BPCols = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_BP, XCFG_BP_COLUMNS, "");
-            this.BP_ColNames = str_BPCols.Split(',');
-            string str_BPParas = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_BP, XCFG_BP_PARAMETERS, "");
-            this.BP_ParaNames = str_BPParas.Split(',');
-            this.BP_STPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_BP, XCFG_BP_STP, "");
+            // Fetch DD Variable configuration
+            XmlNode xml_DDV = PALS.Utilities.XMLConfig.GetConfigSetElement(ref xconfig, XCFG_DDV);
+            string str_SVCols = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_DDV, XCFG_DDV_COLUMNS, "");
+            this.DDV_ColNames = str_SVCols.Split(',');
+            string str_SVParas = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_DDV, XCFG_DDV_PARAMETERS, "");
+            this.DDV_ParaNames = str_SVParas.Split(',');
+            this.DDV_STPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_DDV, XCFG_DDV_STP, "");
+            this.DDV_SQL_REVISION = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_DDV, XCFG_SQLREVISION, "");
 
             // Feth Standard Parts configuration
             XmlNode xml_STD = PALS.Utilities.XMLConfig.GetConfigSetElement(ref xconfig, XCFG_STD);
@@ -141,7 +151,46 @@ namespace SEDPlan
             string str_STDParas = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_STD, XCFG_STD_PARAMETERS, "");
             this.STD_ParaNames = str_STDParas.Split(',');
             this.STD_STPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_STD, XCFG_STD_STP, "");
-            
+            this.STD_SQL_REVISION = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_STD, XCFG_SQLREVISION, "");
+
+            // (FW)Fetch Fixed Weight configuration
+            XmlNode xml_FW = PALS.Utilities.XMLConfig.GetConfigSetElement(ref xconfig, XCFG_FW);
+            string str_FWCols = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_FW, XCFG_FW_COLUMNS, "");
+            this.FW_ColNames = str_FWCols.Split(',');
+            string str_FWParas = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_FW, XCFG_FW_PARAMETERS, "");
+            this.FW_ParaNames = str_FWParas.Split(',');
+            this.FW_STPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_FW, XCFG_FW_STP, "");
+            this.FW_SQL_REVISION = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_FW, XCFG_SQLREVISION, "");
+
+            // (DDT)Fetch Detail Design Types configuration
+            XmlNode xml_DDT = PALS.Utilities.XMLConfig.GetConfigSetElement(ref xconfig, XCFG_DDT);
+            string str_DDTCols = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_DDT, XCFG_DDT_COLUMNS, "");
+            this.DDT_ColNames = str_DDTCols.Split(',');
+            string str_DDTParas = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_DDT, XCFG_DDT_PARAMETERS, "");
+            this.DDT_ParaNames = str_DDTParas.Split(',');
+            this.DDT_STPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_DDT, XCFG_DDT_STP, "");
+            this.DDT_SQL_REVISION = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_DDT, XCFG_SQLREVISION, "");
+
+            // Fetch SA Component configuration
+            XmlNode xml_SC = PALS.Utilities.XMLConfig.GetConfigSetElement(ref xconfig, XCFG_SC);
+            string str_SCCols = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SC, XCFG_SC_COLUMNS, "");
+            this.SC_ColNames = str_SCCols.Split(',');
+            string str_SCParas = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SC, XCFG_SC_PARAMETERS, "");
+            this.SC_ParaNames = str_SCParas.Split(',');
+            this.SC_STPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SC, XCFG_SC_STP, "");
+            this.SC_SQL_REVISION = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SC, XCFG_SQLREVISION, "");
+
+            // Fetch BOM Plan configuration
+            XmlNode xml_BP = PALS.Utilities.XMLConfig.GetConfigSetElement(ref xconfig, XCFG_BP);
+            string str_BPCols = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_BP, XCFG_BP_COLUMNS, "");
+            this.BP_ColNames = str_BPCols.Split(',');
+            string str_BPVarNames = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_BP, XCFG_BP_VARNAMES, "");
+            this.BP_VarNames = str_BPVarNames.Split(',');
+            string str_BPParas = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_BP, XCFG_BP_PARAMETERS, "");
+            this.BP_ParaNames = str_BPParas.Split(',');
+            this.BP_STPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_BP, XCFG_BP_STP, "");
+            this.BP_SQL_REVISION = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_BP, XCFG_SQLREVISION, "");
+   
         }
 
         public bool Init(DataTable dtImport, string sheetname)
@@ -226,15 +275,21 @@ namespace SEDPlan
                         string[] paras = null;
                         switch (tabletype)
                         {
-                            case TP_SC:
-                                paras = AnalyzeDataRow_SC(dr, revision.ToString(), crtime);
-                                break;
-                            case TP_SV:
-                                paras = AnalyzeDataRow_SV(dr, revision.ToString(), crtime);
+                            case TP_DDV:
+                                paras = AnalyzeDataRow_DDV(dr, revision.ToString(), crtime);
                                 break;
                             case TP_STD:
                                 paras = AnalyzeDataRow_STD(dr, revision.ToString(), crtime);
                                 break;
+                            case TP_FW:
+                                paras = AnalyzeDataRow_FW(dr, revision.ToString(), crtime);
+                                break;
+                            case TP_DDT:
+                                paras = AnalyzeDataRow_DDT(dr, revision.ToString(), crtime);
+                                break;
+                            case TP_SC:
+                                paras = AnalyzeDataRow_SC(dr, revision.ToString(), crtime);
+                                break;     
                             case TP_BP:
                                 paras = AnalyzeDataRow_BP(dr, revision.ToString(), crtime);
                                 break;
@@ -308,10 +363,80 @@ namespace SEDPlan
 
         }
 
+        private string[] AnalyzeDataRow_DDV(DataRow dr, string revision, string created_time)
+        {
+            string[] paras = new string[this.DDV_ColNames.Length + 3];
+            paras[0] = this.sheetname.Trim(); // sheet name is DD ID
+            int i = 1;
+            foreach (string colname in this.DDV_ColNames)
+            {
+                paras[i] = "";
+                if (dr.Table.Columns.Contains(colname))
+                    paras[i] = ((string)dr[colname]).Trim();
+                i++;
+            }
+            paras[paras.Length - 2] = revision;
+            paras[paras.Length - 1] = created_time;
+            return paras;
+        }
+
+        private string[] AnalyzeDataRow_STD(DataRow dr, string revision, string created_time)
+        {
+            string[] paras = new string[this.STD_ColNames.Length + 2];
+            //paras[0] = this.sheetname.Trim();
+
+            int i = 0;
+            foreach (string colname in this.STD_ColNames)
+            {
+                paras[i] = "";
+                if (dr[colname] != null)
+                    paras[i] = ((string)dr[colname]).Trim();
+                i++;
+            }
+            paras[paras.Length - 2] = revision;
+            paras[paras.Length - 1] = created_time;
+            return paras;
+        }
+
+        private string[] AnalyzeDataRow_FW(DataRow dr, string revision, string created_time)
+        {
+            string[] paras = new string[this.FW_ColNames.Length + 2];
+            //paras[0] = this.sheetname.Trim();
+
+            int i = 0;
+            foreach (string colname in this.FW_ColNames)
+            {
+                paras[i] = "";
+                if (dr[colname] != null)
+                    paras[i] = ((string)dr[colname]).Trim();
+                i++;
+            }
+            paras[paras.Length - 2] = revision;
+            paras[paras.Length - 1] = created_time;
+            return paras;
+        }
+
+        private string[] AnalyzeDataRow_DDT(DataRow dr, string revision, string created_time)
+        {
+            string[] paras = new string[this.DDT_ColNames.Length + 3];
+            paras[0] = this.sheetname.Trim(); // sheet name is SA ID
+            int i = 1;
+            foreach (string colname in this.DDT_ColNames)
+            {
+                paras[i] = "";
+                if (dr.Table.Columns.Contains(colname))
+                    paras[i] = ((string)dr[colname]).Trim();
+                i++;
+            }
+            paras[paras.Length - 2] = revision;
+            paras[paras.Length - 1] = created_time;
+            return paras;
+        }
+
         private string[] AnalyzeDataRow_SC(DataRow dr,string revision, string created_time)
         {
             string[] paras = new string[this.SC_ColNames.Length + 3];
-            paras[0] = this.sheetname.Trim();
+            paras[0] = this.sheetname.Trim(); // sheet name is SA ID
 
             int i = 1;
             foreach (string paraname in this.SC_ColNames)
@@ -342,53 +467,42 @@ namespace SEDPlan
             return paras;
         }
 
-        private string[] AnalyzeDataRow_SV(DataRow dr, string revision, string created_time)
+
+        private string[] AnalyzeDataRow_BP(DataRow dr, string revision, string created_time)
         {
-            string[] paras = new string[this.SV_ColNames.Length + 3];
-            paras[0] = this.sheetname.Trim();
+            string[] paras = new string[this.BP_ColNames.Length + 2 + 3];
+            paras[0] = this.sheetname.Trim(); // sheetname is the plan name
             int i = 1;
-            foreach (string colname in this.SV_ColNames)
+
+            // the non-var columns 
+            foreach (string colname in this.BP_ColNames)
             {
                 paras[i] = "";
                 if (dr.Table.Columns.Contains(colname))
                     paras[i] = ((string)dr[colname]).Trim();
                 i++;
             }
-            paras[paras.Length - 2] = revision;
-            paras[paras.Length - 1] = created_time;
-            return paras;
-        }
 
-        private string[] AnalyzeDataRow_STD(DataRow dr, string revision, string created_time)
-        {
-            string[] paras = new string[this.STD_ColNames.Length + 2];
-            //paras[0] = this.sheetname.Trim();
-
-            int i = 0;
-            foreach (string colname in this.STD_ColNames)
+            // the var columns
+            string varnames = "";
+            string vars = "";
+            int j = 0;
+            foreach (string varname in this.BP_VarNames)
             {
-                paras[i] = "";
-                if (dr[colname] != null)
-                    paras[i] = ((string)dr[colname]).Trim();
-                i++;
+                if (dr.Table.Columns.Contains(varname))
+                {
+                    varnames += varname;
+                    vars += ((string)dr[varname]).Trim();
+                    if (j != this.BP_VarNames.Length - 1)
+                    {
+                        varnames += ",";
+                        vars += ",";
+                    }
+                }
+                j++;
             }
-            paras[paras.Length - 2] = revision;
-            paras[paras.Length - 1] = created_time;
-            return paras;
-        }
-
-        private string[] AnalyzeDataRow_BP(DataRow dr, string revision, string created_time)
-        {
-            string[] paras = new string[this.BP_ColNames.Length + 3];
-            paras[0] = this.sheetname.Trim();
-            int i = 1;
-            foreach (string colname in this.BP_ColNames)
-            {
-                paras[i] = "";
-                if (dr[colname] != null)
-                    paras[i] = ((string)dr[colname]).Trim();
-                i++;
-            }
+            paras[i] = varnames;
+            paras[i + 1] = vars;
             paras[paras.Length - 2] = revision;
             paras[paras.Length - 1] = created_time;
             return paras;
@@ -410,17 +524,25 @@ namespace SEDPlan
 
                 switch (tabletype)
                 {
-                    case TP_SC:
-                        paranames = this.SC_ParaNames;
-                        sqlcmd.CommandText = SC_STPName;
-                        break;
-                    case TP_SV:
-                        paranames = this.SV_ParaNames;
-                        sqlcmd.CommandText = SV_STPName;
+                    case TP_DDV:
+                        paranames = this.DDV_ParaNames;
+                        sqlcmd.CommandText = DDV_STPName;
                         break;
                     case TP_STD:
                         paranames = this.STD_ParaNames;
                         sqlcmd.CommandText = STD_STPName;
+                        break;
+                    case TP_FW:
+                        paranames = this.FW_ParaNames;
+                        sqlcmd.CommandText = FW_STPName;
+                        break;
+                    case TP_DDT:
+                        paranames = this.DDT_ParaNames;
+                        sqlcmd.CommandText = DDT_STPName;
+                        break;
+                    case TP_SC:
+                        paranames = this.SC_ParaNames;
+                        sqlcmd.CommandText = SC_STPName;
                         break;
                     case TP_BP:
                         paranames = this.BP_ParaNames;
@@ -478,18 +600,23 @@ namespace SEDPlan
             {
                 switch (tabletype)
                 {
-                    case TP_SC:
-                        sqlstr = "select max(Revision) as MAXREV from SA_Component where SA_ID='" + sheetname + "';";
-                        break;
-                    case TP_SV:
-                        sqlstr = "select max(Revision) as MAXREV from SA_Variable_Map where SA_ID='" + sheetname + "';";
+                    case TP_DDV:
+                        sqlstr = this.DDV_SQL_REVISION + "'" + sheetname + "';";
                         break;
                     case TP_STD:
-                        //sqlstr = "select max(Revision) as MAXREV from STD_Parts where STD_ImportName='" + sheetname + "';";
-                        sqlstr = "select max(Revision) as MAXREV from STD_Parts;";
+                        sqlstr = this.STD_SQL_REVISION;
+                        break;
+                    case TP_FW:
+                        sqlstr = this.FW_SQL_REVISION;
+                        break;
+                    case TP_DDT:
+                        sqlstr = this.DDT_SQL_REVISION + "'" + sheetname + "';";;
+                        break;
+                    case TP_SC:
+                        sqlstr = this.SC_SQL_REVISION + "'" + sheetname + "';";
                         break;
                     case TP_BP:
-                        sqlstr = "select max(Revision) as MAXREV from BOM_Plan where Plan_Name='" + sheetname + "';";
+                        sqlstr = this.BP_SQL_REVISION + "'" + sheetname + "';";
                         break;
                     default:
                         sqlstr = "";

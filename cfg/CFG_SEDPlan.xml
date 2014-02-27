@@ -39,45 +39,52 @@
     </logger>
   </log4net>
   <connectionString>User ID=sa;Pwd=DBAdm1n@BHS.irel;Initial Catalog=SEDPLAN;Data Source=SG10031CSD6782;Packet Size=4096</connectionString>
-  <sql-cmbx_SC_SAID>select distinct SA_ID from SA_Variable_Map</sql-cmbx_SC_SAID>
+  <sql-cmbx_SC_SAID>select distinct SA_ID from DD_TYPES</sql-cmbx_SC_SAID>
   <configSet name="SEDPlan.ExcelDataImport">
     <VariableType>L,LS,A°</VariableType>
 
     <DDVariable>
-      <DDColumns>L(Inches),LS(Inches),A(Degree),Weight(Ibs)</DDColumns>
-      <DDParameters>DDID,L_para,LS_para,A_para,Weight,Revision,CRTIME</DDParameters>
-      <DDSTP>stp_ImportDDVData</DDSTP>
+      <DDVColumns>L(Inches),LS(Inches),A(Degree),Weight</DDVColumns>
+      <DDVParameters>DDID,L_para,LS_para,A_para,Weight,Revision,CRTIME</DDVParameters>
+      <DDVSTP>stp_ImportDDVData</DDVSTP>
+      <SqlRevision>select max(Revision) as MAXREV from DD_Variable_Map where DD_ID=</SqlRevision>
     </DDVariable>
 
     <StandardParts>
       <STDColumns>NAME,DESCRIPTION,WEIGHT (lbs/pce)</STDColumns>
       <STDParameters>PartsName,Spec,STDWeight,Revision,CRTIME</STDParameters>
       <STDSTP>stp_ImportSTDData</STDSTP>
+      <SqlRevision>select max(Revision) as MAXREV from STD_Parts;</SqlRevision>
     </StandardParts>
 
     <FixedWeight>
       <FWColumns>DD ID,WEIGHT (lbs/pce)</FWColumns>
       <FWParameters>DDID,Weight,Revision,CRTIME</FWParameters>
       <FWSTP>stp_ImportFWData</FWSTP>
+      <SqlRevision>select max(Revision) as MAXREV from DD_Variable_Map where VAR_Type='F';</SqlRevision>
     </FixedWeight>
 
     <DrawingDesingTypes>
-      <DDTColumns>NAME,Para Type,Para Value,DD ID</DDTColumns>
+      <DDTColumns>NAME,DD Types,DD Value,DD ID</DDTColumns>
       <DDTParameters>SAID,PARTSNAME,PARATYPE,PARAVALUE,DDID,REVISION,CRTIME</DDTParameters>
       <DDTSTP>stp_ImportDDTData</DDTSTP>
+      <SqlRevision>select max(Revision) as MAXREV from DD_TYPES where SA_ID=</SqlRevision>
     </DrawingDesingTypes>
     
     <SAComponent>
       <SCColumns>NAME,DESCRIPTION,LHS,RHS,PCE,VAR,Parameter,REMARKS</SCColumns>
       <SCParameters>SAID,PARTSNAME,SPEC,LHS,RHS,PCE,VAR,PARATYPE,PROCESS,REVISION,CRTIME</SCParameters>
       <SCSTP>stp_ImportSCData</SCSTP>
+      <SqlRevision>select max(Revision) as MAXREV from SA_Component where SA_ID=</SqlRevision>
     </SAComponent>
 
     <BOMPlan>
-      <BPColumns>SAID,Quantity,L,LS,A°,TB,H</BPColumns>
+      <BPColumns>SAID,Quantity</BPColumns>
+      <BPVarNames>L,LS,A°,TB,H</BPVarNames>
       <!--<BPParameters>PlanName,SAID,Quantity,L_para,LS_para,A_para,TB_para,H_para,Revision,CRTIME</BPParameters>-->
-      <BPParameters>PlanName,SAID,Quantity,paras,Revision,CRTIME</BPParameters>
-      <BPSTP>stp_ImportBPData</BPSTP>
+      <BPParameters>PlanName,SAID,Quantity,VarNames,Vars,Revision,CRTIME</BPParameters>
+      <BPSTP>stp_ImportBPData2</BPSTP>
+      <SqlRevision>select max(Revision) as MAXREV from BOM_Plan where Plan_Name=</SqlRevision>
     </BOMPlan>
     
     

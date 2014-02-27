@@ -34,20 +34,37 @@ namespace SEDPlan
 
         private ErrorProvider errProvider;
 
-        // SC
-        private DataTable dt_SCImport;
-        private string SC_xlssheet;
-        private string SC_filepath;
+        private const string TP_DDV = "DDV";
+        private const string TP_STD = "STD";
+        private const string TP_FW = "FW";
+        private const string TP_DDT = "DDT";
+        private const string TP_SC = "SC";
+        private const string TP_BP = "BP";
 
-        // SV
-        private DataTable dt_SVImport;
-        private string SV_xlssheet;
-        private string SV_filepath;
+        // DDV
+        private DataTable dt_DDVImport;
+        private string DDV_xlssheet;
+        private string DDV_filepath;
 
         // STD
         private DataTable dt_STDImport;
         private string STD_xlssheet;
         private string STD_filepath;
+
+        // FW
+        private DataTable dt_FWImport;
+        private string FW_xlssheet;
+        private string FW_filepath;
+
+        // DDT
+        private DataTable dt_DDTImport;
+        private string DDT_xlssheet;
+        private string DDT_filepath;
+
+        // SC
+        private DataTable dt_SCImport;
+        private string SC_xlssheet;
+        private string SC_filepath;
 
         // BOM Plan
         private DataTable dt_BPImport;
@@ -96,13 +113,7 @@ namespace SEDPlan
             Process.Start("PALS.ReportViewer.exe");
         }
 
-        private void btn_SC_Open_Click(object sender, EventArgs e)
-        {
-            this.openFileDialog.ShowDialog();
-            this.tbx_SC_FPath.Text = this.openFileDialog.FileName;
-        }
-
-        private void btn_SV_Open_Click(object sender, EventArgs e)
+        private void btn_DDV_Open_Click(object sender, EventArgs e)
         {
             this.openFileDialog.ShowDialog();
             this.tbx_DDV_FPath.Text = this.openFileDialog.FileName;
@@ -112,6 +123,24 @@ namespace SEDPlan
         {
             this.openFileDialog.ShowDialog();
             this.tbx_STD_FPath.Text = this.openFileDialog.FileName;
+        }
+
+        private void btn_FW_Open_Click(object sender, EventArgs e)
+        {
+            this.openFileDialog.ShowDialog();
+            this.tbx_FW_FPath.Text = this.openFileDialog.FileName;
+        }
+
+        private void btn_DDT_Open_Click(object sender, EventArgs e)
+        {
+            this.openFileDialog.ShowDialog();
+            this.tbx_DDT_FPath.Text = this.openFileDialog.FileName;
+        }
+
+        private void btn_SC_Open_Click(object sender, EventArgs e)
+        {
+            this.openFileDialog.ShowDialog();
+            this.tbx_SC_FPath.Text = this.openFileDialog.FileName;
         }
 
         private void btn_BP_Open_Click(object sender, EventArgs e)
@@ -164,7 +193,10 @@ namespace SEDPlan
 
                 this.tbx_STD_FPath.Text = "../../../excel/Standard Parts.xlsx";
 
-                this.tbx_FW_FPath.Text = "../../../excel/Detail Design Fixed Weight.xlsx"
+                this.tbx_FW_FPath.Text = "../../../excel/Detail Design Fixed Weight.xlsx";
+
+                this.cmbx_DDT_SAID.Text = "SA-Test3";
+                this.tbx_DDT_FPath.Text = "../../../excel/SA Detail Design Types.xlsx";
 
                 this.cmbx_SC_SAID.Text = "SA-Test1"; // SA-Test2 SA-Test3
                 this.tbx_SC_FPath.Text = "../../../excel/Bill Of Material dated 14102013.xls";
@@ -211,7 +243,7 @@ namespace SEDPlan
             }
         }
 
-        private void btn_SV_View_Click(object sender, EventArgs e)
+        private void btn_DDV_View_Click(object sender, EventArgs e)
         {
             lbErr.Text = "";
             errProvider.SetError(lbErr, string.Empty);
@@ -225,9 +257,9 @@ namespace SEDPlan
                 {
                     Form fmShowData = new ShowData(xlsview.ImportData);
                     fmShowData.Show();
-                    this.dt_SVImport = xlsview.ImportData;
-                    this.SV_xlssheet = xlsview.SheetName;
-                    this.SV_filepath = xlsview.FilePath;
+                    this.dt_DDVImport = xlsview.ImportData;
+                    this.DDV_xlssheet = xlsview.SheetName;
+                    this.DDV_filepath = xlsview.FilePath;
                 }
             }
             else
@@ -255,7 +287,7 @@ namespace SEDPlan
                     fmShowData.Show();
                     this.dt_STDImport = xlsview.ImportData;
                     this.STD_xlssheet = xlsview.SheetName;
-                    this.STD_filepath = xlsview.FilePath;
+                    this.FW_filepath = xlsview.FilePath;
                 }
             }
             else
@@ -322,7 +354,7 @@ namespace SEDPlan
             if (this.dt_SCImport != null)
             {
                 res &= xlsimport.Init(this.dt_SCImport, this.SC_xlssheet);
-                res &= xlsimport.ImportData("SC");
+                res &= xlsimport.ImportData(TP_SC);
             }
             else
             {
@@ -348,10 +380,10 @@ namespace SEDPlan
             errProvider.SetError(lbErr, string.Empty);
             bool res = true;
 
-            if (this.dt_SVImport != null)
+            if (this.dt_DDVImport != null)
             {
-                res &= xlsimport.Init(this.dt_SVImport, this.SV_xlssheet);
-                res &= xlsimport.ImportData("SV");
+                res &= xlsimport.Init(this.dt_DDVImport, this.DDV_xlssheet);
+                res &= xlsimport.ImportData(TP_DDV);
             }
             else
             {
@@ -359,10 +391,10 @@ namespace SEDPlan
                 res = false;
             }
 
-            if (this.dt_SVImport != null)
+            if (this.dt_DDVImport != null)
             {
-                this.dt_SVImport.Dispose();
-                this.dt_SVImport = null;
+                this.dt_DDVImport.Dispose();
+                this.dt_DDVImport = null;
             }
 
             if (res == true)
@@ -380,7 +412,7 @@ namespace SEDPlan
             if (this.dt_STDImport != null)
             {
                 res &= xlsimport.Init(this.dt_STDImport, this.STD_xlssheet);
-                res &= xlsimport.ImportData("STD");
+                res &= xlsimport.ImportData(TP_STD);
             }
             else
             {
@@ -409,7 +441,7 @@ namespace SEDPlan
             if (this.dt_BPImport != null)
             {
                 res &= xlsimport.Init(this.dt_BPImport, this.BP_xlssheet);
-                res &= xlsimport.ImportData("BP");
+                res &= xlsimport.ImportData(TP_BP);
             }
             else
             {
@@ -489,6 +521,120 @@ namespace SEDPlan
                 return;
             }
         }
+
+        private void btn_FW_View_Click(object sender, EventArgs e)
+        {
+            lbErr.Text = "";
+            errProvider.SetError(lbErr, string.Empty);
+
+            if (this.tbx_FW_FPath.Text.Trim() != "")
+            {
+                xlsview.ClearData();
+                xlsview.Init(this.tbx_FW_FPath.Text.Trim(), "");
+
+                if (xlsview.ImportData != null && xlsview.ImportData.Rows.Count > 0)
+                {
+                    Form fmShowData = new ShowData(xlsview.ImportData);
+                    fmShowData.Show();
+                    this.dt_FWImport = xlsview.ImportData;
+                    this.FW_xlssheet = xlsview.SheetName;
+                    this.FW_filepath = xlsview.FilePath;
+                }
+            }
+            else
+            {
+                if (this.tbx_FW_FPath.Text == "")
+                    ShowError("Please specify the imported file");
+            }
+        }
+
+        private void btn_FW_Import_Click(object sender, EventArgs e)
+        {
+            lbErr.Text = "";
+            errProvider.SetError(lbErr, string.Empty);
+            bool res = true;
+
+            if (this.dt_FWImport != null)
+            {
+                res &= xlsimport.Init(this.dt_FWImport, this.FW_xlssheet);
+                res &= xlsimport.ImportData(TP_FW);
+            }
+            else
+            {
+                ShowError("Please view the imported data at first.");
+                res = false;
+            }
+
+            if (this.dt_FWImport != null)
+            {
+                this.dt_FWImport.Dispose();
+                this.dt_FWImport = null;
+            }
+
+            if (res == true)
+            {
+                ShowInfo("Data Import Complete.");
+            }
+        }
+
+        private void btn_DDT_View_Click(object sender, EventArgs e)
+        {
+            lbErr.Text = "";
+            errProvider.SetError(lbErr, string.Empty);
+
+            if (this.tbx_DDT_FPath.Text.Trim() != "" && this.cmbx_DDT_SAID.Text.Trim() != "")
+            {
+                xlsview.ClearData();
+                xlsview.Init(this.tbx_DDT_FPath.Text.Trim(), this.cmbx_DDT_SAID.Text.Trim());
+
+                if (xlsview.ImportData != null && xlsview.ImportData.Rows.Count > 0)
+                {
+                    Form fmShowData = new ShowData(xlsview.ImportData);
+                    fmShowData.Show();
+                    this.dt_DDTImport = xlsview.ImportData;
+                    this.DDT_xlssheet = xlsview.SheetName;
+                    this.DDT_filepath = xlsview.FilePath;
+                }
+            }
+            else
+            {
+                if (this.cmbx_DDT_SAID.Text == "")
+                    ShowError("Please provide a SA ID");
+                else if (this.tbx_DDT_FPath.Text == "")
+                    ShowError("Please specify the imported file");
+            }
+        }
+
+        private void btn_DDT_Import_Click(object sender, EventArgs e)
+        {
+            lbErr.Text = "";
+            errProvider.SetError(lbErr, string.Empty);
+            bool res = true;
+
+            if (this.dt_DDTImport != null)
+            {
+                res &= xlsimport.Init(this.dt_DDTImport, this.DDT_xlssheet);
+                res &= xlsimport.ImportData(TP_DDT);
+            }
+            else
+            {
+                ShowError("Please view the imported data at first.");
+                res = false;
+            }
+
+            if (this.dt_DDTImport != null)
+            {
+                this.dt_DDTImport.Dispose();
+                this.dt_DDTImport = null;
+            }
+
+            if (res == true)
+            {
+                ShowInfo("Data Import Complete.");
+            }
+        }
+
+       
 
         
     }

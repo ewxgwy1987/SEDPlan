@@ -195,6 +195,7 @@ namespace SEDPlan
                 //    _logger.Error(showerrstr);
                 //    return;
                 //}
+                this.CloseExcel();
             }
             catch (Exception exp)
             {
@@ -210,13 +211,16 @@ namespace SEDPlan
             Dispose();
         }
 
-        public void Dispose()
+        private void CloseExcel()
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
 
             try
             {
+                this.m_DataRange = null;
+                this.m_worksheet = null;
+
                 if (this.m_xlswbk != null)
                 {
                     this.m_xlswbk.Close();
@@ -229,12 +233,23 @@ namespace SEDPlan
                     this.m_xlsapp.Quit();
                     this.m_xlsapp = null;
                 }
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+                showerrstr += exp.Message;
+            }
+        }
 
-                if (this.m_DataRange != null)
-                {
-                    //this.m_DataRange.Clear();
-                    this.m_DataRange = null;
-                }
+        public void Dispose()
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            try
+            {
+                CloseExcel();
 
                 if (this.m_dtImportData != null)
                 {
@@ -253,29 +268,11 @@ namespace SEDPlan
 
         public void ClearData()
         {
+            CloseExcel();
             if (this.m_dtImportData != null)
             {
                 this.m_dtImportData.Clear();
                 this.m_dtImportData = null;
-            }
-
-            if (this.m_xlswbk != null)
-            {
-                this.m_xlswbk.Close();
-
-                this.m_xlswbk = null;
-            }
-
-            if (this.m_xlsapp != null)
-            {
-                this.m_xlsapp.Quit();
-                this.m_xlsapp = null;
-            }
-
-            if (this.m_DataRange != null)
-            {
-                //this.m_DataRange.Clear();
-                this.m_DataRange = null;
             }
 
             if (this.m_dtImportData != null)
@@ -284,6 +281,8 @@ namespace SEDPlan
                 this.m_dtImportData = null;
             }
         }
+
+
 
         #endregion
 
