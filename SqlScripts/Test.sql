@@ -135,8 +135,13 @@ FROM DBO.RPT_GETPARAMETERS('10,20,,TS,,')
 SELECT * FROM #TEST;
 DROP TABLE #TEST;
 
-select * from BOM_Plan;
+select ROW_NUMBER() OVER(ORDER BY BD.Plan_Name,BD.Parts_Name,BD.Specification ASC) AS ITEM_NO,
+BD.Plan_Name,BD.Parts_Name,BD.Specification,BD.VAR_TYPE,BD.VAR_VALUE,BD.LHS,BD.RHS,BD.PCE,BD.Total_Weight,SP.Process_Name
+from BOM_Detail BD, SA_Process SP
+WHERE BD.Process_ID=SP.Process_ID;
 
 select * from SA_Component sc where sc.IsVariable=1 and sc.Para_Type='' and sc.Specification='IS1-58-002'
 SELECT * FROM DD_Variable_Map DDV WHERE DDV.VAR_Type='LS' AND DDV.DD_ID='IS1-58-002' AND DDV.VAR_Value='45.625';
+
+
 
