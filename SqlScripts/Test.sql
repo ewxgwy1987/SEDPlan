@@ -69,9 +69,17 @@ EXEC stp_ImportBPData2 @PlanName,@SAID,@Quantity,@PARAS,@Revision,@CRTIME;
 SELECT * FROM BOM_Plan;
 DELETE FROM BOM_PLAN;
 
-SELECT dbo.FUN_VAR_EXISTS('IS1-60-001','L','10');
+DECLARE @SA_ID NVARCHAR(100)='SA-Test1';
+DECLARE @VARTYPE NVARCHAR(5) = 'LS';
+DECLARE @VARVALUE NVARCHAR(50) = '46.875';
+SELECT SC.SA_ID,DDV.DD_ID,DDV.VAR_Type,DDV.VAR_Value,DDV.VAR_Weight
+FROM SA_Component SC, DD_Variable_Map DDV
+WHERE SC.SA_ID=@SA_ID AND SC.VAR_Type=@VARTYPE AND SC.IsVariable=1 AND SC.Para_Type=''
+AND SC.Revision = (SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID)
+AND SC.Specification=DDV.DD_ID AND DDV.VAR_Type=SC.VAR_Type AND DDV.VAR_Value=@VARVALUE
+AND DDV.Revision = (SELECT MAX(Revision) FROM DD_Variable_Map DDV2 WHERE DDV2.DD_ID=DDV.DD_ID)
 
-
+SELECT * FROM  DD_Variable_Map DDV WHERE DDV.DD_ID='IS1-58-002'
 -----------------------------------------------------------------------------------------------------
 ------------------------------------Check if BP data is complete-------------------------------------
 DECLARE @PLANNAME NVARCHAR(100) = '';
@@ -102,9 +110,11 @@ WHERE NOT EXISTS
 			AND BP.VAR_Type = AVT.VAR_Type
 	)
 -----------------------------------------------------------------------------------------------------
-------------------------------------Check if BP var type is valid-------------------------------------
+------------------------------------Statistics-------------------------------------
 
-SELECT
+DECLARE @PlanName NVARCHAR(100)='BOMPlanTest'
+EXEC stp_CalBOMPlan @PlanName;
+SELECT * FROM BOM_Detail;
 
 -----------------------------------------------------------------------------------------------------
 SELECT * FROM BOM_PLAN;
@@ -113,7 +123,7 @@ select * from SA_Process;
 select max(Revision) as MAXREV from SA_Component where SA_ID='IS1-30-001';
 
 TRUNCATE TABLE SA_Component;
-TRUNCATE TABLE SA_Variable_Map;
+TRUNCATE TABLE DD_Variable_Map;
 TRUNCATE TABLE STD_Parts;
 TRUNCATE TABLE BOM_Plan;
 drop database SEDPLAN;
@@ -124,4 +134,9 @@ FROM DBO.RPT_GETPARAMETERS('10,20,,TS,,')
 
 SELECT * FROM #TEST;
 DROP TABLE #TEST;
+
+select * from BOM_Plan;
+
+select * from SA_Component sc where sc.IsVariable=1 and sc.Para_Type='' and sc.Specification='IS1-58-002'
+SELECT * FROM DD_Variable_Map DDV WHERE DDV.VAR_Type='LS' AND DDV.DD_ID='IS1-58-002' AND DDV.VAR_Value='45.625';
 

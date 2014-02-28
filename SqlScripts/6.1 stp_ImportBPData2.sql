@@ -20,9 +20,15 @@ BEGIN
 		DECLARE @VAR_Value NVARCHAR(50);
 		DECLARE @Qty INT = CAST(@Quantity AS INT);
 		DECLARE @IsMain BIT = 0;
+		DECLARE @SAUID NVARCHAR(100);
 		DECLARE @NewRevision INT = CAST(@Revision AS INT);
 		DECLARE @Created_Time Datetime = CAST(@CRTIME AS datetime);
 
+		DECLARE @IDNUM BIGINT = (SELECT MAX(SAUID) FROM BOM_Plan);
+		IF @IDNUM IS NULL
+			SET @IDNUM = 1;
+		ELSE
+			SET @IDNUM = @IDNUM + 1;
 		DECLARE @MARK BIT = 0;
 
 		DECLARE @PARA_NAME NVARCHAR(5);
@@ -54,6 +60,7 @@ BEGIN
 				IF @MARK = 0
 				BEGIN
 					SET @MARK = 1;
+					SET @SAUID = @IDNUM
 					SET @IsMain = 1;
 				END
 				ELSE 
@@ -61,8 +68,8 @@ BEGIN
 					SET @IsMain = 0;
 				END
 
-				INSERT INTO BOM_Plan(Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,IsMain,Revision,Created_Time)
-				VALUES(@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@IsMain,@NewRevision,@Created_Time);
+				INSERT INTO BOM_Plan(Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,IsMain,SAUID,Revision,Created_Time)
+				VALUES(@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@IsMain,@SAUID,@NewRevision,@Created_Time);
 
 				INSERT INTO @VARLIST VALUES(@VAR_Type,@VAR_Value);
 			END

@@ -90,6 +90,7 @@ CREATE TABLE BOM_Plan
 	VAR_Value NVARCHAR(50),
 	Quantity int,
 	IsMain bit, -- Inidate whether the variable of this SA is a primary variable
+	SAUID BIGINT,
 	Revision int,
 	Created_Time Datetime,
 	timestamp,
@@ -99,11 +100,14 @@ CREATE TABLE BOM_Plan
 	CONSTRAINT CHK_BOM_Plan_VAR CHECK (DBO.FUN_BP_VAR_EXISTS(SA_ID,VAR_Type,VAR_Value)=CAST(1 AS BIT)),
 );
 
+--DROP TABLE BOM_Detail;
 CREATE TABLE BOM_Detail
 (
 	Plan_Name NVARCHAR(100),
 	Parts_Name NVARCHAR(100),
 	Specification NVARCHAR(100),
+	VAR_TYPE NVARCHAR(5),
+	VAR_VALUE NVARCHAR(50),
 	LHS INT,
 	RHS INT,
 	PCE INT,
@@ -112,7 +116,7 @@ CREATE TABLE BOM_Detail
 	Revision int,
 	Created_Time Datetime,
 	timestamp,
-	CONSTRAINT PK_BOM_Detail PRIMARY KEY (Plan_Name, Parts_Name,Specification,Revision),
+	CONSTRAINT PK_BOM_Detail PRIMARY KEY (Plan_Name, Parts_Name,Specification,VAR_TYPE,VAR_VALUE,Process_ID,Revision),
 	CONSTRAINT FK_BOM_Detail FOREIGN KEY (Process_ID) REFERENCES SA_Process(Process_ID),
 );
 

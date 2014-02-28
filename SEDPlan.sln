@@ -17,12 +17,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{BEFD02C8-D1B
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EBEF10B4-1804-4D68-ACCC-131C6B02DB3E}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{EBEF10B4-1804-4D68-ACCC-131C6B02DB3E}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{EBEF10B4-1804-4D68-ACCC-131C6B02DB3E}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{EBEF10B4-1804-4D68-ACCC-131C6B02DB3E}.Debug|x86.ActiveCfg = Debug|x86
 		{EBEF10B4-1804-4D68-ACCC-131C6B02DB3E}.Debug|x86.Build.0 = Debug|x86
+		{EBEF10B4-1804-4D68-ACCC-131C6B02DB3E}.Release|Any CPU.ActiveCfg = Release|x86
+		{EBEF10B4-1804-4D68-ACCC-131C6B02DB3E}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{EBEF10B4-1804-4D68-ACCC-131C6B02DB3E}.Release|Mixed Platforms.Build.0 = Release|x86
 		{EBEF10B4-1804-4D68-ACCC-131C6B02DB3E}.Release|x86.ActiveCfg = Release|x86
 		{EBEF10B4-1804-4D68-ACCC-131C6B02DB3E}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
