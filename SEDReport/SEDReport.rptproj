@@ -13,6 +13,10 @@
       <Name>FabricationList.rdl</Name>
       <FullPath>FabricationList.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>Sub Assembly List.rdl</Name>
+      <FullPath>Sub Assembly List.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>

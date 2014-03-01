@@ -20,7 +20,6 @@ namespace SEDPlan
 
         private const string XCFG_CONNSTR = "connectionString";
         private const string XCFG_VARTYPE = "VariableType";
-
         private const string XCFG_SQLREVISION = "SqlRevision";
 
         // SV Tags

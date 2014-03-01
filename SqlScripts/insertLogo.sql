@@ -4,7 +4,7 @@ GO
 
 insert into PICTURES
 select 'PTERIS','Pteris Global Ltd','Logo Used On all reports for SEDPlan',
-BulkColumn FROM OPENROWSET(Bulk 'D:\1Pteris Global Ltd\GWY_DEV\SEDPlan\pteris logo (low res).jpg', SINGLE_BLOB) AS BLOB;
+BulkColumn FROM OPENROWSET(Bulk 'F:\1Pteris Global Ltd\EWXGWY1987_DEV\SEDPlan\pteris logo (low res).jpg', SINGLE_BLOB) AS BLOB;
 
 select * from PICTURES;
 delete from PICTURES;

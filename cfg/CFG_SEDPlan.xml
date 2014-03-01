@@ -40,6 +40,7 @@
   </log4net>
   <connectionString>User ID=sa;Pwd=DBAdm1n@BHS.irel;Initial Catalog=SEDPLAN;Data Source=SG10031CSD6782;Packet Size=4096</connectionString>
   <sql-cmbx_SC_SAID>select distinct SA_ID from DD_TYPES</sql-cmbx_SC_SAID>
+  <BomPlanCalSTP>stp_CalBOMPlan</BomPlanCalSTP>
   <configSet name="SEDPlan.ExcelDataImport">
     <VariableType>L,LS,A°</VariableType>
 
@@ -86,7 +87,6 @@
       <BPSTP>stp_ImportBPData2</BPSTP>
       <SqlRevision>select max(Revision) as MAXREV from BOM_Plan where Plan_Name=</SqlRevision>
     </BOMPlan>
-    
-    
+
   </configSet>
 </configuration>

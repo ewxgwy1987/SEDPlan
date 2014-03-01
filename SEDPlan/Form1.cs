@@ -26,9 +26,11 @@ namespace SEDPlan
         private const string Path_XMLFileSetting2 = @"./cfg/CFG_MDSReader.xml";
         private const string XCFG_CONNSTRING = "connectionString";
         private const string XCFG_SQL_cmbx_SC_SAID = "sql-cmbx_SC_SAID";
+        private const string XCFG_BPCALSTP = "BomPlanCalSTP";
 
         private string connstr;
         private string sql_cmbx_SC_SAID;
+        private string BomPlanCalSTPName;
         private ExcelView xlsview;
         private ExcelDataImport xlsimport;
 
@@ -115,44 +117,48 @@ namespace SEDPlan
 
         private void btn_DDV_Open_Click(object sender, EventArgs e)
         {
-            this.openFileDialog.ShowDialog();
-            this.tbx_DDV_FPath.Text = this.openFileDialog.FileName;
+            DialogResult openres = this.openFileDialog.ShowDialog();
+            if (openres == DialogResult.OK)
+                this.tbx_DDV_FPath.Text = this.openFileDialog.FileName;
         }
 
         private void btn_STD_Open_Click(object sender, EventArgs e)
         {
-            this.openFileDialog.ShowDialog();
-            this.tbx_STD_FPath.Text = this.openFileDialog.FileName;
+            DialogResult openres = this.openFileDialog.ShowDialog();
+            if (openres == DialogResult.OK)
+                this.tbx_STD_FPath.Text = this.openFileDialog.FileName;
         }
 
         private void btn_FW_Open_Click(object sender, EventArgs e)
         {
-            this.openFileDialog.ShowDialog();
-            this.tbx_FW_FPath.Text = this.openFileDialog.FileName;
+            DialogResult openres = this.openFileDialog.ShowDialog();
+            if (openres == DialogResult.OK)
+                this.tbx_FW_FPath.Text = this.openFileDialog.FileName;
         }
 
         private void btn_DDT_Open_Click(object sender, EventArgs e)
         {
-            this.openFileDialog.ShowDialog();
-            this.tbx_DDT_FPath.Text = this.openFileDialog.FileName;
+            DialogResult openres = this.openFileDialog.ShowDialog();
+            if (openres == DialogResult.OK)
+                this.tbx_DDT_FPath.Text = this.openFileDialog.FileName;
         }
 
         private void btn_SC_Open_Click(object sender, EventArgs e)
         {
-            this.openFileDialog.ShowDialog();
-            this.tbx_SC_FPath.Text = this.openFileDialog.FileName;
+            DialogResult openres = this.openFileDialog.ShowDialog();
+            if (openres == DialogResult.OK)
+                this.tbx_SC_FPath.Text = this.openFileDialog.FileName;
         }
 
         private void btn_BP_Open_Click(object sender, EventArgs e)
         {
-            this.openFileDialog.ShowDialog();
-            this.tbx_BP_FPath.Text = this.openFileDialog.FileName;
+            DialogResult openres = this.openFileDialog.ShowDialog();
+            if (openres == DialogResult.OK)
+                this.tbx_BP_FPath.Text = this.openFileDialog.FileName;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'sEDPLANDataSet.SA_Component' table. You can move, or remove it, as needed.
-            this.sA_ComponentTableAdapter.Fill(this.sEDPLANDataSet.SA_Component);
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
 
@@ -177,6 +183,7 @@ namespace SEDPlan
 
                 this.connstr = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xmlRoot, XCFG_CONNSTRING, "");
                 this.sql_cmbx_SC_SAID = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xmlRoot, XCFG_SQL_cmbx_SC_SAID, "");
+                this.BomPlanCalSTPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xmlRoot, XCFG_BPCALSTP, "");
 
                 // Init view function
                 xlsview = new ExcelView();
@@ -370,7 +377,12 @@ namespace SEDPlan
 
             if (res == true)
             {
-                ShowInfo("Data Import Complete.");
+                string infostr = "Data Import Complete.\r\n"
+                    + "File Path:" + this.SC_filepath + "\r\n"
+                    + "SA ID:" + this.SC_xlssheet + "\r\n";
+                this.tbx_SC_FPath.Text = "";
+                this.cmbx_SC_SAID.Text = "";
+                ShowInfo(infostr);
             }
         }
 
@@ -399,7 +411,12 @@ namespace SEDPlan
 
             if (res == true)
             {
-                ShowInfo("Data Import Complete.");
+                string infostr = "Data Import Complete.\r\n"
+                    + "File Path:" + this.DDV_filepath + "\r\n"
+                    + "DD ID:" + this.DDV_xlssheet + "\r\n";
+                this.tbx_DDV_FPath.Text = "";
+                this.tbx_DDV_SAID.Text = "";
+                ShowInfo(infostr);
             }
         }
 
@@ -428,7 +445,11 @@ namespace SEDPlan
 
             if (res == true)
             {
-                ShowInfo("Data Import Complete.");
+                string infostr = "Data Import Complete.\r\n"
+                    + "File Path:" + this.STD_filepath + "\r\n"
+                    + "Sheet Name:" + this.STD_xlssheet + "\r\n";
+                this.tbx_STD_FPath.Text = "";
+                ShowInfo(infostr);
             }
         }
 
@@ -442,6 +463,7 @@ namespace SEDPlan
             {
                 res &= xlsimport.Init(this.dt_BPImport, this.BP_xlssheet);
                 res &= xlsimport.ImportData(TP_BP);
+                res &= BOMPalnCal(this.BP_xlssheet.Trim()); // calculate statistics result
             }
             else
             {
@@ -457,7 +479,12 @@ namespace SEDPlan
 
             if (res == true)
             {
-                ShowInfo("Data Import Complete.");
+                string infostr = "Data Import Complete. Calculation Complete. \r\n"
+                   + "File Path:" + this.BP_filepath + "\r\n"
+                   + "Plan Name:" + this.BP_xlssheet + "\r\n";
+                this.tbx_BP_FPath.Text = "";
+                this.tbx_BP_PlanName.Text = "";
+                ShowInfo(infostr);
             }
         }
 
@@ -573,7 +600,11 @@ namespace SEDPlan
 
             if (res == true)
             {
-                ShowInfo("Data Import Complete.");
+                string infostr = "Data Import Complete.\r\n"
+                   + "File Path:" + this.FW_filepath + "\r\n"
+                   + "Sheet Name:" + this.FW_xlssheet + "\r\n";
+                this.tbx_FW_FPath.Text = "";
+                ShowInfo(infostr);
             }
         }
 
@@ -630,12 +661,60 @@ namespace SEDPlan
 
             if (res == true)
             {
-                ShowInfo("Data Import Complete.");
+                string infostr = "Data Import Complete.\r\n"
+                   + "File Path:" + this.DDT_filepath + "\r\n"
+                   + "SA ID:" + this.DDT_xlssheet + "\r\n";
+                this.cmbx_DDT_SAID.Text = "";
+                this.tbx_DDT_FPath.Text = "";
+                ShowInfo(infostr);
             }
         }
 
-       
 
-        
+        private bool BOMPalnCal(string planname)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+            string showerrstr = "";
+            bool res;
+
+            SqlConnection sqlconn = new SqlConnection(connstr);
+            sqlconn.Open();
+            SqlCommand sqlcmd = new SqlCommand();
+            sqlcmd.Connection = sqlconn;
+
+            try
+            {
+                SqlParameter sPararameter = new SqlParameter("@PlanName", SqlDbType.NVarChar, 100);
+                sPararameter.Direction = ParameterDirection.Input;
+                sPararameter.Value = planname;
+                sqlcmd.Parameters.Add(sPararameter);
+                sqlcmd.CommandType = CommandType.StoredProcedure;
+                sqlcmd.CommandText = this.BomPlanCalSTPName;
+                sqlcmd.ExecuteNonQuery();
+                res = true;
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+                showerrstr += exp.Message;
+                ShowError(showerrstr);
+                res = false;
+            }
+            finally
+            {
+                if (sqlconn != null && sqlconn.State == ConnectionState.Open)
+                {
+                    sqlconn.Close();
+                    sqlconn.Dispose();
+                    if (sqlcmd != null)
+                    {
+                        sqlcmd.Dispose();
+                    }
+                }
+            }
+            return res;
+        }
     }
 }
