@@ -372,6 +372,14 @@ namespace SEDPlan
                 paras[i] = "";
                 if (dr.Table.Columns.Contains(colname))
                     paras[i] = ((string)dr[colname]).Trim();
+                else
+                {
+                    if (colname.ToUpper().IndexOf("WEIGHT") != -1)
+                    {
+                        string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: Detail Design Variabls(A, L & LS)";
+                        throw new Exception(errstr);
+                    }
+                }
                 i++;
             }
             paras[paras.Length - 2] = revision;
@@ -388,8 +396,13 @@ namespace SEDPlan
             foreach (string colname in this.STD_ColNames)
             {
                 paras[i] = "";
-                if (dr[colname] != null)
+                if (dr.Table.Columns.Contains(colname))
                     paras[i] = ((string)dr[colname]).Trim();
+                else
+                {
+                    string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: Standard Parts";
+                    throw new Exception(errstr);
+                }
                 i++;
             }
             paras[paras.Length - 2] = revision;
@@ -406,8 +419,13 @@ namespace SEDPlan
             foreach (string colname in this.FW_ColNames)
             {
                 paras[i] = "";
-                if (dr[colname] != null)
+                if (dr.Table.Columns.Contains(colname))
                     paras[i] = ((string)dr[colname]).Trim();
+                else
+                {
+                    string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: Detail Design Fixed Weight";
+                    throw new Exception(errstr);
+                }
                 i++;
             }
             paras[paras.Length - 2] = revision;
@@ -425,6 +443,11 @@ namespace SEDPlan
                 paras[i] = "";
                 if (dr.Table.Columns.Contains(colname))
                     paras[i] = ((string)dr[colname]).Trim();
+                else
+                {
+                    string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: SA Detail Design Types";
+                    throw new Exception(errstr);
+                }
                 i++;
             }
             paras[paras.Length - 2] = revision;
@@ -438,10 +461,10 @@ namespace SEDPlan
             paras[0] = this.sheetname.Trim(); // sheet name is SA ID
 
             int i = 1;
-            foreach (string paraname in this.SC_ColNames)
+            foreach (string colname in this.SC_ColNames)
             {
                 paras[i] = "";
-                if (paraname == PARA_VAR)
+                if (colname == PARA_VAR)
                 {
                     foreach (string vartype in this.Var_Types)
                     {
@@ -453,10 +476,24 @@ namespace SEDPlan
                                 break;
                             }
                         }
+                        // some variables may not be shown in excel
+                        //else
+                        //{
+                        //    string errstr = "Import Data Error: Cannot find the variable type - " + vartype + " for ExcelType: SA Component";
+                        //    throw new Exception(errstr);
+                        //}
                     }
                 }
                 else
-                    paras[i] = ((string)dr[paraname]).Trim();
+                {
+                    if (dr.Table.Columns.Contains(colname))
+                        paras[i] = ((string)dr[colname]).Trim();
+                    else
+                    {
+                        string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: SA Component";
+                        throw new Exception(errstr);
+                    }
+                }
 
                 i++;
             }
@@ -479,6 +516,11 @@ namespace SEDPlan
                 paras[i] = "";
                 if (dr.Table.Columns.Contains(colname))
                     paras[i] = ((string)dr[colname]).Trim();
+                else
+                {
+                    string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: BOM Plan";
+                    throw new Exception(errstr);
+                }
                 i++;
             }
 
@@ -497,6 +539,11 @@ namespace SEDPlan
                         varnames += ",";
                         vars += ",";
                     }
+                }
+                else
+                {
+                    string errstr = "Import Data Error: Cannot find the variable name - " + varname + " for ExcelType: BOM Plan";
+                    throw new Exception(errstr);
                 }
                 j++;
             }

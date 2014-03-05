@@ -30,11 +30,13 @@ namespace SEDPlan
         private int crr_rowidx = -1;
         private int crr_colidx = -1;
 
+        private const string XLS_PROJECTNO = "Project No:";
         private const int EMPTY_ROWNUM = 3;
         private const int EMPTY_COLNUM = 3;
         private const int MAXROWNUM = 2000;
         private const int MAXCOLNUM = 2000;
 
+        private string m_projno;
         private string[] m_rowheads;
         private string[] m_colheads;
 
@@ -51,6 +53,14 @@ namespace SEDPlan
             get
             {
                 return this.m_sheetname;
+            }
+        }
+
+        public string ProjectNo
+        {
+            get
+            {
+                return this.m_projno;
             }
         }
 
@@ -105,6 +115,7 @@ namespace SEDPlan
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
             int i;
+            this.m_projno = "";
             this.showerrstr = "";
             crr_rowidx = -1;
             start_rowidx = -1;
@@ -326,10 +337,27 @@ namespace SEDPlan
 
             try
             {
+                Range rg_str_projno = (Range)m_worksheet.Cells[1, 1];
+                Range rg_projno = (Range)m_worksheet.Cells[1, 2];
+                if (rg_str_projno.Value != null
+                    && rg_str_projno.Value == XLS_PROJECTNO
+                    && rg_projno.Value != null
+                    && rg_projno.Value != "")
+                {
+                        this.m_projno = rg_projno.Value;
+                }
+                else
+                {
+                    showerrstr += "Cannot find Project No. Please specify \"Project No\" in the first two columns of the first row\n" ;
+                    errstr += showerrstr;
+                    _logger.Error(errstr);
+                    ShowError(showerrstr);
+                    return;
+                }
 
-                int i = 1, j = 1;
+                int i = 2, j = 1;
                 // Find starting row and column
-                for (i = 1; i <= EMPTY_ROWNUM; i++)
+                for (i = 2; i <= EMPTY_ROWNUM; i++)
                 {
                     for (j = 1; j <= EMPTY_COLNUM; j++)
                     {

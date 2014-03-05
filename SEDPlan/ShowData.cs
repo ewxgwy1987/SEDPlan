@@ -11,12 +11,14 @@ namespace SEDPlan
 {
     public partial class ShowData : Form
     {
-        
-        public ShowData(DataTable dt)
+
+        public ShowData(DataTable dt, string projno)
         {
             InitializeComponent();
-            if (dt != null)
+            if (dt != null && projno != "")
             {
+                this.tbxProjectNo.Text = projno;
+                this.tbxProjectNo.ReadOnly = true;
                 this.dataGridView1.DataSource = dt;
                 this.dataGridView1.Refresh();
             }

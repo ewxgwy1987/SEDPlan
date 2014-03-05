@@ -84,7 +84,7 @@
       <BPVarNames>L,LS,A°,TB,H</BPVarNames>
       <!--<BPParameters>PlanName,SAID,Quantity,L_para,LS_para,A_para,TB_para,H_para,Revision,CRTIME</BPParameters>-->
       <BPParameters>PlanName,SAID,Quantity,VarNames,Vars,Revision,CRTIME</BPParameters>
-      <BPSTP>stp_ImportBPData2</BPSTP>
+      <BPSTP>stp_ImportBPData</BPSTP>
       <SqlRevision>select max(Revision) as MAXREV from BOM_Plan where Plan_Name=</SqlRevision>
     </BOMPlan>
 

@@ -63,7 +63,7 @@ DECLARE @PARAS NVARCHAR(100) = '88.25,46.875,,,300';--'L,LS,A,TB,H'
 DECLARE @Revision NVARCHAR(100)='1';
 DECLARE @CRTIME NVARCHAR(100)=GETDATE();
 
-EXEC stp_ImportBPData2 @PlanName,@SAID,@Quantity,@PARAS,@Revision,@CRTIME;
+EXEC stp_ImportBPData @PlanName,@SAID,@Quantity,@PARAS,@Revision,@CRTIME;
 --EXEC stp_ImportBPData @PlanName,@SAID,@Quantity,@L_para,@LS_para,@A_para,@Revision,@CRTIME;
 
 SELECT * FROM BOM_Plan;
@@ -114,7 +114,15 @@ WHERE NOT EXISTS
 
 DECLARE @PlanName NVARCHAR(100)='BOMPlanTest'
 EXEC stp_CalBOMPlan @PlanName;
-SELECT * FROM BOM_Detail;
+--SELECT * FROM BOM_Detail;
+
+DECLARE @REVERSION INT = (SELECT MAX(Revision) FROM BOM_Detail BD WHERE BD.Plan_Name=@PlanName);
+	IF @REVERSION IS NULL
+		SET @REVERSION=0;
+	ELSE 
+		SET @REVERSION = @REVERSION + 1;
+
+select @REVERSION
 
 -----------------------------------------------------------------------------------------------------
 SELECT * FROM BOM_PLAN;
@@ -122,10 +130,14 @@ select * from SA_Process;
 
 select max(Revision) as MAXREV from SA_Component where SA_ID='IS1-30-001';
 
-TRUNCATE TABLE SA_Component;
 TRUNCATE TABLE DD_Variable_Map;
 TRUNCATE TABLE STD_Parts;
+TRUNCATE TABLE SA_Component;
+TRUNCATE TABLE DD_TYPES;
 TRUNCATE TABLE BOM_Plan;
+TRUNCATE TABLE BOM_DETAIL;
+
+
 drop database SEDPLAN;
 
 
@@ -136,12 +148,44 @@ SELECT * FROM #TEST;
 DROP TABLE #TEST;
 
 select ROW_NUMBER() OVER(ORDER BY BD.Plan_Name,BD.Parts_Name,BD.Specification ASC) AS ITEM_NO,
-BD.Plan_Name,BD.Parts_Name,BD.Specification,BD.VAR_TYPE,BD.VAR_VALUE,BD.LHS,BD.RHS,BD.PCE,BD.Total_Weight,SP.Process_Name
+BD.Parts_Name,BD.Specification,BD.VAR_TYPE,BD.VAR_VALUE,BD.LHS,BD.RHS,BD.PCE,BD.Total_Weight,SP.Process_Name
 from BOM_Detail BD, SA_Process SP
-WHERE BD.Process_ID=SP.Process_ID;
+WHERE BD.Process_ID=SP.Process_ID AND BD.Plan_Name=@;
 
 select * from SA_Component sc where sc.IsVariable=1 and sc.Para_Type='' and sc.Specification='IS1-58-002'
 SELECT * FROM DD_Variable_Map DDV WHERE DDV.VAR_Type='LS' AND DDV.DD_ID='IS1-58-002' AND DDV.VAR_Value='45.625';
+SELECT * FROM BOM_Plan;
 
+EXEC stp_RPT_GETDATETIMEFORMAT;
 
+DECLARE @BOMPlan NVARCHAR(100)='BOMPlanTest';
+SELECT ROW_NUMBER() OVER(ORDER BY BP.SA_ID ASC) AS ITEM_NO,
+BP.SA_ID,
+BP_L.VAR_VALUE AS L_VAL,
+BP_LS.VAR_VALUE AS LS_VAL,
+BP_A.VAR_VALUE AS A_VAL,
+BP_TB.VAR_VALUE AS TB_VAL, 
+BP_H.VAR_VALUE AS H_VAL,
+BP.QUANTITY
+FROM BOM_Plan BP
+LEFT JOIN BOM_PLAN BP_L ON BP.SAUID=BP_L.SAUID AND BP.Revision=BP_L.Revision AND BP_L.VAR_TYPE='L'
+LEFT JOIN BOM_PLAN BP_LS ON BP.SAUID=BP_LS.SAUID AND BP.Revision=BP_LS.Revision AND BP_LS.VAR_TYPE='LS'
+LEFT JOIN BOM_PLAN BP_A ON BP.SAUID=BP_A.SAUID AND BP.Revision=BP_A.Revision AND BP_A.VAR_TYPE='A°'
+LEFT JOIN BOM_PLAN BP_H ON BP.SAUID=BP_H.SAUID AND BP.Revision=BP_H.Revision AND BP_H.VAR_TYPE='H'
+LEFT JOIN BOM_PLAN BP_TB ON BP.SAUID=BP_TB.SAUID AND BP.Revision=BP_TB.Revision AND BP_TB.VAR_TYPE='TB'
+WHERE BP.Plan_Name=@BOMPlan AND BP.ISMAIN=1
+AND BP.Revision=(SELECT MAX(Revision) FROM BOM_Plan BP2 WHERE BP2.Plan_Name=@BOMPlan);
 
+SELECT * FROM BOM_Detail where Revision=1;
+
+SELECT * FROM DD_Variable_Map where VAR_Weight=0;
+SELECT * FROM STD_Parts;
+SELECT * FROM SA_Component;
+SELECT * FROM DD_TYPES;
+SELECT * FROM BOM_Plan;
+SELECT * FROM BOM_DETAIL;
+  
+
+SELECT * FROM DD_Variable_Map where VAR_Weight=0;
+
+select distinct Revision,DD_ID FROM DD_Variable_Map where VAR_Weight=0;
