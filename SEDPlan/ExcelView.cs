@@ -356,16 +356,19 @@ namespace SEDPlan
                 //    return;
                 //}
 
-                int i = 2, j = 1;
+                int i = 1, j = 1;
+                int r_idx = 0;
+                if (this.m_projno != "")
+                    r_idx = 1;
                 // Find starting row and column
-                for (i = 2; i <= EMPTY_ROWNUM; i++)
+                for (i = 1; i <= EMPTY_ROWNUM; i++)
                 {
                     for (j = 1; j <= EMPTY_COLNUM; j++)
                     {
-                        Range startcell = (Range)m_worksheet.Cells[i, j];
+                        Range startcell = (Range)m_worksheet.Cells[r_idx + i, j];
                         if (startcell.Value != null && startcell.Value != "")
                         {
-                            this.start_rowidx = i;
+                            this.start_rowidx = r_idx + i;
                             this.start_colidx = j;
                             break;
                         }

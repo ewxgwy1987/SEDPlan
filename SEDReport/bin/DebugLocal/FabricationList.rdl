@@ -1585,14 +1585,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox42">
+                    <Textbox Name="COLOR">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!COLOR.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
@@ -1604,7 +1604,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox42</rd:DefaultName>
+                      <rd:DefaultName>COLOR</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -2813,11 +2813,6 @@
                   <GroupExpression>=Fields!Parts_Name.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
-              <SortExpressions>
-                <SortExpression>
-                  <Value>=Fields!ITEM_NO.Value</Value>
-                </SortExpression>
-              </SortExpressions>
               <TablixMembers>
                 <TablixMember>
                   <TablixMembers>
@@ -3153,7 +3148,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value />
+                      <Value>=First(Fields!ProjectName.Value, "dsProjectName")</Value>
                       <Style>
                         <FontSize>11pt</FontSize>
                       </Style>
@@ -3165,7 +3160,7 @@
               <Top>12.67456mm</Top>
               <Left>1.23352in</Left>
               <Height>6mm</Height>
-              <Width>45mm</Width>
+              <Width>123.31667mm</Width>
               <ZIndex>10</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3213,7 +3208,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value />
+                      <Value>=Parameters!Project.Value</Value>
                       <Style>
                         <FontSize>11pt</FontSize>
                       </Style>
@@ -3578,8 +3573,14 @@ WHERE PIC_NAME = 'PTERIS'</CommandText>
     <DataSet Name="dsAllPlan">
       <Query>
         <DataSourceName>SEDPlan</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@Project">
+            <Value>=Parameters!Project.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
         <CommandText>select distinct Plan_Name
-from BOM_Detail</CommandText>
+from BOM_Detail BD
+WHERE BD.Project_No=@Project</CommandText>
       </Query>
       <Fields>
         <Field Name="Plan_Name">
@@ -3595,18 +3596,16 @@ from BOM_Detail</CommandText>
           <QueryParameter Name="@BOMPlan">
             <Value>=Parameters!BOMPlan.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="@Project">
+            <Value>=Parameters!Project.Value</Value>
+          </QueryParameter>
         </QueryParameters>
-        <CommandText>select ROW_NUMBER() OVER(ORDER BY BD.Parts_Name,BD.Specification ASC) AS ITEM_NO,
-BD.Parts_Name,BD.Specification,BD.VAR_TYPE,BD.VAR_VALUE,BD.LHS,BD.RHS,BD.PCE,BD.Total_Weight,SP.Process_Name
+        <CommandText>select BD.Parts_Name,BD.Specification,BD.VAR_TYPE,BD.VAR_VALUE,BD.LHS,BD.RHS,BD.PCE,BD.Total_Weight,SP.Process_Name,BD.COLOR
 from BOM_Detail BD, SA_Process SP
-WHERE BD.Process_ID=SP.Process_ID AND BD.Plan_Name=@BOMPlan
-AND BD.Revision=(SELECT MAX(Revision) FROM BOM_Detail BD2 WHERE BD2.Plan_Name=@BOMPlan);</CommandText>
+WHERE BD.Project_No=@Project AND BD.Process_ID=SP.Process_ID AND BD.Plan_Name=@BOMPlan
+AND BD.Revision=(SELECT MAX(Revision) FROM BOM_Detail BD2 WHERE BD2.Plan_Name=@BOMPlan AND BD2.Project_No=BD.Project_No);</CommandText>
       </Query>
       <Fields>
-        <Field Name="ITEM_NO">
-          <DataField>ITEM_NO</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
         <Field Name="Parts_Name">
           <DataField>Parts_Name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -3643,10 +3642,62 @@ AND BD.Revision=(SELECT MAX(Revision) FROM BOM_Detail BD2 WHERE BD2.Plan_Name=@B
           <DataField>Process_Name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="COLOR">
+          <DataField>COLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsProjectInfo">
+      <Query>
+        <DataSourceName>SEDPlan</DataSourceName>
+        <CommandText>SELECT DISTINCT ProjectNo,ProjectName 
+FROM ProjectInfo PJ,BOM_Plan BP 
+WHERE PJ.ProjectNo=BP.Project_No;</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ProjectNo">
+          <DataField>ProjectNo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectName">
+          <DataField>ProjectName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsProjectName">
+      <Query>
+        <DataSourceName>SEDPlan</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@Project">
+            <Value>=Parameters!Project.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT ProjectName
+FROM ProjectInfo PJ
+WHERE PJ.ProjectNo=@Project;</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ProjectName">
+          <DataField>ProjectName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
     </DataSet>
   </DataSets>
   <ReportParameters>
+    <ReportParameter Name="Project">
+      <DataType>String</DataType>
+      <Prompt>Project</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsProjectInfo</DataSetName>
+          <ValueField>ProjectNo</ValueField>
+          <LabelField>ProjectName</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
     <ReportParameter Name="BOMPlan">
       <DataType>String</DataType>
       <Prompt>BOM Plan:</Prompt>

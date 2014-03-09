@@ -42,6 +42,7 @@ namespace SEDPlan
         private const string TP_DDT = "DDT";
         private const string TP_SC = "SC";
         private const string TP_BP = "BP";
+        private const string TP_SAIF = "SAIF";
 
         // DDV
         private DataTable dt_DDVImport;
@@ -70,8 +71,14 @@ namespace SEDPlan
 
         // BOM Plan
         private DataTable dt_BPImport;
+        private string BP_projectno;
         private string BP_xlssheet;
         private string BP_filepath;
+
+        // SA Info
+        private DataTable dt_SAIFImport;
+        private string SAIF_xlssheet;
+        private string SAIF_filepath;
 
         Icon ErrIcon;
         Icon InfoIcon;
@@ -139,12 +146,12 @@ namespace SEDPlan
 
                 // Init view function
                 xlsview = new ExcelView();
-                xlsview.OnErrorHappened += new EventHandler<ErrorEventArgs>(ExcelView_OnError);
+                xlsview.OnErrorHappened += new EventHandler<ErrorEventArgs>(EventHandler_OnError);
 
                 // Init import function
                 XmlNode xcfg_ExcelDataImport = PALS.Utilities.XMLConfig.GetConfigSetElement(ref xmlRoot, "configSet", "name", "SEDPlan.ExcelDataImport");
                 xlsimport = new ExcelDataImport(xcfg_ExcelDataImport, this.connstr);
-                xlsimport.OnErrorHappened += new EventHandler<ErrorEventArgs>(ExcelView_OnError);
+                xlsimport.OnErrorHappened += new EventHandler<ErrorEventArgs>(EventHandler_OnError);
 
                 // test
                 this.tbx_DDV_SAID.Text = "MS01-17-301";
@@ -162,6 +169,8 @@ namespace SEDPlan
 
                 this.tbx_BP_PlanName.Text = "BOMPlanTest";
                 this.tbx_BP_FPath.Text = "../../../excel/BomPlan.xlsx";
+
+                this.tbx_SAIF_FPath.Text = "../../../excel/SA Information.xlsx";
 
             }
             catch (Exception exp)
@@ -263,6 +272,20 @@ namespace SEDPlan
             }
         }
 
+        private void btn_SAIF_Open_Click(object sender, EventArgs e)
+        {
+            DialogResult openres = this.openFileDialog.ShowDialog();
+            if (openres == DialogResult.OK)
+            {
+                this.tbx_SAIF_FPath.Text = this.openFileDialog.FileName;
+                if (this.dt_SAIFImport != null)
+                {
+                    this.dt_SAIFImport.Dispose();
+                    this.dt_SAIFImport = null;
+                }
+            }
+        }
+
         private void btn_SC_View_Click(object sender, EventArgs e)
         {
             lbErr.Text = "";
@@ -359,6 +382,7 @@ namespace SEDPlan
                     Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo, GetProjName(xlsview.ProjectNo));
                     fmShowData.Show();
                     this.dt_BPImport = xlsview.ImportData;
+                    this.BP_projectno = xlsview.ProjectNo;
                     this.BP_xlssheet = xlsview.SheetName;
                     this.BP_filepath = xlsview.FilePath;
                 }
@@ -372,7 +396,7 @@ namespace SEDPlan
             }
         }
 
-        private void ExcelView_OnError(object sender, ErrorEventArgs e)
+        private void EventHandler_OnError(object sender, ErrorEventArgs e)
         {
             ShowError(e.ErrorMsg);
         }
@@ -402,7 +426,7 @@ namespace SEDPlan
 
             if (this.dt_SCImport != null)
             {
-                res &= xlsimport.Init(this.dt_SCImport, this.SC_xlssheet);
+                res &= xlsimport.Init(this.dt_SCImport, this.SC_xlssheet, "");
                 res &= xlsimport.ImportData(TP_SC);
             }
             else
@@ -438,7 +462,7 @@ namespace SEDPlan
 
             if (this.dt_DDVImport != null)
             {
-                res &= xlsimport.Init(this.dt_DDVImport, this.DDV_xlssheet);
+                res &= xlsimport.Init(this.dt_DDVImport, this.DDV_xlssheet, "");
                 res &= xlsimport.ImportData(TP_DDV);
             }
             else
@@ -476,7 +500,7 @@ namespace SEDPlan
 
             if (this.dt_STDImport != null)
             {
-                res &= xlsimport.Init(this.dt_STDImport, this.STD_xlssheet);
+                res &= xlsimport.Init(this.dt_STDImport, this.STD_xlssheet, "");
                 res &= xlsimport.ImportData(TP_STD);
             }
             else
@@ -513,9 +537,10 @@ namespace SEDPlan
 
             if (this.dt_BPImport != null)
             {
-                res &= xlsimport.Init(this.dt_BPImport, this.BP_xlssheet);
+                res &= xlsimport.Init(this.dt_BPImport, this.BP_xlssheet, this.BP_projectno);
                 res &= xlsimport.ImportData(TP_BP);
-                res &= BOMPalnCal(this.BP_xlssheet.Trim()); // calculate statistics result
+                if (res == true)
+                    res &= BOMPalnCal(this.BP_xlssheet.Trim(), this.BP_projectno);// calculate statistics result
             }
             else
             {
@@ -637,7 +662,7 @@ namespace SEDPlan
 
             if (this.dt_FWImport != null)
             {
-                res &= xlsimport.Init(this.dt_FWImport, this.FW_xlssheet);
+                res &= xlsimport.Init(this.dt_FWImport, this.FW_xlssheet, "");
                 res &= xlsimport.ImportData(TP_FW);
             }
             else
@@ -700,7 +725,7 @@ namespace SEDPlan
 
             if (this.dt_DDTImport != null)
             {
-                res &= xlsimport.Init(this.dt_DDTImport, this.DDT_xlssheet);
+                res &= xlsimport.Init(this.dt_DDTImport, this.DDT_xlssheet, "");
                 res &= xlsimport.ImportData(TP_DDT);
             }
             else
@@ -727,8 +752,68 @@ namespace SEDPlan
             this.btn_DDT_Import.Enabled = true;
         }
 
+        private void btn_SAIF_View_Click(object sender, EventArgs e)
+        {
+            lbErr.Text = "";
+            errProvider.SetError(lbErr, string.Empty);
 
-        private bool BOMPalnCal(string planname)
+            if (this.tbx_SAIF_FPath.Text.Trim() != "")
+            {
+                xlsview.ClearData();
+                xlsview.Init(this.tbx_SAIF_FPath.Text.Trim(), "");
+
+                if (xlsview.ImportData != null && xlsview.ImportData.Rows.Count > 0)
+                {
+                    Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo, GetProjName(xlsview.ProjectNo));
+                    fmShowData.Show();
+                    this.dt_SAIFImport = xlsview.ImportData;
+                    this.SAIF_xlssheet = xlsview.SheetName;
+                    this.SAIF_filepath = xlsview.FilePath;
+                }
+            }
+            else
+            {
+                if (this.tbx_SAIF_FPath.Text == "")
+                    ShowError("Please specify the imported file");
+            }
+        }
+
+        private void btn_SAIF_Import_Click(object sender, EventArgs e)
+        {
+            this.btn_SAIF_Import.Enabled = false;
+            lbErr.Text = "";
+            errProvider.SetError(lbErr, string.Empty);
+            bool res = true;
+
+            if (this.dt_SAIFImport != null)
+            {
+                res &= xlsimport.Init(this.dt_SAIFImport, this.SAIF_xlssheet, "");
+                res &= xlsimport.ImportData(TP_SAIF);
+            }
+            else
+            {
+                ShowError("Please view the imported data at first.");
+                res = false;
+            }
+
+            if (this.dt_SAIFImport != null)
+            {
+                this.dt_SAIFImport.Dispose();
+                this.dt_SAIFImport = null;
+            }
+
+            if (res == true)
+            {
+                string infostr = "Data Import Complete.\r\n"
+                   + "File Path:" + this.SAIF_filepath + "\r\n"
+                   + "Sheet Name:" + this.SAIF_xlssheet + "\r\n";
+                this.tbx_SAIF_FPath.Text = "";
+                ShowInfo(infostr);
+            }
+            this.btn_SAIF_Import.Enabled = true;
+        }
+
+        private bool BOMPalnCal(string planname, string projno)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
@@ -742,10 +827,16 @@ namespace SEDPlan
 
             try
             {
-                SqlParameter sPararameter = new SqlParameter("@PlanName", SqlDbType.NVarChar, 100);
-                sPararameter.Direction = ParameterDirection.Input;
-                sPararameter.Value = planname;
-                sqlcmd.Parameters.Add(sPararameter);
+                SqlParameter sPara_ProjNo = new SqlParameter("@ProjectNo", SqlDbType.NVarChar, 100);
+                sPara_ProjNo.Direction = ParameterDirection.Input;
+                sPara_ProjNo.Value = projno;
+
+                SqlParameter sPara_PlanName = new SqlParameter("@PlanName", SqlDbType.NVarChar, 100);
+                sPara_PlanName.Direction = ParameterDirection.Input;
+                sPara_PlanName.Value = planname;
+
+                sqlcmd.Parameters.Add(sPara_ProjNo);
+                sqlcmd.Parameters.Add(sPara_PlanName);
                 sqlcmd.CommandType = CommandType.StoredProcedure;
                 sqlcmd.CommandText = this.BomPlanCalSTPName;
                 sqlcmd.ExecuteNonQuery();
@@ -830,5 +921,6 @@ namespace SEDPlan
             }
             return projname;
         }
+
     }
 }

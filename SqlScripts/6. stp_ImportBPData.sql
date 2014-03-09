@@ -3,9 +3,11 @@ USE [SEDPLAN];
 GO
 
 ALTER PROCEDURE dbo.stp_ImportBPData
+		  @ProjectNo NVARCHAR(100),
 		  @PlanName NVARCHAR(100),
 		  @SAID NVARCHAR(100),
 		  @Quantity NVARCHAR(100),
+		  @COLOR NVARCHAR(100),
 		  @VarNames NVARCHAR(MAX),
 		  @Vars NVARCHAR(MAX),
 		  @Revision NVARCHAR(100),
@@ -14,6 +16,7 @@ AS
 BEGIN
 	BEGIN TRANSACTION;
 	BEGIN TRY
+		DECLARE @PROJECT_NO NVARCHAR(20) = @ProjectNo;
 		DECLARE @Plan_Name NVARCHAR(100) = @PlanName;
 		DECLARE @SA_ID NVARCHAR(50) = @SAID;
 		DECLARE @VAR_Type NVARCHAR(5);
@@ -68,8 +71,8 @@ BEGIN
 					SET @IsMain = 0;
 				END
 
-				INSERT INTO BOM_Plan(Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,IsMain,SAUID,Revision,Created_Time)
-				VALUES(@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@IsMain,@SAUID,@NewRevision,@Created_Time);
+				INSERT INTO BOM_Plan(Project_No,Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,COLOR,IsMain,SAUID,Revision,Created_Time)
+				VALUES(@PROJECT_NO,@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@COLOR,@IsMain,@SAUID,@NewRevision,@Created_Time);
 
 				INSERT INTO @VARLIST VALUES(@VAR_Type,@VAR_Value);
 			END
@@ -130,7 +133,8 @@ BEGIN
 		FETCH NEXT FROM VAR_CURSOR INTO @VARTYPE,@VARVALUE;
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
-			IF @VARTYPE != 'TB' AND @VARTYPE != 'H'
+			-- is normal variable(not TB or H)
+			IF @VARTYPE != 'TB' AND @VARTYPE != 'H' 
 			BEGIN
 				IF
 				NOT EXISTS(
@@ -159,10 +163,25 @@ BEGIN
 					THROW 60001,@ERRMSG,1
 				END
 			END
+			-- this is implemented in FUN_BP_VAR_EXISTS
+			--ELSE
+			--BEGIN
+			--	-- is TB or H
+			--	IF NOT EXISTS(
+			--				SELECT DDT.DD_ID
+			--				FROM DD_TYPES DDT,SA_Component SC
+			--				WHERE DDT.SA_ID=@SA_ID AND DDT.Para_Type=@VARTYPE AND DDT.Para_Value=@VARVALUE
+			--				AND DDT.Revision = (SELECT MAX(Revision) FROM DD_TYPES DDT2 WHERE DDT2.SA_ID=DDT.SA_ID)
+			--				AND SC.SA_ID=DDT.SA_ID AND SC.Para_Type=DDT.Para_Type AND DDT.Parts_Name=SC.Parts_Name
+			--				AND SC.Revision = (SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID)
+			--			  )
+			--	BEGIN
+			--		SET @ERRMSG = 'The parameter value is not VALID. Please Check. SA ID:'+@SA_ID + ', VAR TYPE:' + @VARTYPE + ', VAR VALUE:' + @VARVALUE + char(13)+char(10);
+			--		THROW 60001,@ERRMSG,1
+			--	END
+			--END
 			FETCH NEXT FROM VAR_CURSOR INTO @VARTYPE,@VARVALUE;
 		END
-
-		
 
 	END TRY
 	BEGIN CATCH

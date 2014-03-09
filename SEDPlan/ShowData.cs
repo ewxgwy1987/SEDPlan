@@ -24,7 +24,7 @@ namespace SEDPlan
         public ShowData(DataTable dt, string projno, string projname)
         {
             InitializeComponent();
-            if (dt != null && projno != "")
+            if (dt != null)
             {
                 this.dataGridView1.DataSource = dt;
                 this.dataGridView1.Refresh();
@@ -48,6 +48,6 @@ namespace SEDPlan
             this.Close();
         }
 
-        
+
     }
 }

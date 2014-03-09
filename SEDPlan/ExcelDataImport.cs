@@ -16,6 +16,7 @@ namespace SEDPlan
         #region Class Field and Property
 
         private DataTable m_dtImportData;
+        private string projectno;
         private string sheetname;
 
         private const string XCFG_CONNSTR = "connectionString";
@@ -61,6 +62,12 @@ namespace SEDPlan
         private const string XCFG_BP_PARAMETERS = "BPParameters";
         private const string XCFG_BP_STP = "BPSTP";
 
+        // SAIF Tags
+        private const string XCFG_SAIF = "SAInfomation";
+        private const string XCFG_SAIF_COLUMNS = "SIColumns";
+        private const string XCFG_SAIF_PARAMETERS = "SIParameters";
+        private const string XCFG_SAIF_STP = "SISTP";
+
         private const string PARA_VAR = "VAR";
         private const string PARA_WEIGHT = "WEIGHT";
         private const string TP_DDV = "DDV";
@@ -69,6 +76,7 @@ namespace SEDPlan
         private const string TP_DDT = "DDT";
         private const string TP_SC = "SC";
         private const string TP_BP = "BP";
+        private const string TP_SAIF = "SAIF";
 
         private string connstr;
         private string[] Var_Types;
@@ -109,6 +117,12 @@ namespace SEDPlan
         private string[] BP_ParaNames;
         private string BP_STPName;
         private string BP_SQL_REVISION;
+
+        // SAIF
+        private string[] SAIF_ColNames;
+        private string[] SAIF_ParaNames;
+        private string SAIF_STPName;
+        private string SAIF_SQL_REVISION;
 
         private string showerrstr;
 
@@ -189,10 +203,19 @@ namespace SEDPlan
             this.BP_ParaNames = str_BPParas.Split(',');
             this.BP_STPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_BP, XCFG_BP_STP, "");
             this.BP_SQL_REVISION = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_BP, XCFG_SQLREVISION, "");
+
+            // (SAIF)Fetch SA Information configuration
+            XmlNode xml_SAIF = PALS.Utilities.XMLConfig.GetConfigSetElement(ref xconfig, XCFG_SAIF);
+            string str_SAIFCols = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SAIF, XCFG_SAIF_COLUMNS, "");
+            this.SAIF_ColNames = str_SAIFCols.Split(',');
+            string str_SAIFParas = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SAIF, XCFG_SAIF_PARAMETERS, "");
+            this.SAIF_ParaNames = str_SAIFParas.Split(',');
+            this.SAIF_STPName = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SAIF, XCFG_SAIF_STP, "");
+            this.SAIF_SQL_REVISION = PALS.Utilities.XMLConfig.GetSettingFromInnerText(xml_SAIF, XCFG_SQLREVISION, "");
    
         }
 
-        public bool Init(DataTable dtImport, string sheetname)
+        public bool Init(DataTable dtImport, string sheetname, string projectID)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
@@ -205,6 +228,7 @@ namespace SEDPlan
                 {
                     this.m_dtImportData = dtImport;
                     this.sheetname = sheetname;
+                    this.projectno = projectID;
                 }
                 else
                 {
@@ -261,7 +285,7 @@ namespace SEDPlan
                 sqlcmd = new SqlCommand();
                 sqlcmd.Connection = sqlconn;
 
-                int revision = this.getNewRevision(this.sheetname, sqlcmd, tabletype);
+                int revision = this.getNewRevision(sqlcmd, tabletype);
                 string crtime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
                 SqlTransaction sqltran = sqlconn.BeginTransaction();
@@ -291,6 +315,9 @@ namespace SEDPlan
                                 break;     
                             case TP_BP:
                                 paras = AnalyzeDataRow_BP(dr, revision.ToString(), crtime);
+                                break;
+                            case TP_SAIF:
+                                paras = AnalyzeDataRow_SAIF(dr, revision.ToString(), crtime);
                                 break;
                             default:
                                 paras = null;
@@ -503,12 +530,12 @@ namespace SEDPlan
             return paras;
         }
 
-
         private string[] AnalyzeDataRow_BP(DataRow dr, string revision, string created_time)
         {
-            string[] paras = new string[this.BP_ColNames.Length + 2 + 3];
-            paras[0] = this.sheetname.Trim(); // sheetname is the plan name
-            int i = 1;
+            string[] paras = new string[this.BP_ColNames.Length + 2 + 4];
+            paras[0] = this.projectno;
+            paras[1] = this.sheetname.Trim(); // sheetname is the plan name
+            int i = 2;
 
             // the non-var columns 
             foreach (string colname in this.BP_ColNames)
@@ -554,6 +581,29 @@ namespace SEDPlan
             return paras;
         }
 
+        private string[] AnalyzeDataRow_SAIF(DataRow dr, string revision, string created_time)
+        {
+            string[] paras = new string[this.SAIF_ColNames.Length + 2];
+            //paras[0] = this.sheetname.Trim();
+
+            int i = 0;
+            foreach (string colname in this.SAIF_ColNames)
+            {
+                paras[i] = "";
+                if (dr.Table.Columns.Contains(colname))
+                    paras[i] = ((string)dr[colname]).Trim();
+                else
+                {
+                    string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: Detail Design Fixed Weight";
+                    throw new Exception(errstr);
+                }
+                i++;
+            }
+            paras[paras.Length - 2] = revision;
+            paras[paras.Length - 1] = created_time;
+            return paras;
+        }
+
         private bool InsertToDatabase(string[] paras, SqlCommand sqlcmd, string tabletype)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
@@ -594,6 +644,10 @@ namespace SEDPlan
                         paranames = this.BP_ParaNames;
                         sqlcmd.CommandText = BP_STPName;
                         break;
+                    case TP_SAIF:
+                        paranames = this.SAIF_ParaNames;
+                        sqlcmd.CommandText = SAIF_STPName;
+                        break;
                     default:
                         paranames = null;
                         sqlcmd.CommandText = "";
@@ -612,7 +666,7 @@ namespace SEDPlan
                 int i;
                 for (i = 0; i < paras.Length; i++)
                 {
-                    sPararameter[i] = new SqlParameter("@" + paranames[i], SqlDbType.NVarChar, 100);
+                    sPararameter[i] = new SqlParameter("@" + paranames[i], SqlDbType.NVarChar, 500);
                     sPararameter[i].Direction = ParameterDirection.Input;
                     sPararameter[i].Value = paras[i];
                     sqlcmd.Parameters.Add(sPararameter[i]);
@@ -636,7 +690,7 @@ namespace SEDPlan
             return res;
         }
 
-        private int getNewRevision(string sheetname, SqlCommand sqlcmd, string tabletype)
+        private int getNewRevision(SqlCommand sqlcmd, string tabletype)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
@@ -647,7 +701,7 @@ namespace SEDPlan
                 switch (tabletype)
                 {
                     case TP_DDV:
-                        sqlstr = this.DDV_SQL_REVISION + "'" + sheetname + "';";
+                        sqlstr = this.DDV_SQL_REVISION + "'" + this.sheetname + "';";
                         break;
                     case TP_STD:
                         sqlstr = this.STD_SQL_REVISION;
@@ -656,13 +710,16 @@ namespace SEDPlan
                         sqlstr = this.FW_SQL_REVISION;
                         break;
                     case TP_DDT:
-                        sqlstr = this.DDT_SQL_REVISION + "'" + sheetname + "';";;
+                        sqlstr = this.DDT_SQL_REVISION + "'" + this.sheetname + "';";;
                         break;
                     case TP_SC:
-                        sqlstr = this.SC_SQL_REVISION + "'" + sheetname + "';";
+                        sqlstr = this.SC_SQL_REVISION + "'" + this.sheetname + "';";
                         break;
                     case TP_BP:
-                        sqlstr = this.BP_SQL_REVISION + "'" + sheetname + "';";
+                        sqlstr = this.BP_SQL_REVISION + " where Plan_Name='" + this.sheetname + "' AND Project_No='" + this.projectno + "';";
+                        break;
+                    case TP_SAIF:
+                        sqlstr = this.SAIF_SQL_REVISION;
                         break;
                     default:
                         sqlstr = "";

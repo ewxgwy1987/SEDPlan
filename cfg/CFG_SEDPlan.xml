@@ -38,7 +38,8 @@
       <level value="ALL" />
     </logger>
   </log4net>
-  <connectionString>User ID=sa;Pwd=DBAdm1n@BHS.irel;Initial Catalog=SEDPLAN;Data Source=SG10031CSD6782;Packet Size=4096</connectionString>
+  <!--<connectionString>User ID=sa;Pwd=DBAdm1n@BHS.irel;Initial Catalog=SEDPLAN;Data Source=SG10031CSD6782;Packet Size=4096</connectionString>-->
+  <connectionString>User ID=sa;Pwd=DBAdm1n@BHS.irel;Initial Catalog=SEDPLAN;Data Source=EWXGWY1987-PC\MSSQLSERVERGWY;Packet Size=4096</connectionString>
   <sql-cmbx_SC_SAID>select distinct SA_ID from DD_TYPES</sql-cmbx_SC_SAID>
   <BomPlanCalSTP>stp_CalBOMPlan</BomPlanCalSTP>
   <configSet name="SEDPlan.ExcelDataImport">
@@ -59,8 +60,8 @@
     </StandardParts>
 
     <FixedWeight>
-      <FWColumns>DD ID,WEIGHT (lbs/pce)</FWColumns>
-      <FWParameters>DDID,Weight,Revision,CRTIME</FWParameters>
+      <FWColumns>DD ID,WEIGHT (lbs/pce),color</FWColumns>
+      <FWParameters>DDID,Weight,COLOR,Revision,CRTIME</FWParameters>
       <FWSTP>stp_ImportFWData</FWSTP>
       <SqlRevision>select max(Revision) as MAXREV from DD_Variable_Map where VAR_Type='F';</SqlRevision>
     </FixedWeight>
@@ -80,13 +81,20 @@
     </SAComponent>
 
     <BOMPlan>
-      <BPColumns>SAID,Quantity</BPColumns>
+      <BPColumns>SAID,Quantity,Color Code</BPColumns>
       <BPVarNames>L,LS,A°,TB,H</BPVarNames>
       <!--<BPParameters>PlanName,SAID,Quantity,L_para,LS_para,A_para,TB_para,H_para,Revision,CRTIME</BPParameters>-->
-      <BPParameters>PlanName,SAID,Quantity,VarNames,Vars,Revision,CRTIME</BPParameters>
+      <BPParameters>ProjectNo,PlanName,SAID,Quantity,COLOR,VarNames,Vars,Revision,CRTIME</BPParameters>
       <BPSTP>stp_ImportBPData</BPSTP>
-      <SqlRevision>select max(Revision) as MAXREV from BOM_Plan where Plan_Name=</SqlRevision>
+      <SqlRevision>select max(Revision) as MAXREV from BOM_Plan</SqlRevision>
     </BOMPlan>
+
+    <SAInfomation>
+      <SIColumns>SA ID,DESCRIPTION</SIColumns>
+      <SIParameters>SAID,Dscp,Revision,CRTIME</SIParameters>
+      <SISTP>stp_ImportSAIFData</SISTP>
+      <SqlRevision>select max(Revision) as MAXREV from SA_INFO;</SqlRevision>
+    </SAInfomation>
 
   </configSet>
 </configuration>

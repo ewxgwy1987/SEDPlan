@@ -1273,14 +1273,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Parts_Name">
+                    <Textbox Name="SA_DESCRIPTION">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!SA_DESCRIPTION.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
@@ -1292,7 +1292,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Parts_Name</rd:DefaultName>
+                      <rd:DefaultName>SA_DESCRIPTION</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1833,14 +1833,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox127">
+                    <Textbox Name="COLOR">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!COLOR.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
@@ -1852,7 +1852,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox127</rd:DefaultName>
+                      <rd:DefaultName>COLOR</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1885,6 +1885,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -3323,7 +3324,7 @@
                 </Paragraph>
               </Paragraphs>
               <Top>2.27263mm</Top>
-              <Left>1.25504in</Left>
+              <Left>1.50504in</Left>
               <Height>6mm</Height>
               <Width>45mm</Width>
               <ZIndex>6</ZIndex>
@@ -3404,7 +3405,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value />
+                      <Value>=First(Fields!ProjectName.Value, "dsProjectName")</Value>
                       <Style>
                         <FontSize>11pt</FontSize>
                       </Style>
@@ -3414,9 +3415,9 @@
                 </Paragraph>
               </Paragraphs>
               <Top>10.03652mm</Top>
-              <Left>1.25504in</Left>
+              <Left>1.50504in</Left>
               <Height>6mm</Height>
-              <Width>45mm</Width>
+              <Width>107.08344mm</Width>
               <ZIndex>9</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3464,7 +3465,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value />
+                      <Value>=Parameters!Project.Value</Value>
                       <Style>
                         <FontSize>11pt</FontSize>
                       </Style>
@@ -3474,7 +3475,7 @@
                 </Paragraph>
               </Paragraphs>
               <Top>17.80041mm</Top>
-              <Left>1.25504in</Left>
+              <Left>1.50504in</Left>
               <Height>6mm</Height>
               <Width>45mm</Width>
               <ZIndex>11</ZIndex>
@@ -3535,7 +3536,7 @@
                 </Paragraph>
               </Paragraphs>
               <Top>33.24766mm</Top>
-              <Left>1.25504in</Left>
+              <Left>1.50504in</Left>
               <Height>6mm</Height>
               <Width>45mm</Width>
               <ZIndex>13</ZIndex>
@@ -3565,7 +3566,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox31</rd:DefaultName>
               <Top>1.10336in</Top>
-              <Left>1.30972in</Left>
+              <Left>1.55972in</Left>
               <Height>0.15005in</Height>
               <Width>0.53066in</Width>
               <ZIndex>14</ZIndex>
@@ -3593,7 +3594,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox31</rd:DefaultName>
               <Top>1.10336in</Top>
-              <Left>1.90982in</Left>
+              <Left>2.15982in</Left>
               <Height>0.15005in</Height>
               <Width>0.53066in</Width>
               <ZIndex>15</ZIndex>
@@ -3621,7 +3622,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox31</rd:DefaultName>
               <Top>1.10336in</Top>
-              <Left>2.49604in</Left>
+              <Left>2.74604in</Left>
               <Height>0.15005in</Height>
               <Width>0.53066in</Width>
               <ZIndex>16</ZIndex>
@@ -3649,7 +3650,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox34</rd:DefaultName>
               <Top>0.08947in</Top>
-              <Left>0.92841in</Left>
+              <Left>1.17841in</Left>
               <Height>0.23622in</Height>
               <Width>0.21875in</Width>
               <ZIndex>17</ZIndex>
@@ -3681,7 +3682,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox34</rd:DefaultName>
               <Top>0.39514in</Top>
-              <Left>0.92841in</Left>
+              <Left>1.17841in</Left>
               <Height>0.23622in</Height>
               <Width>0.21875in</Width>
               <ZIndex>18</ZIndex>
@@ -3713,7 +3714,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox34</rd:DefaultName>
               <Top>0.7008in</Top>
-              <Left>0.92841in</Left>
+              <Left>1.17841in</Left>
               <Height>0.24089in</Height>
               <Width>0.21875in</Width>
               <ZIndex>19</ZIndex>
@@ -3745,7 +3746,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox34</rd:DefaultName>
               <Top>1.30896in</Top>
-              <Left>0.92841in</Left>
+              <Left>1.17841in</Left>
               <Height>0.23622in</Height>
               <Width>0.21875in</Width>
               <ZIndex>20</ZIndex>
@@ -3792,8 +3793,8 @@
               <rd:DefaultName>Textbox3</rd:DefaultName>
               <Top>1.68755in</Top>
               <Left>0.11674in</Left>
-              <Height>10.23333mm</Height>
-              <Width>18.85234mm</Width>
+              <Height>6.00025mm</Height>
+              <Width>25.20253mm</Width>
               <ZIndex>22</ZIndex>
               <Style>
                 <Border>
@@ -3824,7 +3825,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox34</rd:DefaultName>
               <Top>1.68756in</Top>
-              <Left>0.92841in</Left>
+              <Left>1.17841in</Left>
               <Height>0.23622in</Height>
               <Width>0.21875in</Width>
               <ZIndex>23</ZIndex>
@@ -3855,7 +3856,7 @@
                 </Paragraph>
               </Paragraphs>
               <Top>42.86365mm</Top>
-              <Left>1.25504in</Left>
+              <Left>1.50504in</Left>
               <Height>13.56929mm</Height>
               <Width>107.08344mm</Width>
               <ZIndex>24</ZIndex>
@@ -3934,19 +3935,6 @@ WHERE PIC_NAME = 'PTERIS'</CommandText>
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="dsAllPlan">
-      <Query>
-        <DataSourceName>SEDPlan</DataSourceName>
-        <CommandText>select distinct Plan_Name
-from BOM_Detail</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="Plan_Name">
-          <DataField>Plan_Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
     <DataSet Name="dsSubAssemblyList">
       <Query>
         <DataSourceName>SEDPlan</DataSourceName>
@@ -3954,8 +3942,11 @@ from BOM_Detail</CommandText>
           <QueryParameter Name="@FabricationList">
             <Value>=Parameters!FabricationList.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="@Project">
+            <Value>=Parameters!Project.Value</Value>
+          </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT SA_ID,L_VAL,LS_VAL,A_VAL,TB_VAL,H_VAL,SUM(QUANTITY) AS QUANTITY
+        <CommandText>SELECT SI.SA_DESCRIPTION,ALLBP.SA_ID,L_VAL,LS_VAL,A_VAL,TB_VAL,H_VAL,SUM(QUANTITY)AS QUANTITY,COLOR 
 FROM(
 	SELECT 
 	BP.SA_ID,
@@ -3964,21 +3955,28 @@ FROM(
 	BP_A.VAR_VALUE AS A_VAL,
 	BP_TB.VAR_VALUE AS TB_VAL, 
 	BP_H.VAR_VALUE AS H_VAL,
-	BP.QUANTITY
+	BP.QUANTITY,
+	BP.COLOR
 	FROM BOM_Plan BP
 	LEFT JOIN BOM_PLAN BP_L ON BP.SAUID=BP_L.SAUID AND BP.Revision=BP_L.Revision AND BP_L.VAR_TYPE='L'
 	LEFT JOIN BOM_PLAN BP_LS ON BP.SAUID=BP_LS.SAUID AND BP.Revision=BP_LS.Revision AND BP_LS.VAR_TYPE='LS'
 	LEFT JOIN BOM_PLAN BP_A ON BP.SAUID=BP_A.SAUID AND BP.Revision=BP_A.Revision AND BP_A.VAR_TYPE='A°'
 	LEFT JOIN BOM_PLAN BP_H ON BP.SAUID=BP_H.SAUID AND BP.Revision=BP_H.Revision AND BP_H.VAR_TYPE='H'
 	LEFT JOIN BOM_PLAN BP_TB ON BP.SAUID=BP_TB.SAUID AND BP.Revision=BP_TB.Revision AND BP_TB.VAR_TYPE='TB'
-	WHERE BP.Plan_Name IN (@FabricationList) AND BP.ISMAIN=1
-	AND BP.Revision=(SELECT MAX(Revision) FROM BOM_Plan BP2 WHERE BP2.Plan_Name=BP.Plan_Name)
-) AS ALLBP
-GROUP BY SA_ID,L_VAL,LS_VAL,A_VAL,TB_VAL,H_VAL;</CommandText>
+	WHERE BP.Project_No=@Project AND BP.Plan_Name IN (@FabricationList) AND BP.ISMAIN=1
+	AND BP.Revision=(SELECT MAX(Revision) FROM BOM_Plan BP2 WHERE BP2.Plan_Name=BP.Plan_Name AND BP2.Project_No=BP.Project_No)
+) AS ALLBP, SA_INFO SI
+WHERE ALLBP.SA_ID=SI.SA_ID
+AND SI.Revision=(SELECT MAX(Revision) FROM SA_INFO SI2 WHERE SI2.SA_ID=SI.SA_ID)
+GROUP BY SI.SA_DESCRIPTION,ALLBP.SA_ID,L_VAL,LS_VAL,A_VAL,TB_VAL,H_VAL,COLOR;</CommandText>
       </Query>
       <Fields>
         <Field Name="SA_ID">
           <DataField>SA_ID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SA_DESCRIPTION">
+          <DataField>SA_DESCRIPTION</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="L_VAL">
@@ -4005,13 +4003,23 @@ GROUP BY SA_ID,L_VAL,LS_VAL,A_VAL,TB_VAL,H_VAL;</CommandText>
           <DataField>QUANTITY</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="COLOR">
+          <DataField>COLOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
     </DataSet>
     <DataSet Name="dsFabricationList">
       <Query>
         <DataSourceName>SEDPlan</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@Project">
+            <Value>=Parameters!Project.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
         <CommandText>SELECT DISTINCT PLAN_NAME
-FROM BOM_PLAN;</CommandText>
+FROM BOM_PLAN BP
+WHERE BP.Project_No=@Project;</CommandText>
       </Query>
       <Fields>
         <Field Name="PLAN_NAME">
@@ -4020,8 +4028,56 @@ FROM BOM_PLAN;</CommandText>
         </Field>
       </Fields>
     </DataSet>
+    <DataSet Name="dsProjectInfo">
+      <Query>
+        <DataSourceName>SEDPlan</DataSourceName>
+        <CommandText>SELECT DISTINCT ProjectNo,ProjectName 
+FROM ProjectInfo PJ,BOM_Plan BP 
+WHERE PJ.ProjectNo=BP.Project_No;</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ProjectNo">
+          <DataField>ProjectNo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProjectName">
+          <DataField>ProjectName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsProjectName">
+      <Query>
+        <DataSourceName>SEDPlan</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@Project">
+            <Value>=Parameters!Project.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT ProjectName
+FROM ProjectInfo PJ
+WHERE PJ.ProjectNo=@Project;</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ProjectName">
+          <DataField>ProjectName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
   </DataSets>
   <ReportParameters>
+    <ReportParameter Name="Project">
+      <DataType>String</DataType>
+      <Prompt>Project : </Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsProjectInfo</DataSetName>
+          <ValueField>ProjectNo</ValueField>
+          <LabelField>ProjectName</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
     <ReportParameter Name="FabricationList">
       <DataType>String</DataType>
       <Prompt>Fabrication List :</Prompt>
