@@ -189,7 +189,7 @@ DROP DATABASE SEDPLAN;
 -- Report: Fabrication List 
 DECLARE @BOMPlan NVARCHAR(100)='FAB01-B3-02';
 DECLARE @Project NVARCHAR(50)='S32A1305700';
-select BD.Parts_Name,BD.Specification,BD.VAR_TYPE,BD.VAR_VALUE,BD.LHS,BD.RHS,BD.PCE,BD.Total_Weight,SP.Process_Name
+select BD.Parts_Name,BD.Specification,BD.VAR_TYPE,BD.VAR_VALUE,BD.LHS,BD.RHS,BD.PCE,BD.Total_Weight,SP.Process_Name,BD.COLOR
 from BOM_Detail BD, SA_Process SP
 WHERE BD.Project_No=@Project AND BD.Process_ID=SP.Process_ID AND BD.Plan_Name=@BOMPlan
 AND BD.Revision=(SELECT MAX(Revision) FROM BOM_Detail BD2 WHERE BD2.Plan_Name=@BOMPlan AND BD2.Project_No=BD.Project_No);
