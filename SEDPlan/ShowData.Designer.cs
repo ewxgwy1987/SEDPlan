@@ -33,7 +33,7 @@
             this.lbProjectNo = new System.Windows.Forms.Label();
             this.tbxProjectNo = new System.Windows.Forms.TextBox();
             this.lbProjectName = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbxProjectName = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,6 +68,7 @@
             this.lbProjectNo.Size = new System.Drawing.Size(111, 14);
             this.lbProjectNo.TabIndex = 2;
             this.lbProjectNo.Text = "Project No : ";
+            this.lbProjectNo.Visible = false;
             // 
             // tbxProjectNo
             // 
@@ -78,6 +79,7 @@
             this.tbxProjectNo.Name = "tbxProjectNo";
             this.tbxProjectNo.Size = new System.Drawing.Size(141, 23);
             this.tbxProjectNo.TabIndex = 3;
+            this.tbxProjectNo.Visible = false;
             // 
             // lbProjectName
             // 
@@ -88,23 +90,25 @@
             this.lbProjectName.Size = new System.Drawing.Size(127, 14);
             this.lbProjectName.TabIndex = 4;
             this.lbProjectName.Text = "Project Name : ";
+            this.lbProjectName.Visible = false;
             // 
-            // textBox1
+            // tbxProjectName
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.Info;
-            this.textBox1.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.ForeColor = System.Drawing.Color.OrangeRed;
-            this.textBox1.Location = new System.Drawing.Point(435, 6);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(281, 23);
-            this.textBox1.TabIndex = 5;
+            this.tbxProjectName.BackColor = System.Drawing.SystemColors.Info;
+            this.tbxProjectName.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tbxProjectName.ForeColor = System.Drawing.Color.OrangeRed;
+            this.tbxProjectName.Location = new System.Drawing.Point(435, 6);
+            this.tbxProjectName.Name = "tbxProjectName";
+            this.tbxProjectName.Size = new System.Drawing.Size(281, 23);
+            this.tbxProjectName.TabIndex = 5;
+            this.tbxProjectName.Visible = false;
             // 
             // ShowData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(877, 542);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbxProjectName);
             this.Controls.Add(this.lbProjectName);
             this.Controls.Add(this.tbxProjectNo);
             this.Controls.Add(this.lbProjectNo);
@@ -125,6 +129,6 @@
         private System.Windows.Forms.Label lbProjectNo;
         private System.Windows.Forms.TextBox tbxProjectNo;
         private System.Windows.Forms.Label lbProjectName;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbxProjectName;
     }
 }

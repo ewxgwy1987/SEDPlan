@@ -275,7 +275,7 @@ namespace SEDPlan
                 
                 if (xlsview.ImportData != null && xlsview.ImportData.Rows.Count > 0)
                 {
-                    Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo);
+                    Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo, GetProjName(xlsview.ProjectNo));
                     fmShowData.Show();
                     this.dt_SCImport = xlsview.ImportData;
                     this.SC_xlssheet = xlsview.SheetName;
@@ -303,7 +303,7 @@ namespace SEDPlan
 
                 if (xlsview.ImportData != null && xlsview.ImportData.Rows.Count > 0)
                 {
-                    Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo);
+                    Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo, GetProjName(xlsview.ProjectNo));
                     fmShowData.Show();
                     this.dt_DDVImport = xlsview.ImportData;
                     this.DDV_xlssheet = xlsview.SheetName;
@@ -331,7 +331,7 @@ namespace SEDPlan
 
                 if (xlsview.ImportData != null && xlsview.ImportData.Rows.Count > 0)
                 {
-                    Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo);
+                    Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo, GetProjName(xlsview.ProjectNo));
                     fmShowData.Show();
                     this.dt_STDImport = xlsview.ImportData;
                     this.STD_xlssheet = xlsview.SheetName;
@@ -356,7 +356,7 @@ namespace SEDPlan
 
                 if (xlsview.ImportData != null && xlsview.ImportData.Rows.Count > 0)
                 {
-                    Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo);
+                    Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo, GetProjName(xlsview.ProjectNo));
                     fmShowData.Show();
                     this.dt_BPImport = xlsview.ImportData;
                     this.BP_xlssheet = xlsview.SheetName;
@@ -542,7 +542,6 @@ namespace SEDPlan
             this.btn_BP_Import.Enabled = true;
         }
 
-
         private void cmbx_SC_SAID_KeyUP(object sender, KeyEventArgs e)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
@@ -615,7 +614,7 @@ namespace SEDPlan
 
                 if (xlsview.ImportData != null && xlsview.ImportData.Rows.Count > 0)
                 {
-                    Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo);
+                    Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo, GetProjName(xlsview.ProjectNo));
                     fmShowData.Show();
                     this.dt_FWImport = xlsview.ImportData;
                     this.FW_xlssheet = xlsview.SheetName;
@@ -676,7 +675,7 @@ namespace SEDPlan
 
                 if (xlsview.ImportData != null && xlsview.ImportData.Rows.Count > 0)
                 {
-                    Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo);
+                    Form fmShowData = new ShowData(xlsview.ImportData, xlsview.ProjectNo, GetProjName(xlsview.ProjectNo));
                     fmShowData.Show();
                     this.dt_DDTImport = xlsview.ImportData;
                     this.DDT_xlssheet = xlsview.SheetName;
@@ -781,6 +780,9 @@ namespace SEDPlan
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
             string showerrstr = "";
             string projname = "";
+
+            if (projno.Trim() == "")
+                return "";
 
             SqlConnection sqlconn = new SqlConnection(connstr);
             sqlconn.Open();

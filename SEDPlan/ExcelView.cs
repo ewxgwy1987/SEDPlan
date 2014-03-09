@@ -346,14 +346,15 @@ namespace SEDPlan
                 {
                         this.m_projno = rg_projno.Value;
                 }
-                else
-                {
-                    showerrstr += "Cannot find Project No. Please specify \"Project No\" in the first two columns of the first row\n" ;
-                    errstr += showerrstr;
-                    _logger.Error(errstr);
-                    ShowError(showerrstr);
-                    return;
-                }
+                // By now, only BOM Plan can be specified project no
+                //else
+                //{
+                //    showerrstr += "Cannot find Project No. Please specify \"Project No\" in the first two columns of the first row\n" ;
+                //    errstr += showerrstr;
+                //    _logger.Error(errstr);
+                //    ShowError(showerrstr);
+                //    return;
+                //}
 
                 int i = 2, j = 1;
                 // Find starting row and column

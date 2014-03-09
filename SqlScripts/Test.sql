@@ -188,4 +188,6 @@ SELECT * FROM BOM_DETAIL;
 
 SELECT * FROM DD_Variable_Map where VAR_Weight=0;
 
+
+select * from PICTURES;
 select distinct Revision,DD_ID FROM DD_Variable_Map where VAR_Weight=0;
