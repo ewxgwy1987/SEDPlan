@@ -2844,7 +2844,7 @@
       </Border>
     </Style>
   </Body>
-  <Width>9.18075in</Width>
+  <Width>9.05575in</Width>
   <Page>
     <PageHeader>
       <Height>2.34435in</Height>
@@ -3087,7 +3087,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Subject</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>11pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -3118,7 +3120,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Project</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>11pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -3178,7 +3182,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Job No</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>11pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -3238,7 +3244,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>List No</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>11pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -3270,7 +3278,8 @@
                     <TextRun>
                       <Value>=Parameters!BOMPlan.Value</Value>
                       <Style>
-                        <FontSize>8pt</FontSize>
+                        <FontSize>11pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
                         <Format>G</Format>
                       </Style>
                     </TextRun>
@@ -3384,6 +3393,7 @@
                     <TextRun>
                       <Value>:</Value>
                       <Style>
+                        <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -3416,6 +3426,7 @@
                     <TextRun>
                       <Value>:</Value>
                       <Style>
+                        <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -3448,6 +3459,7 @@
                     <TextRun>
                       <Value>:</Value>
                       <Style>
+                        <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -3480,6 +3492,7 @@
                     <TextRun>
                       <Value>:</Value>
                       <Style>
+                        <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>

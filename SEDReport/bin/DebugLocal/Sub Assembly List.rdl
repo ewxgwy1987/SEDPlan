@@ -1885,7 +1885,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -3117,7 +3116,7 @@
     <Height>1.33723in</Height>
     <Style />
   </Body>
-  <Width>8.94377in</Width>
+  <Width>8.92206in</Width>
   <Page>
     <PageHeader>
       <Height>2.45777in</Height>
@@ -3144,8 +3143,8 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>1.68756in</Top>
-              <Left>7.11674in</Left>
+              <Top>1.63756in</Top>
+              <Left>7.34174in</Left>
               <Height>6mm</Height>
               <Width>23.00012mm</Width>
               <Style>
@@ -3172,8 +3171,8 @@
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>1.9632in</Top>
-              <Left>6.48674in</Left>
+              <Top>1.9132in</Top>
+              <Left>6.71174in</Left>
               <Height>6mm</Height>
               <Width>15mm</Width>
               <ZIndex>1</ZIndex>
@@ -3201,8 +3200,8 @@
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>1.41195in</Top>
-              <Left>6.48674in</Left>
+              <Top>1.36195in</Top>
+              <Left>6.71174in</Left>
               <Height>6mm</Height>
               <Width>15mm</Width>
               <ZIndex>2</ZIndex>
@@ -3230,8 +3229,8 @@
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>1.68756in</Top>
-              <Left>6.48674in</Left>
+              <Top>1.63756in</Top>
+              <Left>6.71174in</Left>
               <Height>6mm</Height>
               <Width>15mm</Width>
               <ZIndex>3</ZIndex>
@@ -3260,8 +3259,8 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>1.96319in</Top>
-              <Left>7.11674in</Left>
+              <Top>1.91319in</Top>
+              <Left>7.34174in</Left>
               <Height>6mm</Height>
               <Width>23.00012mm</Width>
               <ZIndex>4</ZIndex>
@@ -3291,8 +3290,8 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>1.41195in</Top>
-              <Left>7.11674in</Left>
+              <Top>1.36195in</Top>
+              <Left>7.34174in</Left>
               <Height>6mm</Height>
               <Width>23.00012mm</Width>
               <ZIndex>5</ZIndex>
@@ -3324,7 +3323,7 @@
                 </Paragraph>
               </Paragraphs>
               <Top>2.27263mm</Top>
-              <Left>1.50504in</Left>
+              <Left>1.63004in</Left>
               <Height>6mm</Height>
               <Width>45mm</Width>
               <ZIndex>6</ZIndex>
@@ -3344,7 +3343,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Subject</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>11pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -3375,7 +3376,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Project</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>11pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -3415,7 +3418,7 @@
                 </Paragraph>
               </Paragraphs>
               <Top>10.03652mm</Top>
-              <Left>1.50504in</Left>
+              <Left>1.63004in</Left>
               <Height>6mm</Height>
               <Width>107.08344mm</Width>
               <ZIndex>9</ZIndex>
@@ -3435,7 +3438,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Job No</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>11pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -3475,7 +3480,7 @@
                 </Paragraph>
               </Paragraphs>
               <Top>17.80041mm</Top>
-              <Left>1.50504in</Left>
+              <Left>1.63004in</Left>
               <Height>6mm</Height>
               <Width>45mm</Width>
               <ZIndex>11</ZIndex>
@@ -3495,7 +3500,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>List No</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>11pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -3527,7 +3534,7 @@
                     <TextRun>
                       <Value />
                       <Style>
-                        <FontSize>8pt</FontSize>
+                        <FontSize>11pt</FontSize>
                         <Format>G</Format>
                       </Style>
                     </TextRun>
@@ -3536,7 +3543,7 @@
                 </Paragraph>
               </Paragraphs>
               <Top>33.24766mm</Top>
-              <Left>1.50504in</Left>
+              <Left>1.63004in</Left>
               <Height>6mm</Height>
               <Width>45mm</Width>
               <ZIndex>13</ZIndex>
@@ -3566,7 +3573,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox31</rd:DefaultName>
               <Top>1.10336in</Top>
-              <Left>1.55972in</Left>
+              <Left>1.68472in</Left>
               <Height>0.15005in</Height>
               <Width>0.53066in</Width>
               <ZIndex>14</ZIndex>
@@ -3594,7 +3601,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox31</rd:DefaultName>
               <Top>1.10336in</Top>
-              <Left>2.15982in</Left>
+              <Left>2.28482in</Left>
               <Height>0.15005in</Height>
               <Width>0.53066in</Width>
               <ZIndex>15</ZIndex>
@@ -3622,7 +3629,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox31</rd:DefaultName>
               <Top>1.10336in</Top>
-              <Left>2.74604in</Left>
+              <Left>2.87104in</Left>
               <Height>0.15005in</Height>
               <Width>0.53066in</Width>
               <ZIndex>16</ZIndex>
@@ -3641,6 +3648,7 @@
                     <TextRun>
                       <Value>:</Value>
                       <Style>
+                        <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -3650,7 +3658,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox34</rd:DefaultName>
               <Top>0.08947in</Top>
-              <Left>1.17841in</Left>
+              <Left>1.30341in</Left>
               <Height>0.23622in</Height>
               <Width>0.21875in</Width>
               <ZIndex>17</ZIndex>
@@ -3673,6 +3681,7 @@
                     <TextRun>
                       <Value>:</Value>
                       <Style>
+                        <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -3682,7 +3691,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox34</rd:DefaultName>
               <Top>0.39514in</Top>
-              <Left>1.17841in</Left>
+              <Left>1.30341in</Left>
               <Height>0.23622in</Height>
               <Width>0.21875in</Width>
               <ZIndex>18</ZIndex>
@@ -3705,6 +3714,7 @@
                     <TextRun>
                       <Value>:</Value>
                       <Style>
+                        <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -3714,7 +3724,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox34</rd:DefaultName>
               <Top>0.7008in</Top>
-              <Left>1.17841in</Left>
+              <Left>1.30341in</Left>
               <Height>0.24089in</Height>
               <Width>0.21875in</Width>
               <ZIndex>19</ZIndex>
@@ -3737,6 +3747,7 @@
                     <TextRun>
                       <Value>:</Value>
                       <Style>
+                        <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -3746,7 +3757,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox34</rd:DefaultName>
               <Top>1.30896in</Top>
-              <Left>1.17841in</Left>
+              <Left>1.30341in</Left>
               <Height>0.23622in</Height>
               <Width>0.21875in</Width>
               <ZIndex>20</ZIndex>
@@ -3760,22 +3771,6 @@
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Image Name="image2">
-              <Source>Database</Source>
-              <Value>=First(Fields!PIC_IMAGE.Value, "dsReportLogo")</Value>
-              <MIMEType>image/gif</MIMEType>
-              <Sizing>Fit</Sizing>
-              <Top>0.95022mm</Top>
-              <Left>158.62217mm</Left>
-              <Height>32.7mm</Height>
-              <Width>64mm</Width>
-              <ZIndex>21</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-            </Image>
             <Textbox Name="Textbox38">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -3784,7 +3779,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Fabrication List</Value>
-                      <Style />
+                      <Style>
+                        <FontSize>11pt</FontSize>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -3794,8 +3791,8 @@
               <Top>1.68755in</Top>
               <Left>0.11674in</Left>
               <Height>6.00025mm</Height>
-              <Width>25.20253mm</Width>
-              <ZIndex>22</ZIndex>
+              <Width>28.73031mm</Width>
+              <ZIndex>21</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3816,6 +3813,7 @@
                     <TextRun>
                       <Value>:</Value>
                       <Style>
+                        <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -3825,10 +3823,10 @@
               </Paragraphs>
               <rd:DefaultName>Textbox34</rd:DefaultName>
               <Top>1.68756in</Top>
-              <Left>1.17841in</Left>
+              <Left>1.30341in</Left>
               <Height>0.23622in</Height>
               <Width>0.21875in</Width>
-              <ZIndex>23</ZIndex>
+              <ZIndex>22</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3848,6 +3846,8 @@
                     <TextRun>
                       <Value>=Join(Parameters!FabricationList.Value,",   ")</Value>
                       <Style>
+                        <FontSize>11pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
                         <Format>G</Format>
                       </Style>
                     </TextRun>
@@ -3856,10 +3856,10 @@
                 </Paragraph>
               </Paragraphs>
               <Top>42.86365mm</Top>
-              <Left>1.50504in</Left>
+              <Left>1.63004in</Left>
               <Height>13.56929mm</Height>
               <Width>107.08344mm</Width>
-              <ZIndex>24</ZIndex>
+              <ZIndex>23</ZIndex>
               <Style>
                 <VerticalAlign>Top</VerticalAlign>
                 <PaddingLeft>2pt</PaddingLeft>
@@ -3868,6 +3868,22 @@
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
+            <Image Name="image1">
+              <Source>Database</Source>
+              <Value>=First(Fields!PIC_IMAGE.Value, "dsReportLogo")</Value>
+              <MIMEType>image/gif</MIMEType>
+              <Sizing>Fit</Sizing>
+              <Top>2.57661mm</Top>
+              <Left>165.67154mm</Left>
+              <Height>28.625mm</Height>
+              <Width>56mm</Width>
+              <ZIndex>24</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Image>
           </ReportItems>
           <PageBreak>
             <BreakLocation>End</BreakLocation>
@@ -3876,7 +3892,7 @@
           <Top>1.31986mm</Top>
           <Left>1.50081mm</Left>
           <Height>59.34361mm</Height>
-          <Width>224.14817mm</Width>
+          <Width>224.14808mm</Width>
           <Style>
             <Border>
               <Style>Solid</Style>
