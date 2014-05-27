@@ -2,7 +2,7 @@
 <RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="SEDPLAN">
   <ConnectionProperties>
     <Extension>SQL</Extension>
-    <ConnectString>Data Source=EWXGWY1987-PC\MSSQLSERVERGWY;Initial Catalog=SEDPLAN</ConnectString>
+    <ConnectString>Data Source=SG10031CSD6782;Initial Catalog=SEDPLAN</ConnectString>
   </ConnectionProperties>
   <DataSourceID>bb2c8add-f5cf-44c2-b994-da5f5094c2e2</DataSourceID>
 </RptDataSource>
