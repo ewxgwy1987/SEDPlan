@@ -3313,7 +3313,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Fabrication List</Value>
+                      <Value>Assembly List</Value>
                       <Style>
                         <FontSize>11pt</FontSize>
                       </Style>

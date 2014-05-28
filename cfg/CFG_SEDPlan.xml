@@ -38,8 +38,8 @@
       <level value="ALL" />
     </logger>
   </log4net>
-  <connectionString>User ID=sa;Pwd=DBAdm1n@BHS.irel;Initial Catalog=SEDPLAN;Data Source=SG10031CSD6782;Packet Size=4096</connectionString>
-  <!--<connectionString>User ID=sa;Pwd=DBAdm1n@BHS.irel;Initial Catalog=SEDPLAN;Data Source=EWXGWY1987-PC\MSSQLSERVERGWY;Packet Size=4096</connectionString>-->
+  <!--<connectionString>User ID=sa;Pwd=DBAdm1n@BHS.irel;Initial Catalog=SEDPLAN;Data Source=SG10031CSD6782;Packet Size=4096</connectionString>-->
+  <connectionString>User ID=sa;Pwd=DBAdm1n@BHS.irel;Initial Catalog=SEDPLAN;Data Source=EWXGWY1987-PC;Packet Size=4096</connectionString>
   <sql-cmbx_SC_SAID>select distinct SA_ID from DD_TYPES</sql-cmbx_SC_SAID>
   <BomPlanCalSTP>stp_CalBOMPlan</BomPlanCalSTP>
   <configSet name="SEDPlan.ExcelDataImport">
