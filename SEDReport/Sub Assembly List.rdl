@@ -3119,42 +3119,12 @@
   <Width>8.92206in</Width>
   <Page>
     <PageHeader>
-      <Height>2.45777in</Height>
+      <Height>1.99944in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
         <Rectangle Name="rectangle1">
           <ReportItems>
-            <Textbox Name="ReportTime">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Format(Now,"hh:mm:ss tt")</Value>
-                      <Style>
-                        <FontSize>8pt</FontSize>
-                        <Format>G</Format>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>1.63756in</Top>
-              <Left>7.34174in</Left>
-              <Height>6mm</Height>
-              <Width>23.00012mm</Width>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
             <Textbox Name="lblReportPage">
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -3171,11 +3141,10 @@
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>1.9132in</Top>
+              <Top>1.5757in</Top>
               <Left>6.71174in</Left>
               <Height>6mm</Height>
               <Width>15mm</Width>
-              <ZIndex>1</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>2pt</PaddingLeft>
@@ -3200,40 +3169,11 @@
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>1.36195in</Top>
+              <Top>1.27445in</Top>
               <Left>6.71174in</Left>
               <Height>6mm</Height>
               <Width>15mm</Width>
-              <ZIndex>2</ZIndex>
-              <Style>
-                <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="lblReportTime">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>Time :</Value>
-                      <Style>
-                        <FontSize>8pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <Top>1.63756in</Top>
-              <Left>6.71174in</Left>
-              <Height>6mm</Height>
-              <Width>15mm</Width>
-              <ZIndex>3</ZIndex>
+              <ZIndex>1</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>2pt</PaddingLeft>
@@ -3259,11 +3199,11 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>1.91319in</Top>
+              <Top>1.57569in</Top>
               <Left>7.34174in</Left>
               <Height>6mm</Height>
               <Width>23.00012mm</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>2</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>2pt</PaddingLeft>
@@ -3290,11 +3230,11 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>1.36195in</Top>
+              <Top>1.27445in</Top>
               <Left>7.34174in</Left>
               <Height>6mm</Height>
               <Width>23.00012mm</Width>
-              <ZIndex>5</ZIndex>
+              <ZIndex>3</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3326,7 +3266,7 @@
               <Left>1.63004in</Left>
               <Height>6mm</Height>
               <Width>45mm</Width>
-              <ZIndex>6</ZIndex>
+              <ZIndex>4</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>2pt</PaddingLeft>
@@ -3356,7 +3296,7 @@
               <Left>0.13063in</Left>
               <Height>6mm</Height>
               <Width>14.79536mm</Width>
-              <ZIndex>7</ZIndex>
+              <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3389,7 +3329,7 @@
               <Left>0.13063in</Left>
               <Height>6mm</Height>
               <Width>14.79542mm</Width>
-              <ZIndex>8</ZIndex>
+              <ZIndex>6</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3421,7 +3361,7 @@
               <Left>1.63004in</Left>
               <Height>6mm</Height>
               <Width>107.08344mm</Width>
-              <ZIndex>9</ZIndex>
+              <ZIndex>7</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>2pt</PaddingLeft>
@@ -3451,7 +3391,7 @@
               <Left>0.13063in</Left>
               <Height>6mm</Height>
               <Width>14.79542mm</Width>
-              <ZIndex>10</ZIndex>
+              <ZIndex>8</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3483,7 +3423,7 @@
               <Left>1.63004in</Left>
               <Height>6mm</Height>
               <Width>45mm</Width>
-              <ZIndex>11</ZIndex>
+              <ZIndex>9</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>2pt</PaddingLeft>
@@ -3513,41 +3453,11 @@
               <Left>0.13063in</Left>
               <Height>6mm</Height>
               <Width>14.79542mm</Width>
-              <ZIndex>12</ZIndex>
+              <ZIndex>10</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="ReportName4">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style>
-                        <FontSize>11pt</FontSize>
-                        <Format>G</Format>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <Top>33.24766mm</Top>
-              <Left>1.63004in</Left>
-              <Height>6mm</Height>
-              <Width>45mm</Width>
-              <ZIndex>13</ZIndex>
-              <Style>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
@@ -3562,21 +3472,23 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Phase no</Value>
+                      <Value>Assembly</Value>
                       <Style>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox31</rd:DefaultName>
               <Top>1.10336in</Top>
-              <Left>1.68472in</Left>
+              <Left>1.63004in</Left>
               <Height>0.15005in</Height>
               <Width>0.53066in</Width>
-              <ZIndex>14</ZIndex>
+              <ZIndex>11</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3590,21 +3502,23 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Batch no</Value>
+                      <Value>Belt Conv</Value>
                       <Style>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox31</rd:DefaultName>
               <Top>1.10336in</Top>
-              <Left>2.28482in</Left>
+              <Left>2.20237in</Left>
               <Height>0.15005in</Height>
-              <Width>0.53066in</Width>
-              <ZIndex>15</ZIndex>
+              <Width>0.54455in</Width>
+              <ZIndex>12</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3618,21 +3532,23 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Rev no</Value>
+                      <Value>Zone/Phase</Value>
                       <Style>
                         <FontSize>8pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox31</rd:DefaultName>
               <Top>1.10336in</Top>
-              <Left>2.87104in</Left>
+              <Left>2.79136in</Left>
               <Height>0.15005in</Height>
-              <Width>0.53066in</Width>
-              <ZIndex>16</ZIndex>
+              <Width>0.62649in</Width>
+              <ZIndex>13</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3661,7 +3577,7 @@
               <Left>1.30341in</Left>
               <Height>0.23622in</Height>
               <Width>0.21875in</Width>
-              <ZIndex>17</ZIndex>
+              <ZIndex>14</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3694,7 +3610,7 @@
               <Left>1.30341in</Left>
               <Height>0.23622in</Height>
               <Width>0.21875in</Width>
-              <ZIndex>18</ZIndex>
+              <ZIndex>15</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3727,7 +3643,7 @@
               <Left>1.30341in</Left>
               <Height>0.24089in</Height>
               <Width>0.21875in</Width>
-              <ZIndex>19</ZIndex>
+              <ZIndex>16</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3760,7 +3676,7 @@
               <Left>1.30341in</Left>
               <Height>0.23622in</Height>
               <Width>0.21875in</Width>
-              <ZIndex>20</ZIndex>
+              <ZIndex>17</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3771,6 +3687,119 @@
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
+            <Textbox Name="ReportName5">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Join(Parameters!FabricationList.Value,", ")</Value>
+                      <Style>
+                        <FontSize>11pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Format>G</Format>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <Top>33.6005mm</Top>
+              <Left>1.63004in</Left>
+              <Height>13.56929mm</Height>
+              <Width>107.08344mm</Width>
+              <ZIndex>18</ZIndex>
+              <Visibility>
+                <Hidden>=Parameters!FabricationList.Count &lt;= 1</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Image Name="image1">
+              <Source>Database</Source>
+              <Value>=First(Fields!PIC_IMAGE.Value, "dsReportLogo")</Value>
+              <MIMEType>image/gif</MIMEType>
+              <Sizing>Fit</Sizing>
+              <Top>0.9525mm</Top>
+              <Left>165.67154mm</Left>
+              <Height>28.625mm</Height>
+              <Width>56mm</Width>
+              <ZIndex>19</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Image>
+            <Textbox Name="Textbox40">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Batch</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox31</rd:DefaultName>
+              <Top>1.10336in</Top>
+              <Left>3.44664in</Left>
+              <Height>0.15005in</Height>
+              <Width>0.33274in</Width>
+              <ZIndex>20</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox41">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Revision</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox31</rd:DefaultName>
+              <Top>1.10336in</Top>
+              <Left>3.82105in</Left>
+              <Height>0.15005in</Height>
+              <Width>0.47163in</Width>
+              <ZIndex>21</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
             <Textbox Name="Textbox38">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -3778,21 +3807,30 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Fabrication List</Value>
+                      <Value>=IIF(
+		LEN(Parameters!FabricationList.Value(0)) &gt;= 4,
+		LEFT(Parameters!FabricationList.Value(0),4),
+		""
+	)</Value>
                       <Style>
                         <FontSize>11pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>1.68755in</Top>
-              <Left>0.11674in</Left>
-              <Height>6.00025mm</Height>
-              <Width>28.73031mm</Width>
-              <ZIndex>21</ZIndex>
+              <Top>1.30895in</Top>
+              <Left>1.63004in</Left>
+              <Height>6.00024mm</Height>
+              <Width>13.47876mm</Width>
+              <ZIndex>22</ZIndex>
+              <Visibility>
+                <Hidden>=Parameters!FabricationList.Count &gt; 1</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -3811,79 +3849,167 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>:</Value>
+                      <Value>=IIF(
+		LEN(Parameters!FabricationList.Value(0)) &gt;= 7,
+		MID(Parameters!FabricationList.Value(0),5,3),
+		""
+	)</Value>
                       <Style>
                         <FontSize>11pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
-              <rd:DefaultName>Textbox34</rd:DefaultName>
-              <Top>1.68756in</Top>
-              <Left>1.30341in</Left>
-              <Height>0.23622in</Height>
-              <Width>0.21875in</Width>
-              <ZIndex>22</ZIndex>
+              <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>1.32285in</Top>
+              <Left>2.20237in</Left>
+              <Height>5.64683mm</Height>
+              <Width>13.83154mm</Width>
+              <ZIndex>23</ZIndex>
+              <Visibility>
+                <Hidden>=Parameters!FabricationList.Count &gt; 1</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
+                <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Textbox Name="ReportName5">
+            <Textbox Name="Textbox42">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Join(Parameters!FabricationList.Value,",   ")</Value>
+                      <Value>=IIF(
+		LEN(Parameters!FabricationList.Value(0)) &gt;= 10,
+		MID(Parameters!FabricationList.Value(0),8,3),
+		""
+	)</Value>
                       <Style>
                         <FontSize>11pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                        <Format>G</Format>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>42.86365mm</Top>
-              <Left>1.63004in</Left>
-              <Height>13.56929mm</Height>
-              <Width>107.08344mm</Width>
-              <ZIndex>23</ZIndex>
+              <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>1.32285in</Top>
+              <Left>2.79136in</Left>
+              <Height>5.64683mm</Height>
+              <Width>15.91277mm</Width>
+              <ZIndex>24</ZIndex>
+              <Visibility>
+                <Hidden>=Parameters!FabricationList.Count &gt; 1</Hidden>
+              </Visibility>
               <Style>
-                <VerticalAlign>Top</VerticalAlign>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Image Name="image1">
-              <Source>Database</Source>
-              <Value>=First(Fields!PIC_IMAGE.Value, "dsReportLogo")</Value>
-              <MIMEType>image/gif</MIMEType>
-              <Sizing>Fit</Sizing>
-              <Top>2.57661mm</Top>
-              <Left>165.67154mm</Left>
-              <Height>28.625mm</Height>
-              <Width>56mm</Width>
-              <ZIndex>24</ZIndex>
+            <Textbox Name="Textbox43">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=IIF(
+		LEN(Parameters!FabricationList.Value(0)) &gt;= 13,
+		MID(Parameters!FabricationList.Value(0),11,3),
+		""
+	)</Value>
+                      <Style>
+                        <FontSize>11pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>1.32285in</Top>
+              <Left>3.44664in</Left>
+              <Height>5.64683mm</Height>
+              <Width>8.45168mm</Width>
+              <ZIndex>25</ZIndex>
+              <Visibility>
+                <Hidden>=Parameters!FabricationList.Count &gt; 1</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
               </Style>
-            </Image>
+            </Textbox>
+            <Textbox Name="Textbox44">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=IIF(
+		LEN(Parameters!FabricationList.Value(0)) &gt;= 16,
+		MID(Parameters!FabricationList.Value(0),14,3),
+		""
+	)</Value>
+                      <Style>
+                        <FontSize>11pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>1.32285in</Top>
+              <Left>3.82105in</Left>
+              <Height>5.64683mm</Height>
+              <Width>11.97937mm</Width>
+              <ZIndex>26</ZIndex>
+              <Visibility>
+                <Hidden>=Parameters!FabricationList.Count &gt; 1</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
           </ReportItems>
           <PageBreak>
             <BreakLocation>End</BreakLocation>
@@ -3891,7 +4017,7 @@
           <DataElementOutput>ContentsOnly</DataElementOutput>
           <Top>1.31986mm</Top>
           <Left>1.50081mm</Left>
-          <Height>59.34361mm</Height>
+          <Height>48.49569mm</Height>
           <Width>224.14808mm</Width>
           <Style>
             <Border>
@@ -3981,9 +4107,10 @@ FROM(
 	LEFT JOIN BOM_PLAN BP_TB ON BP.SAUID=BP_TB.SAUID AND BP.Revision=BP_TB.Revision AND BP_TB.VAR_TYPE='TB'
 	WHERE BP.Project_No=@Project AND BP.Plan_Name IN (@FabricationList) AND BP.ISMAIN=1
 	AND BP.Revision=(SELECT MAX(Revision) FROM BOM_Plan BP2 WHERE BP2.Plan_Name=BP.Plan_Name AND BP2.Project_No=BP.Project_No)
-) AS ALLBP, SA_INFO SI
-WHERE ALLBP.SA_ID=SI.SA_ID
-AND SI.Revision=(SELECT MAX(Revision) FROM SA_INFO SI2 WHERE SI2.SA_ID=SI.SA_ID)
+) AS ALLBP
+LEFT JOIN SA_INFO SI 
+	ON ALLBP.SA_ID=SI.SA_ID
+	AND SI.Revision=(SELECT MAX(Revision) FROM SA_INFO SI2 WHERE SI2.SA_ID=SI.SA_ID)
 GROUP BY SI.SA_DESCRIPTION,ALLBP.SA_ID,L_VAL,LS_VAL,A_VAL,TB_VAL,H_VAL,COLOR;</CommandText>
       </Query>
       <Fields>

@@ -188,12 +188,18 @@ DROP TABLE BOM_Detail;
 DROP DATABASE SEDPLAN;
 
 -- Report: Fabrication List 
---DECLARE @BOMPlan NVARCHAR(100)='FAB01-B3-02';
---DECLARE @Project NVARCHAR(50)='S32A1305700';
---select BD.Parts_Name,BD.Specification,BD.VAR_TYPE,BD.VAR_VALUE,BD.LHS,BD.RHS,BD.PCE,BD.Total_Weight,SP.Process_Name,BD.COLOR
---from BOM_Detail BD, SA_Process SP
---WHERE BD.Project_No=@Project AND BD.Process_ID=SP.Process_ID AND BD.Plan_Name=@BOMPlan
---AND BD.Revision=(SELECT MAX(Revision) FROM BOM_Detail BD2 WHERE BD2.Plan_Name=@BOMPlan AND BD2.Project_No=BD.Project_No);
+DECLARE @BOMPlan NVARCHAR(100)='FAB01-B3-02';
+DECLARE @Project NVARCHAR(50)='S32A1305700';
+select	BD.Parts_Name,BD.Specification,BD.VAR_TYPE,BD.VAR_VALUE
+		,SUM(BD.LHS) AS LHS,SUM(BD.RHS) AS RHS,SUM(BD.PCE) PCE,SUM(BD.Total_Weight) AS Total_Weight
+		,SP.Process_Name,BD.COLOR
+from	BOM_Detail BD, SA_Process SP
+WHERE	BD.Project_No=@Project 
+	AND BD.Plan_Name IN (@BOMPlan) 
+	AND BD.Process_ID IN (@ProcessName)
+	AND BD.Process_ID=SP.Process_ID 
+	AND BD.Revision=(SELECT MAX(Revision) FROM BOM_Detail BD2 WHERE BD2.Plan_Name=BD.Plan_Name AND BD2.Project_No=BD.Project_No)
+GROUP BY BD.Parts_Name,BD.Specification,BD.VAR_TYPE,BD.VAR_VALUE,SP.Process_Name,BD.COLOR;
 
 -- Report: Sub Assembly List
 
@@ -219,9 +225,10 @@ DROP DATABASE SEDPLAN;
 --	LEFT JOIN BOM_PLAN BP_TB ON BP.SAUID=BP_TB.SAUID AND BP.Revision=BP_TB.Revision AND BP_TB.VAR_TYPE='TB'
 --	WHERE BP.Project_No=@Project AND BP.Plan_Name IN (@FabricationList) AND BP.ISMAIN=1
 --	AND BP.Revision=(SELECT MAX(Revision) FROM BOM_Plan BP2 WHERE BP2.Plan_Name=BP.Plan_Name AND BP2.Project_No=BP.Project_No)
---) AS ALLBP, SA_INFO SI
---WHERE ALLBP.SA_ID=SI.SA_ID
---AND SI.Revision=(SELECT MAX(Revision) FROM SA_INFO SI2 WHERE SI2.SA_ID=SI.SA_ID)
+--) AS ALLBP
+--LEFT JOIN SA_INFO SI 
+--	ON ALLBP.SA_ID=SI.SA_ID
+--	AND SI.Revision=(SELECT MAX(Revision) FROM SA_INFO SI2 WHERE SI2.SA_ID=SI.SA_ID)
 --GROUP BY SI.SA_DESCRIPTION,ALLBP.SA_ID,L_VAL,LS_VAL,A_VAL,TB_VAL,H_VAL,COLOR;
-  
+
   
