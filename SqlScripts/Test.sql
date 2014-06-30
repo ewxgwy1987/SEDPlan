@@ -196,3 +196,14 @@ SELECT * FROM DD_Variable_Map where VAR_Weight=0;
 
 select * from PICTURES;
 select distinct Revision,DD_ID FROM DD_Variable_Map where VAR_Weight=0;
+
+select max(Revision) from BOM_Detail
+SELECT * FROM BOM_Detail where Revision=4;
+SELECT * FROM BOM_Plan where Revision=4;
+
+SELECT * FROM SA_Component where Para_Type='EW'
+
+SELECT * 
+FROM BOM_Detail 
+where Revision=6 and COLOR='RBL5014' 
+and Parts_Name like 'CHAIN%';

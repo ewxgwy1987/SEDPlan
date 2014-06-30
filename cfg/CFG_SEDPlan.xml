@@ -46,28 +46,28 @@
     <VariableType>L,LS,A°</VariableType>
 
     <DDVariable>
-      <DDVColumns>L(Inches),LS(Inches),A(Degree),Weight</DDVColumns>
+      <DDVColumns>L,LS,A,Weight</DDVColumns>
       <DDVParameters>DDID,L_para,LS_para,A_para,Weight,Revision,CRTIME</DDVParameters>
       <DDVSTP>stp_ImportDDVData</DDVSTP>
       <SqlRevision>select max(Revision) as MAXREV from DD_Variable_Map where DD_ID=</SqlRevision>
     </DDVariable>
 
     <StandardParts>
-      <STDColumns>NAME,DESCRIPTION,WEIGHT (lbs/pce)</STDColumns>
+      <STDColumns>NAME,DESCRIPTION,WEIGHT</STDColumns>
       <STDParameters>PartsName,Spec,STDWeight,Revision,CRTIME</STDParameters>
       <STDSTP>stp_ImportSTDData</STDSTP>
       <SqlRevision>select max(Revision) as MAXREV from STD_Parts;</SqlRevision>
     </StandardParts>
 
     <FixedWeight>
-      <FWColumns>DD ID,WEIGHT (lbs/pce),color</FWColumns>
+      <FWColumns>DESCRIPTION,WEIGHT,color</FWColumns>
       <FWParameters>DDID,Weight,COLOR,Revision,CRTIME</FWParameters>
       <FWSTP>stp_ImportFWData</FWSTP>
       <SqlRevision>select max(Revision) as MAXREV from DD_Variable_Map where VAR_Type='F';</SqlRevision>
     </FixedWeight>
 
     <DrawingDesingTypes>
-      <DDTColumns>NAME,DD Types,DD Value,DD ID</DDTColumns>
+      <DDTColumns>Name,Detail Type,Detail Value,Detail ID</DDTColumns>
       <DDTParameters>SAID,PARTSNAME,PARATYPE,PARAVALUE,DDID,REVISION,CRTIME</DDTParameters>
       <DDTSTP>stp_ImportDDTData</DDTSTP>
       <SqlRevision>select max(Revision) as MAXREV from DD_TYPES where SA_ID=</SqlRevision>
@@ -82,7 +82,7 @@
 
     <BOMPlan>
       <BPColumns>SAID,Quantity,Color Code</BPColumns>
-      <BPVarNames>L,LS,A°,TB,H</BPVarNames>
+      <BPVarNames>L,LS,A°,TB,H,EW,LR</BPVarNames>
       <!--<BPParameters>PlanName,SAID,Quantity,L_para,LS_para,A_para,TB_para,H_para,Revision,CRTIME</BPParameters>-->
       <BPParameters>ProjectNo,PlanName,SAID,Quantity,COLOR,VarNames,Vars,Revision,CRTIME</BPParameters>
       <BPSTP>stp_ImportBPData</BPSTP>

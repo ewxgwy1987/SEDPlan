@@ -23,6 +23,14 @@ BEGIN
 		DECLARE @NewRevision INT = CAST(@Revision AS INT);
 		DECLARE @Created_Time Datetime = CAST(@CRTIME AS datetime);
 
+		DECLARE @ERRMSG VARCHAR(max);
+		IF DBO.FUN_DDT_DDID_EXISTS(@DD_ID)=0
+		BEGIN
+			SET @ERRMSG = 'Cannot find Detail ID. Detail ID:' + @DD_ID + '.'  + CHAR(13) + CHAR(10);;
+			SET @ERRMSG = @ERRMSG + '@/' + @SA_ID + '/' + @Parts_Name + '/' + @Para_Type + '/' + @Para_Value + CHAR(13) + CHAR(10);
+			THROW 60001,@ERRMSG,1
+		END
+
 		INSERT INTO DD_TYPES(SA_ID,Parts_Name,Para_Type,Para_Value,DD_ID,Revision,Created_Time)
 		VALUES(@SA_ID,@Parts_Name,@Para_Type,@Para_Value,@DD_ID,@NewRevision,@Created_Time);
 	END TRY

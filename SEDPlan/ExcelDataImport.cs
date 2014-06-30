@@ -389,16 +389,52 @@ namespace SEDPlan
 
         }
 
+        private string DataRowColumnSearch(DataColumnCollection dtCols, string colname)
+        {
+            string res_colname = null;
+            string tmp_colname = "";
+            int ch_idx = -1;
+
+            if (colname == null || colname == "")
+                return res_colname;
+
+            foreach (DataColumn col in dtCols)
+            {
+                ch_idx = col.ColumnName.IndexOf('(');
+                if (ch_idx > -1)
+                {
+                    tmp_colname = col.ColumnName.Substring(0, ch_idx);
+                    if (tmp_colname.Length > 0 && tmp_colname.Trim().ToUpper() == colname.ToUpper())
+                    {
+                        res_colname = col.ColumnName;
+                        break;
+                    }
+                }
+                else
+                {
+                    if (col.ColumnName.Trim().ToUpper() == colname.ToUpper())
+                    {
+                        res_colname = col.ColumnName;
+                        break;
+                    }
+                }
+            }
+
+            return res_colname;
+        }
+
         private string[] AnalyzeDataRow_DDV(DataRow dr, string revision, string created_time)
         {
+            string drcolname = "";
             string[] paras = new string[this.DDV_ColNames.Length + 3];
             paras[0] = this.sheetname.Trim(); // sheet name is DD ID
             int i = 1;
             foreach (string colname in this.DDV_ColNames)
             {
                 paras[i] = "";
-                if (dr.Table.Columns.Contains(colname))
-                    paras[i] = ((string)dr[colname]).Trim();
+                drcolname = DataRowColumnSearch(dr.Table.Columns, colname);
+                if (drcolname != null && drcolname.Length > 0)
+                    paras[i] = ((string)dr[drcolname]).Trim();
                 else
                 {
                     if (colname.ToUpper().IndexOf("WEIGHT") != -1)
@@ -416,6 +452,7 @@ namespace SEDPlan
 
         private string[] AnalyzeDataRow_STD(DataRow dr, string revision, string created_time)
         {
+            string drcolname = "";
             string[] paras = new string[this.STD_ColNames.Length + 2];
             //paras[0] = this.sheetname.Trim();
 
@@ -423,8 +460,9 @@ namespace SEDPlan
             foreach (string colname in this.STD_ColNames)
             {
                 paras[i] = "";
-                if (dr.Table.Columns.Contains(colname))
-                    paras[i] = ((string)dr[colname]).Trim();
+                drcolname = DataRowColumnSearch(dr.Table.Columns, colname);
+                if (drcolname != null && drcolname.Length > 0)
+                    paras[i] = ((string)dr[drcolname]).Trim();
                 else
                 {
                     string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: Standard Parts";
@@ -439,6 +477,7 @@ namespace SEDPlan
 
         private string[] AnalyzeDataRow_FW(DataRow dr, string revision, string created_time)
         {
+            string drcolname = "";
             string[] paras = new string[this.FW_ColNames.Length + 2];
             //paras[0] = this.sheetname.Trim();
 
@@ -446,8 +485,9 @@ namespace SEDPlan
             foreach (string colname in this.FW_ColNames)
             {
                 paras[i] = "";
-                if (dr.Table.Columns.Contains(colname))
-                    paras[i] = ((string)dr[colname]).Trim();
+                drcolname = DataRowColumnSearch(dr.Table.Columns, colname);
+                if (drcolname != null && drcolname.Length > 0)
+                    paras[i] = ((string)dr[drcolname]).Trim();
                 else
                 {
                     string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: Detail Design Fixed Weight";
@@ -462,14 +502,16 @@ namespace SEDPlan
 
         private string[] AnalyzeDataRow_DDT(DataRow dr, string revision, string created_time)
         {
+            string drcolname = "";
             string[] paras = new string[this.DDT_ColNames.Length + 3];
             paras[0] = this.sheetname.Trim(); // sheet name is SA ID
             int i = 1;
             foreach (string colname in this.DDT_ColNames)
             {
                 paras[i] = "";
-                if (dr.Table.Columns.Contains(colname))
-                    paras[i] = ((string)dr[colname]).Trim();
+                drcolname = DataRowColumnSearch(dr.Table.Columns, colname);
+                if (drcolname != null && drcolname.Length > 0)
+                    paras[i] = ((string)dr[drcolname]).Trim();
                 else
                 {
                     string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: SA Detail Design Types";
@@ -484,6 +526,7 @@ namespace SEDPlan
 
         private string[] AnalyzeDataRow_SC(DataRow dr,string revision, string created_time)
         {
+            string drcolname = "";
             string[] paras = new string[this.SC_ColNames.Length + 3];
             paras[0] = this.sheetname.Trim(); // sheet name is SA ID
 
@@ -532,6 +575,7 @@ namespace SEDPlan
 
         private string[] AnalyzeDataRow_BP(DataRow dr, string revision, string created_time)
         {
+            string drcolname = "";
             string[] paras = new string[this.BP_ColNames.Length + 2 + 4];
             paras[0] = this.projectno;
             paras[1] = this.sheetname.Trim(); // sheetname is the plan name
@@ -541,8 +585,9 @@ namespace SEDPlan
             foreach (string colname in this.BP_ColNames)
             {
                 paras[i] = "";
-                if (dr.Table.Columns.Contains(colname))
-                    paras[i] = ((string)dr[colname]).Trim();
+                drcolname = DataRowColumnSearch(dr.Table.Columns, colname);
+                if (drcolname != null && drcolname.Length > 0)
+                    paras[i] = ((string)dr[drcolname]).Trim();
                 else
                 {
                     string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: BOM Plan";
@@ -583,6 +628,7 @@ namespace SEDPlan
 
         private string[] AnalyzeDataRow_SAIF(DataRow dr, string revision, string created_time)
         {
+            string drcolname = "";
             string[] paras = new string[this.SAIF_ColNames.Length + 2];
             //paras[0] = this.sheetname.Trim();
 
@@ -590,8 +636,9 @@ namespace SEDPlan
             foreach (string colname in this.SAIF_ColNames)
             {
                 paras[i] = "";
-                if (dr.Table.Columns.Contains(colname))
-                    paras[i] = ((string)dr[colname]).Trim();
+                drcolname = DataRowColumnSearch(dr.Table.Columns, colname);
+                if (drcolname != null && drcolname.Length > 0)
+                    paras[i] = ((string)dr[drcolname]).Trim();
                 else
                 {
                     string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: Detail Design Fixed Weight";

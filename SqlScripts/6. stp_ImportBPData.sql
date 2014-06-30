@@ -16,6 +16,7 @@ AS
 BEGIN
 	BEGIN TRANSACTION;
 	BEGIN TRY
+		DECLARE @ERRMSG NVARCHAR(200);
 		DECLARE @PROJECT_NO NVARCHAR(20) = @ProjectNo;
 		DECLARE @Plan_Name NVARCHAR(100) = @PlanName;
 		DECLARE @SA_ID NVARCHAR(50) = @SAID;
@@ -71,6 +72,21 @@ BEGIN
 					SET @IsMain = 0;
 				END
 
+				IF DBO.FUN_BP_SAID_EXISTS(@SA_ID)=0
+				BEGIN
+					SET @ERRMSG = 'Cannot find SA. SA ID:' + @SA_ID + '.'  + CHAR(13) + CHAR(10);
+					SET @ERRMSG = @ERRMSG + '/' + @PlanName + '/' + @SAID + '/' + @Quantity + CHAR(13) + CHAR(10);
+					THROW 60001,@ERRMSG,1
+				END
+
+				IF DBO.FUN_BP_VAR_EXISTS(@SA_ID,@VAR_Type,@VAR_Value)=0
+				BEGIN
+					SET @ERRMSG = 'Cannot find the value of variable or parameter. SA ID:' 
+						+ @SA_ID + ', VAR TYPE:' + @VAR_Type + ', VAR VALUE:' + @VAR_Value + '.'  + CHAR(13) + CHAR(10);
+					SET @ERRMSG = @ERRMSG + '/' + @PlanName + '/' + @SAID + '/' + @Quantity + CHAR(13) + CHAR(10);
+					THROW 60001,@ERRMSG,1
+				END
+
 				INSERT INTO BOM_Plan(Project_No,Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,COLOR,IsMain,SAUID,Revision,Created_Time)
 				VALUES(@PROJECT_NO,@Plan_Name,@SA_ID,@VAR_Type,@VAR_Value,@Qty,@COLOR,@IsMain,@SAUID,@NewRevision,@Created_Time);
 
@@ -93,7 +109,7 @@ BEGIN
 		END
 
 		-- Check all variables and parameters for this SA ID are imported
-		DECLARE @ERRMSG NVARCHAR(100);
+		
 		DECLARE @ISCOMP BIT;
 		DECLARE @MAX_REV INT = (SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID);
 
@@ -134,7 +150,7 @@ BEGIN
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
 			-- is normal variable(not TB or H)
-			IF @VARTYPE != 'TB' AND @VARTYPE != 'H' 
+			IF @VARTYPE != 'TB' AND @VARTYPE != 'H' AND @VARTYPE!='EW' AND @VARTYPE!='LR'
 			BEGIN
 				IF
 				NOT EXISTS(

@@ -14,24 +14,45 @@ BEGIN
 	DECLARE @ISEXISTS BIT;
 	DECLARE @ERRMSG NVARCHAR(200);
 
-	IF @VAR_TYPE='TB' OR @VAR_TYPE='H'
+	IF @VAR_TYPE='TB' OR @VAR_TYPE='H' OR @VAR_TYPE='LR' OR @VAR_TYPE='EW'
 	BEGIN
-		IF EXISTS
-		(
-			SELECT DD_ID
-			FROM DD_TYPES DDT,SA_Component SC
-			WHERE SC.SA_ID=@SA_ID AND SC.Para_Type=@VAR_TYPE
-			AND SC.Revision=(SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID)
-			AND SC.Parts_Name=DDT.Parts_Name AND DDT.SA_ID = SC.SA_ID
-			AND DDT.Para_Type=@VAR_TYPE AND DDT.Para_Value=@VAR_Value
-			AND DDT.Revision=(SELECT MAX(Revision) FROM DD_TYPES DDT2 WHERE DDT2.SA_ID=@SA_ID)
-		)
-			SET @ISEXISTS=1;
+		IF @VAR_TYPE='TB' OR @VAR_TYPE='H' OR @VAR_TYPE='LR'
+		BEGIN
+			IF EXISTS
+			(
+				SELECT DD_ID
+				FROM DD_TYPES DDT,SA_Component SC
+				WHERE SC.SA_ID=@SA_ID AND SC.Para_Type=@VAR_TYPE
+				AND SC.Revision=(SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID)
+				AND SC.Parts_Name=DDT.Parts_Name AND DDT.SA_ID = SC.SA_ID
+				AND DDT.Para_Type=@VAR_TYPE AND DDT.Para_Value=@VAR_Value
+				AND DDT.Revision=(SELECT MAX(Revision) FROM DD_TYPES DDT2 WHERE DDT2.SA_ID=@SA_ID)
+			) OR @VAR_TYPE='LR' 
+				SET @ISEXISTS=1;
+			ELSE
+			BEGIN
+				SET @ISEXISTS=0;
+			END
+		END
 		ELSE
 		BEGIN
-			SET @ISEXISTS=0;
-			--SET @ERRMSG = 'The parameters are not complete. Please Check. SA ID:'+@SA_ID + ', VAR TYPE:' + @VAR_TYPE + ', VAR VALUE:' + @VAR_Value + char(13)+char(10);
-			--THROW 60001,@ERRMSG,1
+			IF EXISTS
+			(
+				SELECT DD_ID
+				FROM DD_TYPES DDT,SA_Component SC
+				WHERE SC.SA_ID IN (SELECT SC2.Specification FROM SA_Component SC2 WHERE SC2.Para_Type='EW' AND SC2.SA_ID=@SA_ID)
+				AND SC.Para_Type=@VAR_TYPE
+				AND SC.Revision=(SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID)
+				AND SC.Parts_Name=DDT.Parts_Name AND DDT.SA_ID = SC.SA_ID
+				AND DDT.Para_Type=@VAR_TYPE AND DDT.Para_Value=@VAR_Value
+				AND DDT.Revision=(SELECT MAX(Revision) FROM DD_TYPES DDT2 WHERE DDT2.SA_ID=@SA_ID)
+			) 
+				SET @ISEXISTS=1;
+			ELSE
+			BEGIN
+				SET @ISEXISTS=0;
+			END
+
 		END
 	END
 	ELSE
@@ -40,8 +61,8 @@ BEGIN
 		(
 			SELECT SA_ID
 			FROM SA_Component SC
-			WHERE SC.SA_ID=@SA_ID AND SC.VAR_Type=@VAR_TYPE AND SC.IsVariable=1
-		)
+			WHERE SC.SA_ID=@SA_ID AND SC.VAR_Type=@VAR_TYPE --AND SC.IsVariable=1
+		) 
 			SET @ISEXISTS=1;
 		ELSE
 			SET @ISEXISTS=0;
