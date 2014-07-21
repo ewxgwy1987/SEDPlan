@@ -172,6 +172,50 @@ CREATE TABLE [dbo].[PICTURES](
 
 GO
 
+--Views for SEDPlan
+GO
+CREATE VIEW vw_BOM_Detail AS
+	SELECT	* 
+	FROM	BOM_Detail BD
+	WHERE	BD.Revision=(SELECT MAX(Revision) FROM BOM_Detail BD2 WHERE BD2.Plan_Name=BD.Plan_Name AND BD2.Project_No=BD.Project_No)
+GO
+CREATE VIEW vw_BOM_Plan AS
+	SELECT	* 
+	FROM	BOM_Plan BP
+	WHERE	BP.Revision=(SELECT MAX(Revision) FROM BOM_Plan BP2 WHERE BP2.Plan_Name=BP.Plan_Name AND BP2.Project_No=BP.Project_No);
+GO
+CREATE VIEW vw_DD_TYPES AS
+	SELECT	* 
+	FROM	DD_TYPES DDT
+	WHERE	DDT.Revision=(SELECT MAX(Revision) FROM DD_TYPES DDT2 WHERE DDT2.SA_ID=DDT.SA_ID);
+GO
+CREATE VIEW vw_SA_Component AS
+	SELECT	* 
+	FROM	SA_Component SC
+	WHERE	SC.Revision=(SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=SC.SA_ID);
+GO
+CREATE VIEW vw_STD_Parts AS
+	SELECT	* 
+	FROM	STD_Parts STD
+	WHERE	STD.Revision=(SELECT MAX(Revision) FROM STD_Parts STD2 WHERE STD.Parts_Name=STD2.Specification AND STD.Specification=STD2.Specification);
+GO
+CREATE VIEW vw_Fixed_Weight AS
+	SELECT	* 
+	FROM	DD_Variable_Map DDV
+	WHERE	DDV.VAR_Type='F'
+		AND DDV.Revision=(SELECT MAX(Revision) FROM DD_Variable_Map DDV2 WHERE DDV2.DD_ID=DDV.DD_ID AND DDV2.VAR_Type='F');
+GO
+CREATE VIEW vw_DD_Variable_Map AS
+	SELECT	* 
+	FROM	DD_Variable_Map DDV
+	WHERE	DDV.VAR_Type!='F'
+		AND DDV.Revision=(SELECT MAX(Revision) FROM DD_Variable_Map DDV2 WHERE DDV2.DD_ID=DDV.DD_ID);
+GO
+CREATE VIEW vw_SA_INFO AS
+	SELECT	* 
+	FROM	SA_INFO SI
+	WHERE	SI.Revision=(SELECT MAX(Revision) FROM SA_INFO SI2 WHERE SI2.SA_ID=SI.SA_ID)
+GO
 --DROP TABLE ProjectInfo;
 --DROP TABLE SA_Process;
 --DROP TABLE DD_Variable_Map;

@@ -16,17 +16,18 @@ BEGIN
 
 	IF @VAR_TYPE='TB' OR @VAR_TYPE='H' OR @VAR_TYPE='LR' OR @VAR_TYPE='EW'
 	BEGIN
+		--If it is normal parameter, then check if the parts in the @SA_ID with this parameter and its value exist in DD_TYPES or not
 		IF @VAR_TYPE='TB' OR @VAR_TYPE='H' OR @VAR_TYPE='LR'
 		BEGIN
 			IF EXISTS
 			(
 				SELECT DD_ID
-				FROM DD_TYPES DDT,SA_Component SC
+				FROM vw_DD_TYPES DDT,vw_SA_Component SC
 				WHERE SC.SA_ID=@SA_ID AND SC.Para_Type=@VAR_TYPE
-				AND SC.Revision=(SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID)
+				--AND SC.Revision=(SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID)
 				AND SC.Parts_Name=DDT.Parts_Name AND DDT.SA_ID = SC.SA_ID
 				AND DDT.Para_Type=@VAR_TYPE AND DDT.Para_Value=@VAR_Value
-				AND DDT.Revision=(SELECT MAX(Revision) FROM DD_TYPES DDT2 WHERE DDT2.SA_ID=@SA_ID)
+				--AND DDT.Revision=(SELECT MAX(Revision) FROM DD_TYPES DDT2 WHERE DDT2.SA_ID=@SA_ID)
 			) OR @VAR_TYPE='LR' 
 				SET @ISEXISTS=1;
 			ELSE
@@ -34,18 +35,19 @@ BEGIN
 				SET @ISEXISTS=0;
 			END
 		END
+		--If it is 'EW' parameter, then check if the parts in the subSA of @SA_ID with this parameter and its value exist in DD_TYPES or not
 		ELSE
 		BEGIN
 			IF EXISTS
 			(
 				SELECT DD_ID
-				FROM DD_TYPES DDT,SA_Component SC
-				WHERE SC.SA_ID IN (SELECT SC2.Specification FROM SA_Component SC2 WHERE SC2.Para_Type='EW' AND SC2.SA_ID=@SA_ID)
+				FROM vw_DD_TYPES DDT,vw_SA_Component SC
+				WHERE SC.SA_ID IN (SELECT SC2.Specification FROM vw_SA_Component SC2 WHERE SC2.Para_Type='EW' AND SC2.SA_ID=@SA_ID)
 				AND SC.Para_Type=@VAR_TYPE
-				AND SC.Revision=(SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID)
+				--AND SC.Revision=(SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID)
 				AND SC.Parts_Name=DDT.Parts_Name AND DDT.SA_ID = SC.SA_ID
 				AND DDT.Para_Type=@VAR_TYPE AND DDT.Para_Value=@VAR_Value
-				AND DDT.Revision=(SELECT MAX(Revision) FROM DD_TYPES DDT2 WHERE DDT2.SA_ID=@SA_ID)
+				--AND DDT.Revision=(SELECT MAX(Revision) FROM DD_TYPES DDT2 WHERE DDT2.SA_ID=@SA_ID)
 			) 
 				SET @ISEXISTS=1;
 			ELSE
@@ -60,8 +62,8 @@ BEGIN
 		IF EXISTS
 		(
 			SELECT SA_ID
-			FROM SA_Component SC
-			WHERE SC.SA_ID=@SA_ID AND SC.VAR_Type=@VAR_TYPE --AND SC.IsVariable=1
+			FROM vw_SA_Component SC
+			WHERE SC.SA_ID=@SA_ID AND SC.VAR_Type=@VAR_TYPE AND SC.IsVariable=1
 		) 
 			SET @ISEXISTS=1;
 		ELSE

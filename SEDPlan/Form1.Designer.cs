@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.ImportTabs = new System.Windows.Forms.TabControl();
             this.tabDDVar = new System.Windows.Forms.TabPage();
             this.pnlDDVar = new System.Windows.Forms.Panel();
@@ -88,9 +89,9 @@
             this.tbx_SAIF_FPath = new System.Windows.Forms.TextBox();
             this.menuSEDPlan = new System.Windows.Forms.MenuStrip();
             this.reportViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.lbErr = new System.Windows.Forms.Label();
-            this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ImportTabs.SuspendLayout();
             this.tabDDVar.SuspendLayout();
             this.pnlDDVar.SuspendLayout();
@@ -710,6 +711,13 @@
             this.reportViewerToolStripMenuItem.Text = "ReportViewer";
             this.reportViewerToolStripMenuItem.Click += new System.EventHandler(this.reportViewerToolStripMenuItem_Click);
             // 
+            // managementToolStripMenuItem
+            // 
+            this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
+            this.managementToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
+            this.managementToolStripMenuItem.Text = "Management";
+            this.managementToolStripMenuItem.Click += new System.EventHandler(this.managementToolStripMenuItem_Click);
+            // 
             // lbErr
             // 
             this.lbErr.AutoSize = true;
@@ -719,13 +727,6 @@
             this.lbErr.Size = new System.Drawing.Size(0, 13);
             this.lbErr.TabIndex = 8;
             // 
-            // managementToolStripMenuItem
-            // 
-            this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
-            this.managementToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
-            this.managementToolStripMenuItem.Text = "Management";
-            this.managementToolStripMenuItem.Click += new System.EventHandler(this.managementToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -734,6 +735,7 @@
             this.Controls.Add(this.lbErr);
             this.Controls.Add(this.ImportTabs);
             this.Controls.Add(this.menuSEDPlan);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuSEDPlan;
             this.Name = "Form1";
             this.Text = "SEDPlan";

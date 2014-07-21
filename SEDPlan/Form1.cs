@@ -924,7 +924,8 @@ namespace SEDPlan
 
         private void managementToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Management myMgm = new Management(this.connstr);
+            myMgm.Show();
         }
 
     }

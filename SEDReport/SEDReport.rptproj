@@ -17,6 +17,14 @@
       <Name>Sub Assembly List.rdl</Name>
       <FullPath>Sub Assembly List.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>ATRStatistics.rdl</Name>
+      <FullPath>ATRStatistics.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>ATRStatistics _old.rdl</Name>
+      <FullPath>ATRStatistics _old.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>

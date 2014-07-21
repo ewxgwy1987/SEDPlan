@@ -6,8 +6,8 @@ ALTER PROCEDURE dbo.stp_CalBOMPlan
 		  @PlanName NVARCHAR(100)
 AS
 BEGIN
-	DECLARE @ProjectNo NVARCHAR(20)='S32A1305700'
-	DECLARE @PlanName NVARCHAR(100)='SAB-BCV01-B03 02'
+	--DECLARE @ProjectNo NVARCHAR(20)='S32A1305700'
+	--DECLARE @PlanName NVARCHAR(100)='SAB-BCV01-B03 02'
 
 	--1. Prepare temp data
 	SELECT * INTO #TMP_DDV
@@ -30,6 +30,13 @@ BEGIN
 	FROM BOM_Plan BP
 	WHERE BP.Plan_Name=@PlanName AND BP.Project_No=@ProjectNo
 	AND BP.Revision=(SELECT MAX(Revision) FROM BOM_Plan BP2 WHERE BP2.Plan_Name=BP.Plan_Name AND BP2.Project_No=BP.Project_No);
+
+	--CREATE NONCLUSTER INDEX FOR EACH TEMP TABLE
+	CREATE NONCLUSTERED INDEX #TMP_DDV_IDX ON #TMP_DDV(DD_ID,VAR_Type,VAR_Value);
+	CREATE NONCLUSTERED INDEX #TMP_STD_IDX ON #TMP_STD(Parts_Name,Specification);
+	CREATE NONCLUSTERED INDEX #TMP_DDT_IDX ON #TMP_DDT(SA_ID,Parts_Name,Para_Type,Para_Value);
+	CREATE NONCLUSTERED INDEX #TMP_SC_IDX ON #TMP_SC(SA_ID,Parts_Name);
+	CREATE NONCLUSTERED INDEX #TMP_BP_IDX ON #TMP_BP(SA_ID,SAUID);
 
 	--2. Scan all SA's in BOM_PLAN to find all sub SA 
 	DECLARE @REV INT = (SELECT MAX(Revision) FROM BOM_Plan WHERE Plan_Name=@PlanName AND Project_No=Project_No);
@@ -63,14 +70,14 @@ BEGIN
 		INSERT INTO #TMP_BP(Project_No,Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,COLOR,IsMain,SAUID,Revision,Created_Time)
 		SELECT	@PROJECT_NO, @PLAN_NAME, SC.Specification, SC.Para_Type, @VAR_VALUE, @QUANTITY, @COLOR,
 				1 AS IsMain, @NEW_SAUID, @REV, @CTIME
-		FROM	SA_Component SC
+		FROM	#TMP_SC SC
 		WHERE	SC.SA_ID=@SA_ID AND SC.IsSubSA=1 AND SC.Para_Type=@VAR_TYPE
 
 		--2. Insert LR parameter with above Sub SA
 		INSERT INTO #TMP_BP(Project_No,Plan_Name,SA_ID,VAR_Type,VAR_Value,Quantity,COLOR,IsMain,SAUID,Revision,Created_Time)
 		SELECT	@PROJECT_NO, @PLAN_NAME, SC.Specification, BP.VAR_Type, BP.VAR_Value, @QUANTITY, @COLOR,
 				0 AS IsMain, @NEW_SAUID, @REV, @CTIME
-		FROM	SA_Component SC, #TMP_BP BP
+		FROM	#TMP_SC SC, #TMP_BP BP
 		WHERE	SC.SA_ID=@SA_ID AND SC.IsSubSA=1 AND SC.Para_Type=@VAR_TYPE
 			AND BP.Project_No=@PROJECT_NO AND BP.Plan_Name=@PLAN_NAME 
 			AND BP.SA_ID=@SA_ID AND BP.SAUID=@BP_SAUID AND BP.VAR_Type='LR'
@@ -82,7 +89,7 @@ BEGIN
 	DEALLOCATE BP_CURSOR;
 
 	--Check the data in the temp BOM_PLAN
-	SELECT * FROM #TMP_BP;
+	--SELECT * FROM #TMP_BP where VAR_Type='EW';
 
 	--Begin statistics
 	CREATE TABLE #TMP_CATALOGUESUM
