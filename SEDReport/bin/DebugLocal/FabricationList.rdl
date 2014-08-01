@@ -12,16 +12,16 @@
               <Width>1.00024in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.1116in</Width>
+              <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.50024in</Width>
+              <Width>0.55in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.50024in</Width>
+              <Width>0.55in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.50024in</Width>
+              <Width>0.51in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.40024in</Width>
@@ -2389,7 +2389,7 @@ IIF(	Parameters!Unit.Value="IS",
         <Top>0.13935cm</Top>
         <Left>1.81831mm</Left>
         <Height>0.93077in</Height>
-        <Width>7.4337in</Width>
+        <Width>7.43138in</Width>
         <Style>
           <Border>
             <Style>None</Style>

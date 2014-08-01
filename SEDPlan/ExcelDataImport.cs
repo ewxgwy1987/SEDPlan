@@ -641,7 +641,7 @@ namespace SEDPlan
                     paras[i] = ((string)dr[drcolname]).Trim();
                 else
                 {
-                    string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: Detail Design Fixed Weight";
+                    string errstr = "Import Data Error: Cannot find the specified column - " + colname + " for ExcelType: SA Information";
                     throw new Exception(errstr);
                 }
                 i++;

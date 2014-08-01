@@ -9,20 +9,20 @@ BEGIN
 
 	DECLARE @ISEXISTS BIT;
 
-	IF EXISTS
+	IF 
+	EXISTS
 	(
 		SELECT	DD_ID 
-		FROM	DD_Variable_Map DDV 
-		WHERE	DDV.DD_ID=@DD_ID
-			AND DDV.VAR_Type='F'
-			AND DDV.Revision=(SELECT MAX(Revision) FROM DD_Variable_Map WHERE VAR_Type='F')
+		FROM	vw_Fixed_Weight FW 
+		WHERE	FW.DD_ID=@DD_ID
+			--AND DDV.VAR_Type='F'
+			--AND DDV.Revision=(SELECT MAX(Revision) FROM DD_Variable_Map WHERE VAR_Type='F')
 	) OR
 	EXISTS
 	(
 		SELECT	DD_ID 
-		FROM	DD_Variable_Map DDV 
+		FROM	vw_DD_Variable_Map DDV 
 		WHERE	DDV.DD_ID=@DD_ID
-			AND DDV.VAR_Type!='F'
 	)
 		SET @ISEXISTS=1;
 	ELSE

@@ -195,7 +195,12 @@ namespace SEDPlan
 
                 if (this.m_dtImportData != null && this.m_dtImportData.Rows.Count > 0)
                 {
-                    _logger.Info("ExcelView Initialization complete");
+                    string infostr = "ExcelView Initialization complete\n";
+                    StringBuilder strbd = new StringBuilder(infostr);
+                    strbd.Append("File Path:").AppendLine(filepath);
+                    strbd.Append("Sheet Name:").AppendLine(sheetname);
+                    infostr = strbd.ToString();
+                    _logger.Info(infostr);
                 }
                 //else
                 //{

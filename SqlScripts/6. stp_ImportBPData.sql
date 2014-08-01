@@ -149,31 +149,46 @@ BEGIN
 		FETCH NEXT FROM VAR_CURSOR INTO @VARTYPE,@VARVALUE;
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
-			-- is normal variable(not TB or H)
-			IF @VARTYPE != 'TB' AND @VARTYPE != 'H' AND @VARTYPE!='EW' AND @VARTYPE!='LR'
+			-- is normal variable(not TB or H or BR)
+			IF NOT EXISTS (SELECT Para_Name FROM SA_Paras WHERE Para_Name=@VARTYPE)
+			   AND @VARTYPE!='EW' AND @VARTYPE!='LR'
 			BEGIN
 				IF
-				NOT EXISTS(
-							--If variable does not has para
-							SELECT SC.SA_ID,DDV.DD_ID,DDV.VAR_Type,DDV.VAR_Value,DDV.VAR_Weight
-							FROM SA_Component SC, DD_Variable_Map DDV
-							WHERE SC.SA_ID=@SA_ID AND SC.VAR_Type=@VARTYPE AND SC.IsVariable=1 AND SC.Para_Type=''
-							AND SC.Revision = (SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID)
-							AND SC.Specification=DDV.DD_ID AND DDV.VAR_Type=SC.VAR_Type AND DDV.VAR_Value=@VARVALUE
-							AND DDV.Revision = (SELECT MAX(Revision) FROM DD_Variable_Map DDV2 WHERE DDV2.DD_ID=DDV.DD_ID)
-						  ) AND 
-				NOT EXISTS(
-							-- If variable has para
-							SELECT SC.SA_ID,DDV.DD_ID,DDV.VAR_Type,DDV.VAR_Value,DDV.VAR_Weight
-							FROM SA_Component SC, DD_TYPES DDT, DD_Variable_Map DDV,@VARLIST VL
-							WHERE SC.SA_ID=@SA_ID AND SC.VAR_Type=@VARTYPE AND SC.IsVariable=1 AND SC.Para_Type!=''
-							AND SC.Revision = (SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID)
-							AND SC.Para_Type=VL.VARTYPE
-							AND SC.SA_ID=DDT.SA_ID AND SC.Parts_Name=DDT.Parts_Name AND SC.Para_Type=DDT.Para_Type AND DDT.Para_Value=VL.VARVALUE
-							AND DDT.Revision = (SELECT MAX(Revision) FROM DD_TYPES DDT2 WHERE DDT2.SA_ID=DDT.SA_ID)
-							AND DDT.DD_ID=DDV.DD_ID AND DDV.VAR_Type=@VARTYPE AND DDV.VAR_Value=@VARVALUE
-							AND DDV.Revision = (SELECT MAX(Revision) FROM DD_Variable_Map DDV2 WHERE DDV2.DD_ID=DDV.DD_ID)
-						  )
+				(
+					--If variable does not has para
+					EXISTS(SELECT SC.SA_ID FROM vw_SA_Component SC 
+						WHERE SC.SA_ID=@SA_ID AND SC.VAR_Type=@VARTYPE AND SC.IsVariable=1 AND SC.Para_Type='')
+					AND
+					NOT EXISTS
+					(
+						
+						SELECT SC.SA_ID,DDV.DD_ID,DDV.VAR_Type,DDV.VAR_Value,DDV.VAR_Weight
+						FROM vw_SA_Component SC, vw_DD_Variable_Map DDV
+						WHERE SC.SA_ID=@SA_ID AND SC.VAR_Type=@VARTYPE AND SC.IsVariable=1 AND SC.Para_Type=''
+						--AND SC.Revision = (SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID)
+						AND SC.Specification=DDV.DD_ID AND DDV.VAR_Type=SC.VAR_Type AND DDV.VAR_Value=@VARVALUE
+						--AND DDV.Revision = (SELECT MAX(Revision) FROM DD_Variable_Map DDV2 WHERE DDV2.DD_ID=DDV.DD_ID)
+					)
+				)
+				OR
+				(
+					-- If variable has para
+					EXISTS(SELECT SC.SA_ID FROM vw_SA_Component SC 
+						WHERE SC.SA_ID=@SA_ID AND SC.VAR_Type=@VARTYPE AND SC.IsVariable=1 AND SC.Para_Type!='')
+					AND
+					NOT EXISTS
+					(
+						SELECT SC.SA_ID,DDV.DD_ID,DDV.VAR_Type,DDV.VAR_Value,DDV.VAR_Weight
+						FROM vw_SA_Component SC, vw_DD_TYPES DDT, vw_DD_Variable_Map DDV,@VARLIST VL
+						WHERE SC.SA_ID=@SA_ID AND SC.VAR_Type=@VARTYPE AND SC.IsVariable=1 AND SC.Para_Type!=''
+						--AND SC.Revision = (SELECT MAX(Revision) FROM SA_Component SC2 WHERE SC2.SA_ID=@SA_ID)
+						AND SC.Para_Type=VL.VARTYPE
+						AND SC.SA_ID=DDT.SA_ID AND SC.Parts_Name=DDT.Parts_Name AND SC.Para_Type=DDT.Para_Type AND DDT.Para_Value=VL.VARVALUE
+						--AND DDT.Revision = (SELECT MAX(Revision) FROM DD_TYPES DDT2 WHERE DDT2.SA_ID=DDT.SA_ID)
+						AND DDT.DD_ID=DDV.DD_ID AND DDV.VAR_Type=@VARTYPE AND DDV.VAR_Value=@VARVALUE
+						--AND DDV.Revision = (SELECT MAX(Revision) FROM DD_Variable_Map DDV2 WHERE DDV2.DD_ID=DDV.DD_ID)
+					)
+				)
 				BEGIN
 					SET @ERRMSG = 'The parameter value is not VALID. Please Check. SA ID:'+@SA_ID + ', VAR TYPE:' + @VARTYPE + ', VAR VALUE:' + @VARVALUE + char(13)+char(10);
 					THROW 60001,@ERRMSG,1

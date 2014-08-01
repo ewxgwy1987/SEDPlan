@@ -44,6 +44,13 @@ BEGIN
 			INSERT INTO DD_Variable_Map(DD_ID,VAR_Type,VAR_Value,VAR_Weight,Revision,Created_Time)
 			VALUES(@DD_ID,@VAR_Type,@VAR_Value,@VAR_Weight,@NewRevision,@Created_Time);
 		END
+
+		DECLARE @ERRMSG VARCHAR(max);
+		IF @L_para='' AND @LS_para='' AND @A_para=''
+		BEGIN
+			SET @ERRMSG = 'All variable values are empty. No Data can be inserted.'+ CHAR(13) + CHAR(10);
+			THROW 60001,@ERRMSG,1
+		END
 	END TRY
 	BEGIN CATCH
 		IF @@TRANCOUNT>0

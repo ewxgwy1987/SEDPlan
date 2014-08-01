@@ -3,9 +3,9 @@ USE [SEDPLAN];
 GO
 
 ALTER FUNCTION DBO.FUN_BP_VAR_EXISTS(
-@SA_ID NVARCHAR(50),
-@VAR_TYPE NVARCHAR(5),
-@VAR_Value NVARCHAR(50)
+	@SA_ID NVARCHAR(50),
+	@VAR_TYPE NVARCHAR(5),
+	@VAR_Value NVARCHAR(50)
 )
 RETURNS BIT
 AS
@@ -14,10 +14,14 @@ BEGIN
 	DECLARE @ISEXISTS BIT;
 	DECLARE @ERRMSG NVARCHAR(200);
 
-	IF @VAR_TYPE='TB' OR @VAR_TYPE='H' OR @VAR_TYPE='LR' OR @VAR_TYPE='EW'
+	--DECLARE @SA_ID NVARCHAR(50)='MS01-10-001'
+	--DECLARE @VAR_TYPE NVARCHAR(5)='BR'
+	--DECLARE @VAR_Value NVARCHAR(50)='EC'
+
+	IF EXISTS (SELECT Para_Name FROM SA_Paras WHERE Para_Name=@VAR_TYPE) OR @VAR_TYPE='LR' OR @VAR_TYPE='EW'
 	BEGIN
-		--If it is normal parameter, then check if the parts in the @SA_ID with this parameter and its value exist in DD_TYPES or not
-		IF @VAR_TYPE='TB' OR @VAR_TYPE='H' OR @VAR_TYPE='LR'
+		--If it is normal parameter, then check whether the parts in the @SA_ID with this parameter and its value exist in DD_TYPES or not
+		IF @VAR_TYPE!='EW'
 		BEGIN
 			IF EXISTS
 			(
@@ -69,6 +73,8 @@ BEGIN
 		ELSE
 			SET @ISEXISTS=0;
 	END
+
+	--PRINT @ISEXISTS;
 
 	RETURN @ISEXISTS;
 

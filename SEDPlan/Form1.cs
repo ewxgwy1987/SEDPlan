@@ -23,7 +23,7 @@ namespace SEDPlan
         #region Class Field and Property
 
         private const string Path_XMLFileSetting = @"../../../cfg/CFG_SEDPlan.xml";
-        private const string Path_XMLFileSetting2 = @"./cfg/CFG_MDSReader.xml";
+        private const string Path_XMLFileSetting2 = @"./cfg/CFG_SEDPlan.xml";
         private const string XCFG_CONNSTRING = "connectionString";
         private const string XCFG_SQL_cmbx_SC_SAID = "sql-cmbx_SC_SAID";
         private const string XCFG_BPCALSTP = "BomPlanCalSTP";
@@ -153,6 +153,13 @@ namespace SEDPlan
                 xlsimport = new ExcelDataImport(xcfg_ExcelDataImport, this.connstr);
                 xlsimport.OnErrorHappened += new EventHandler<ErrorEventArgs>(EventHandler_OnError);
 
+                _logger.Info(".");
+                _logger.Info(".");
+                _logger.Info(".");
+                _logger.Info("App Login by : " + Environment.UserDomainName + "/" + Environment.UserName);
+                _logger.Info("[..................] <" + _className + "." + thisMethod + "()>");
+                _logger.Info("[...App Starting...] <" + _className + "." + thisMethod + "()>");
+                _logger.Info("[..................] <" + _className + "." + thisMethod + "()>");
                 // test
                 //this.tbx_DDV_SAID.Text = "MS01-17-301";
                 //this.tbx_DDV_FPath.Text = "../../../excel/Values Chart for Variables A degrees_ L and LS dated 08112013.xls";
@@ -449,6 +456,7 @@ namespace SEDPlan
                 this.tbx_SC_FPath.Text = "";
                 this.cmbx_SC_SAID.Text = "";
                 ShowInfo(infostr);
+                _logger.Info(infostr);
             }
             this.btn_SC_Import.Enabled = true;
         }
@@ -485,6 +493,7 @@ namespace SEDPlan
                 this.tbx_DDV_FPath.Text = "";
                 this.tbx_DDV_SAID.Text = "";
                 ShowInfo(infostr);
+                _logger.Info(infostr);
             }
 
             this.btn_DDV_Import.Enabled = true;
@@ -522,6 +531,7 @@ namespace SEDPlan
                     + "Sheet Name:" + this.STD_xlssheet + "\r\n";
                 this.tbx_STD_FPath.Text = "";
                 ShowInfo(infostr);
+                _logger.Info(infostr);
             }
 
             this.btn_STD_Import.Enabled = true;
@@ -562,6 +572,7 @@ namespace SEDPlan
                 this.tbx_BP_FPath.Text = "";
                 this.tbx_BP_PlanName.Text = "";
                 ShowInfo(infostr);
+                _logger.Info(infostr);
             }
 
             this.btn_BP_Import.Enabled = true;
@@ -684,6 +695,7 @@ namespace SEDPlan
                    + "Sheet Name:" + this.FW_xlssheet + "\r\n";
                 this.tbx_FW_FPath.Text = "";
                 ShowInfo(infostr);
+                _logger.Info(infostr);
             }
             this.btn_FW_Import.Enabled = true;
         }
@@ -748,6 +760,7 @@ namespace SEDPlan
                 this.tbx_DDT_SAID.Text = "";
                 this.tbx_DDT_FPath.Text = "";
                 ShowInfo(infostr);
+                _logger.Info(infostr);
             }
             this.btn_DDT_Import.Enabled = true;
         }
@@ -809,6 +822,7 @@ namespace SEDPlan
                    + "Sheet Name:" + this.SAIF_xlssheet + "\r\n";
                 this.tbx_SAIF_FPath.Text = "";
                 ShowInfo(infostr);
+                _logger.Info(infostr);
             }
             this.btn_SAIF_Import.Enabled = true;
         }
